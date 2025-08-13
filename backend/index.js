@@ -7,8 +7,8 @@ const path = require('path')
 const app = express()
 
 //comment this in prod
-app.use('/files', express.static(path.join(__dirname, 'data', 'files')));
-app.use(cors())
+// app.use('/files', express.static(path.join(__dirname, 'data', 'files')));
+// app.use(cors())
 // app.use(express.json())
 
 app.use('/boards', boardRoutes)
