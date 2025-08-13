@@ -42,7 +42,7 @@
 
 	@if(showThreadPopup){
 	<div #overlay class="dark-overlay insideOverlay">
-		<textarea rows="12" cols="48" [(ngModel)]="threadData"></textarea>
+		<textarea [(ngModel)]="threadData"></textarea>
 		<div>
 			<a (click)="fileInputOne.click()">file*</a>
 			<a (click)="createThread()">send</a>
