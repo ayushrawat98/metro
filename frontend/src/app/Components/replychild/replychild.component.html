@@ -1,0 +1,15 @@
+<p #pp class="content">
+	@if (data().file != "") {
+	<img [src]="fileUrl + data().file" alt="something" class="floatLeft">
+	}
+	<ng-container>{{data().content}}</ng-container>
+	 @if(data().replyList?.length > 0){
+		&nbsp;
+		@for (item of data().replyList; track item.id) {
+			<span (click)="selectReply(item)" style="border: 1px black solid; height: 24px; width: 24px; text-align: center; margin-right: 12px; margin-bottom : 4px; display: inline-block;">{{$index+1}}</span>
+		}
+	}
+	<br/>
+	<a (click)="emitReplyId()">reply</a>
+
+</p>

@@ -1,0 +1,57 @@
+<div class="contain">
+	<h1 (click)="setShowThreadPopup(true)" class="pointer">
+		threads
+	</h1>
+
+	<!-- (click)="emitEvent()" -->
+	<!-- style="margin-bottom: 0px;" -->
+	<!-- <a style="margin-bottom: 4px; font-size: 24px;" (click)="emitEvent()">create</a> -->
+
+
+	<!-- <div class="flexColumn">
+    @if(!showCreateThreadForm){
+        @for (thread of threadList$ | async; track $index) {
+            <app-threadchild [data]="thread.data" [index]="$index" [flipOut]="flipOut[$index]"></app-threadchild>
+        }
+    }@else {
+        <div class="flippedIn">
+            <div class="">
+                <textarea rows="12" cols="48"></textarea>
+                <div>
+                    <a (click)="fileInputOne.click()">file</a>
+                    <a>send</a>
+                    <a>close</a>
+                </div>
+                <input #fileInputOne type="file" accept="image/*, video/*" hidden />
+            </div>
+        </div>
+    }
+</div> -->
+
+	<div class="flexColumn">
+		@if((threadList$ | async); as threadList){
+		@if(threadList.length > 0){
+		@for (thread of threadList; track thread.id) {
+		<app-threadchild [data]="thread" [index]="$index"></app-threadchild>
+		}
+		}@else {
+		<p>no threads yet!</p>
+		}
+		}
+	</div>
+
+	@if(showThreadPopup){
+	<div #overlay class="dark-overlay insideOverlay">
+		<textarea rows="12" cols="48" [(ngModel)]="threadData"></textarea>
+		<div>
+			<a (click)="fileInputOne.click()">file*</a>
+			<a (click)="createThread()">send</a>
+			<a (click)="closeThreadPopup()">close</a>
+		</div>
+		<a>{{threadFile?.name}}</a>
+		<input (change)="fileSelected($event, 1)" #fileInputOne type="file" accept="image/*, video/*" hidden />
+	</div>
+	}
+
+	<br />
+</div>

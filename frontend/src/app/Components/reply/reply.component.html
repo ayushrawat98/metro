@@ -1,0 +1,38 @@
+<div class="contain">
+	<h1>
+		replies
+	</h1>
+
+	<div class="flexColumn">
+		@if((replyList$ | async); as replyList){
+			@for (reply of replyList; track reply.id) {
+				<app-replychild [data]="reply" [index]="$index" (replyId)="createNewReply($event)" (selectedReply)="setSelectedReply($event)"></app-replychild>
+			}
+		}
+	</div>
+
+	<br />
+</div>
+
+@if(showReplyPopup){
+	<div #overlay class="dark-overlay insideOverlay">
+		<textarea rows="12" cols="48" [(ngModel)]="replyData" minlength="1" maxlength="1000"></textarea>
+		<div>
+			<a (click)="fileInputTwo.click()">file</a>
+			<a (click)="saveReply()">send</a>
+			<a (click)="closeReplyPopup()">close</a>
+		</div>
+		<A>{{replyFile?.name}}</A>
+		<input (change)="fileSelected($event)" #fileInputTwo type="file" accept="image/*, video/*" hidden />
+	</div>
+}
+
+@if(showSelectedReply){
+<div #overlay class="dark-overlay lowerz">
+	<div style="background-color: white;width: 350px; padding: 12px;">
+	<app-replychild [data]="selectedReply" [index]="0" (replyId)="createNewReply($event)"></app-replychild>
+	</div>
+	<a style="color: white;" (click)="setShowSelectedReply(false)">close</a>
+</div>
+}
+

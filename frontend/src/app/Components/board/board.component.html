@@ -1,0 +1,13 @@
+<div class="contain">
+	<h1>
+		boards
+	</h1>
+
+	<div class="flexColumn">
+		@for (board of boards; track $index) {
+		<a (click)="boardChanged(board)">
+			/{{board}}/
+		</a>
+		}
+	</div>
+</div>

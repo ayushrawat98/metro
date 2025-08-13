@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 100%;
+    height: 100%;
+	  // hide scrollbar
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.containerBlock {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    // hide scrollbar
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+// hide scrollbar
+.containerBlock::-webkit-scrollbar {
+    display: none;
+}
+
+
+@media(min-width:1200px) {
+    .containerBlock {
+        width: 50%;
+    }   
+}
