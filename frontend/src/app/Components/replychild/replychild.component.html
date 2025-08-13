@@ -3,15 +3,16 @@
 	<img [src]="fileUrl + data().file" alt="something" class="floatLeft">
 	}
 	<ng-container>{{data().content}}</ng-container>
+	
+		<br/>
+	<a (click)="emitReplyId()">reply</a>
+	<br/>
 	 @if(data().replyList?.length > 0){
-		<div style="display: flex; gap: 12px; margin: 6px 0px;">
+		<div style="display: flex; gap: 12px; margin-top: 12px;">
 		@for (item of data().replyList; track item.id) {
-			<div (click)="selectReply(item)" style="border: 1px black solid; height: 24px; width: 24px;  display: flex; align-items: center; justify-content: center;">{{$index+1}}</div>
+			<span (click)="selectReply(item)" style="border: 1px black solid; height: 24px; width: 24px;  display: flex; align-items: center; justify-content: center;">{{$index+1}}</span>
 		}
 	</div>
-	}@else {
-		<br/>
-	}
-	<a (click)="emitReplyId()">reply</a>
+}
 
 </div>
