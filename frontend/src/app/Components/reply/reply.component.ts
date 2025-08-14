@@ -30,13 +30,6 @@ export class ReplyComponent implements OnInit {
 	constructor(private internalData: InternaldataService, private externalData: ExternaldataService, private route : ActivatedRoute) { }
 
 	ngOnInit(): void {
-		// this.replyList$ = this.internalData.threadSubject.pipe(
-		// 	filter(value => value != null),
-		// 	tap(id => this.currentThread = id),
-		// 	switchMap(id => interval(10000).pipe(startWith(id), switchMap(board => this.externalData.getReplies(this.currentThread.id).pipe(catchError(error => of([])))))),
-		// 	map(data => this.mapFunction(data))
-		// )
-
 		this.replyList$ = merge(
 			this.route.paramMap.pipe(
 				map(value => value.get('threadId') ?? '-1')
@@ -49,6 +42,15 @@ export class ReplyComponent implements OnInit {
 			map(data => this.mapFunction(data))
 		)
 	}
+
+
+	//  ngAfterViewInit(): void {
+	// 	//cant just add the class because I want staggered animation
+	// 	setTimeout(() => {
+	// 		this.container()?.nativeElement.classList.add('flippedIn')
+	// 	}, this.index() * 60);
+	// }
+
 
 	mapFunction(data: reply[]): reply[] {
 

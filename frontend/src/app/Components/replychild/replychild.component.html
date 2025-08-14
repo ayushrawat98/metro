@@ -1,18 +1,17 @@
-<div #pp class="content">
+<div #container class="content">
 	@if (data().file != "") {
-	<img [src]="fileUrl + 't-' + data().file" alt="something" class="floatLeft">
+		<img [src]="fileUrl + 't-' + data().file" alt="something" class="floatLeft">
 	}
 	<ng-container>{{data().content}}</ng-container>
 	<br/>
-	 @if(data().replyList?.length > 0){
-		<div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+	@if(data().replyList?.length > 0){
+		<div class="replyBlockContainer">
 			<a (click)="emitReplyId()" style="display: block;">reply</a>
-		@for (item of data().replyList; track item.id) {
-			<div (click)="selectReply(item)" style="border: 1px black solid; height: 24px; width: 24px;  display: flex; align-items: center; justify-content: center;">{{$index+1}}</div>
-		}
-	</div>
-}@else {
-	<a (click)="emitReplyId()">reply</a>
-}
-
+			@for (item of data().replyList; track item.id) {
+				<div (click)="selectReply(item)" class="replyBlocks">{{$index+1}}</div>
+			}
+		</div>
+	}@else {
+		<a (click)="emitReplyId()">reply</a>
+	}
 </div>

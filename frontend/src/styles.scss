@@ -46,6 +46,17 @@ img {
     gap: 24px;
 }
 
+.animateContainer{
+	perspective: 600px;
+}
+
+.content {
+    transform-origin: left;
+    opacity: 0;
+    min-height: 50px;
+    cursor: pointer;
+}
+
 .dark-overlay {
     position: fixed;
     top: 0;
@@ -142,12 +153,7 @@ img {
     animation: flipOutLeft3D 0.3s linear forwards;
 }
 
-.content {
-    transform-origin: left;
-    opacity: 0;
-    min-height: 50px;
-    cursor: pointer;
-}
+
 
 .pointer {
     cursor: pointer;

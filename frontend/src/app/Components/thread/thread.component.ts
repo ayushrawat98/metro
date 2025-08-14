@@ -29,11 +29,6 @@ export class ThreadComponent implements OnInit {
   constructor(private internalData: InternaldataService, private externalData: ExternaldataService, private route : ActivatedRoute) { }
 
   ngOnInit(): void {
-    // this.threadList$ = this.internalData.boardSubject.pipe(
-    //   tap(board => this.currentBoard = board),
-    //   switchMap(board => interval(10000).pipe(startWith(board), switchMap(board => this.externalData.getThreads(this.currentBoard).pipe(catchError(error => of([]))))))
-    // )
-
 	this.threadList$ = merge(
 		this.route.paramMap.pipe(
 			map(value => value.get('boardName') ?? 'noboard')

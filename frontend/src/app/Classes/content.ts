@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment.development';
 export abstract class ContentComponent {
 	data = input.required<any>()
 	index = input.required<number>()
-	container = viewChild<ElementRef>('pp')
+	container = viewChild<ElementRef>('container')
 	fileUrl = environment.files
 
 	ngAfterViewInit(): void {

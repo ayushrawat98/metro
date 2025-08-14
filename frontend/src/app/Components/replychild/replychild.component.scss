@@ -2,7 +2,22 @@
     perspective: 600px;
 }
 
-p{
+div{
 	white-space: pre-wrap;
 }
 
+.replyBlockContainer{
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.replyBlocks{
+	border: 1px black solid;
+	height: 24px;
+	width: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
