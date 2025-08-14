@@ -85,10 +85,7 @@ let newStorage = {
 			thumbStream
 				.pipe(
 					sharp()
-						.resize(100, 100, {
-							fit: "contain",
-							background: { r: 0, g: 0, b: 0, alpha: 1 }
-						})
+						.resize(100, 100, { fit: "cover", position: "center" })
 						.webp({ quality: 100 })
 				)
 				.pipe(fs.createWriteStream(thumbfilePath))
