@@ -1,5 +1,5 @@
 <div #pp (click)="threadChanged()" class="content">
-    <img [src]="fileUrl + data().file" alt="something" class="floatLeft">
+    <img [src]="fileUrl + 't-' + data().file" alt="something" class="floatLeft">
     {{data().content.length > 180 ? data().content.slice(0,180) + '...' : data().content}}
     <br /><a>{{data().replycount}} replies</a>
 </div>
