@@ -1,0 +1,15 @@
+
+<div class="flexColumn">
+	<p class="fileName">{{files[startingPoint].file}}</p>
+	@if (files[startingPoint].mimetype.startsWith('image')) {
+		<img [src] = " serverUrl + files[startingPoint].file"  />
+	} @else {
+		<video [src] = "serverUrl + files[startingPoint].file" controls autoplay></video>
+	}
+</div>
+
+<div class="nav">
+		<p class="fileName thicker" (click)="decrease()"><</p>
+		<p class="fileName thicker">{{startingPoint+1}}/{{files.length}}</p>
+		<p class="fileName thicker" (click)="increase()">></p>
+</div>

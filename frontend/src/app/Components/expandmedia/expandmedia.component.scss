@@ -1,0 +1,30 @@
+:host{
+	display: block;
+	max-width: 90vw;
+}
+
+img{
+	width: 100%;
+	max-height: 60vh;
+}
+
+.fileName{
+	color: white;
+}
+
+.nav{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+}
+
+.thicker{
+	font-size: 24px;
+	padding: 12px;
+	cursor: pointer;
+}
+
+.thicker:hover{
+	background-color: black;
+}

@@ -6,7 +6,7 @@
 	<div class="flexColumn">
 		@if((replyList$ | async); as replyList){
 			@for (reply of replyList; track reply.id) {
-				<app-replychild [data]="reply" [index]="$index" (replyId)="createNewReply($event)" (selectedReply)="setSelectedReply($event)"></app-replychild>
+				<app-replychild [data]="reply" [index]="$index" (replyId)="createNewReply($event)" (selectedReply)="setSelectedReply($event)" (expandMedia)="expandMedia($event)"></app-replychild>
 			}
 		}
 	</div>

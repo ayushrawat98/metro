@@ -13,6 +13,7 @@ import { Dialog } from '@angular/cdk/dialog';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ReplymicroComponent } from '../replymicro/replymicro.component';
+import { ExpandmediaComponent } from '../expandmedia/expandmedia.component';
 
 @Component({
 	selector: 'app-reply',
@@ -25,10 +26,10 @@ export class ReplyComponent implements OnInit {
 	replyList$!: Observable<reply[]>
 	currentThread!: string
 	currentBoard!: string
+	currentReplyList! : reply[]
+	totalMedia = 0
 	private refreshTrigger$ = new Subject<void>();
 
-	//reply poppup related
-	// showReplyPopup = false
 	replyTo!: number
 
 	constructor(
@@ -51,7 +52,8 @@ export class ReplyComponent implements OnInit {
 		).pipe(
 			tap(id => this.currentThread = id),
 			switchMap(id => this.externalData.getReplies(id).pipe(catchError(error => of([])))),
-			map(data => this.mapFunction(data))
+			map(data => this.mapFunction(data)),
+			tap(data => this.currentReplyList = data)
 		)
 	}
 
@@ -92,7 +94,8 @@ export class ReplyComponent implements OnInit {
 				currentBoard: this.currentBoard,
 				replyTo: this.replyTo,
 				threadId: this.currentThread
-			}
+			},
+			autoFocus : false
 		})
 
 		dialogRef.closed.subscribe((res) => {
@@ -149,9 +152,13 @@ export class ReplyComponent implements OnInit {
 		});
 	}
 
-	// showSelectedReply = false
-	// selectedReply!: reply
-	// setSelectedReply = (value: any) => { this.selectedReply = value.item; this.setShowSelectedReply(true); console.log(this.selectedReply) }
-	// setShowSelectedReply = (value: boolean) => this.showSelectedReply = value
-
+	expandMedia(id : number){
+		let dialogRef = this.dialog.open<string>(ExpandmediaComponent, {
+			data: {
+				id : id,
+				data : this.currentReplyList
+			},
+			autoFocus : false
+		})
+	}
 }

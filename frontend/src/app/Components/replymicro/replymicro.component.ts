@@ -14,13 +14,8 @@ export class ReplymicroComponent {
 	@Input() index! : number
 	fileUrl = environment.files
 	replyId = output<number>()
-	selectedReply = output<reply>()
 
 	emitReplyId(): void {
 		this.replyId.emit(this.data.id)
-	}
-
-	selectReply(item: reply) {
-		this.selectedReply.emit(item)
 	}
 }

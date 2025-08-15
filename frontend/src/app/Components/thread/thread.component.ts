@@ -88,7 +88,8 @@ export class ThreadComponent implements OnInit {
 			data : {
 				forwhat : 'thread',
 				currentBoard : this.currentBoard
-			}
+			},
+			autoFocus : false
 		})
 
 		dialogRef.closed.subscribe((res)=>{

@@ -12,13 +12,12 @@ export class ReplychildComponent extends ContentComponent<reply> implements Afte
 
 	replyId = output<number>()
 	selectedReply = output<{item : reply, element:HTMLElement}>()
-
-	emitReplyId(): void {
-		this.replyId.emit(this.data().id)
-	}
+	expandMedia = output<number>()
 
 	selectReply(item: reply, event : Event) {
 		this.selectedReply.emit({item : item, element : event.target as HTMLElement})
 	}
+
+
 
 }

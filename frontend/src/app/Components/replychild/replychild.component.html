@@ -1,17 +1,17 @@
 <div #container class="content">
 	@if (data().file != "") {
-		<img [src]="fileUrl + 't-' + data().file" alt="something" class="floatLeft">
+		<img (click)="expandMedia.emit(data().id)" [src]="fileUrl + 't-' + data().file" alt="something" class="floatLeft small">
 	}
 	<ng-container>{{data().content}}</ng-container>
 	<br/>
 	@if(data().replyList?.length){
 		<div class="replyBlockContainer">
-			<a (click)="emitReplyId()"  style="display: block;">reply</a>
+			<a (click)="replyId.emit(data().id)"  style="display: block;">reply</a>
 			@for (item of data().replyList; track item.id) {
 				<div (click)="selectReply(item, $event)"  class="replyBlocks">{{$index+1}}</div>
 			}
 		</div>
 	}@else {
-		<a (click)="emitReplyId()">reply</a>
+		<a (click)="replyId.emit(data().id)">reply</a>
 	}
 </div>

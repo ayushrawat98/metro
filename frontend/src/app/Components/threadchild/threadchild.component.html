@@ -1,5 +1,5 @@
 <div #container class="content" (click)="threadClicked()" >
-    <img [src]="fileUrl + 't-' + data().file" [alt]="data().file.split('-')[2]" class="floatLeft">
+    <img [src]="fileUrl + 't-' + data().file" [alt]="data().file.split('-')[2]" class="floatLeft small">
     {{data().content.length > 180 ? data().content.slice(0,180) + '...' : data().content}}
     <br /><a>{{data().replycount}} replies</a>
 </div>
