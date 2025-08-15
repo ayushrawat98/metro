@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import {  Component, ElementRef, OnInit, output, viewChild, viewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, output, viewChild, viewChildren } from '@angular/core';
 import { catchError, filter, interval, last, map, merge, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { InternaldataService } from '../../Services/internaldata.service';
 import { ReplychildComponent } from '../replychild/replychild.component';
@@ -8,10 +8,12 @@ import { ExternaldataService } from '../../Services/externaldata.service';
 import { reply, thread } from '../../Models/thread';
 import { ActivatedRoute } from '@angular/router';
 import { HttpEventType } from '@angular/common/http';
+import { UploadComponent } from '../upload/upload.component';
+import { Dialog } from '@angular/cdk/dialog';
 
 @Component({
 	selector: 'app-reply',
-	imports: [AsyncPipe, ReplychildComponent, FormsModule],
+	imports: [AsyncPipe, ReplychildComponent, FormsModule, UploadComponent],
 	templateUrl: './reply.component.html',
 	styleUrl: './reply.component.scss'
 })
@@ -19,17 +21,21 @@ export class ReplyComponent implements OnInit {
 
 	replyList$!: Observable<reply[]>
 	currentThread!: string
+	currentBoard!: string
 	private refreshTrigger$ = new Subject<void>();
 
 	//reply poppup related
-	showReplyPopup = false
-	replyData = ''
-	replyFile: File | undefined | null
-	overlay = viewChild<ElementRef>('overlay')
+	// showReplyPopup = false
 	replyTo!: number
-	fileUploadProgress = 0
 
-	constructor(private internalData: InternaldataService, private externalData: ExternaldataService, private route : ActivatedRoute) { }
+	constructor(
+		private internalData: InternaldataService,
+		private externalData: ExternaldataService,
+		private route: ActivatedRoute,
+		private dialog : Dialog
+	) {
+		this.currentBoard = this.internalData.currentBoard
+	}
 
 	ngOnInit(): void {
 		this.replyList$ = merge(
@@ -59,28 +65,28 @@ export class ReplyComponent implements OnInit {
 		let map = new Map<number, reply>()
 
 		for (let r of data) {
-			map.set(r.id, {...r, replyList : []})
-			map.get(r.replyto)?.replyList?.push({...r})
+			map.set(r.id, { ...r, replyList: [] })
+			map.get(r.replyto)?.replyList?.push({ ...r })
 		}
 
-		let result : reply[] = []
+		let result: reply[] = []
 
 		map.forEach(x => result.push(x))
 
 		return result
 	}
 
+	// closePopup() {
+	// 	this.setShowReplyPopup(false)
+	// }
 
-	setShowReplyPopup(value: boolean) {
-		this.showReplyPopup = value
-	}
+	// triggerRefresh() {
+	// 	this.refreshTrigger$.next()
+	// }
 
-	closeReplyPopup() {
-		this.overlay()?.nativeElement.classList.add('fade-out')
-		setTimeout(() => {
-			this.setShowReplyPopup(false)
-		}, 300);
-	}
+	// setShowReplyPopup(value: boolean) {
+	// 	this.showReplyPopup = value
+	// }
 
 	createNewReply(event: number) {
 		this.replyTo = event
@@ -88,53 +94,26 @@ export class ReplyComponent implements OnInit {
 		//   this.replyData += '\n'
 		// }
 		// this.replyData += '>>' + event + '\n'
-		this.setShowReplyPopup(true)
-	}
+		// this.setShowReplyPopup(true)
+		let dialogRef = this.dialog.open<boolean>(UploadComponent, {
+			data : {
+				forwhat : 'reply',
+				currentBoard : this.currentBoard,
+				replyTo : this.replyTo,
+				threadId : this.currentThread
+			}
+		})
 
-	fileSelected(event: Event) {
-		let file = (event.target as HTMLInputElement).files?.item(0)
-		this.replyFile = file
-	}
-
-	saveReply() {
-		if(this.replyData.trim().length == 0) return;
-		const body = new FormData()
-		body.append('content', this.replyData.trim().slice(0,1000))
-		body.append('file', this.replyFile as Blob)
-		body.append('replyto', this.replyTo.toString())
-		body.append('boardname' , this.internalData.currentBoard)
-		this.externalData.postReply(body, this.currentThread)
-		.pipe(
-				tap(event => {
-					if (event.type == HttpEventType.UploadProgress) {
-						this.fileUploadProgress = Math.round(100 * event.loaded / (event.total ?? 1));
-					}
-					else if (event.type === HttpEventType.Response) {
-						this.fileUploadProgress = 0
-					}
-				}),
-				last()
-			)
-		.subscribe({
-			next: (res) => {
-				//reset data
-				this.closeReplyPopup()
-				this.setShowSelectedReply(false)
-				this.replyFile = null
-				this.replyData = ''
-				//refresh data
+		dialogRef.closed.subscribe((res) => {
+			if(res == true){
 				this.refreshTrigger$.next()
-				// this.internalData.threadSubject.next(this.currentThread)
-			},
-			error: (err) => {
-
 			}
 		})
 	}
 
 	showSelectedReply = false
-	selectedReply! : reply
-	setSelectedReply = (value : reply) => {this.selectedReply = value;this.setShowSelectedReply(true); console.log(this.selectedReply)}
-	setShowSelectedReply = (value : boolean) => this.showSelectedReply = value
+	selectedReply!: reply
+	setSelectedReply = (value: reply) => { this.selectedReply = value; this.setShowSelectedReply(true); console.log(this.selectedReply) }
+	setShowSelectedReply = (value: boolean) => this.showSelectedReply = value
 
 }

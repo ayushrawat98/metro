@@ -14,21 +14,9 @@
 	<br />
 </div>
 
-@if(showReplyPopup){
-	<div #overlay class="dark-overlay insideOverlay">
-		<textarea [(ngModel)]="replyData" minlength="1" maxlength="1000"></textarea>
-		<div>
-			<a (click)="fileInputTwo.click()">file</a>
-			<a (click)="saveReply()">send</a>
-			<a (click)="closeReplyPopup()">close</a>
-		</div>
-		<A>{{replyFile?.name}}</A>
-		@if (fileUploadProgress > 0) {
-			<progress max="100" [value]="fileUploadProgress"></progress>
-		}
-		<input (change)="fileSelected($event)" #fileInputTwo type="file" accept="image/*, video/*" hidden />
-	</div>
-}
+<!-- @if(showReplyPopup){
+	<app-upload forwhat="reply" [currentBoard]="currentBoard" [replyTo]="replyTo" [threadId]="currentThread" (closepopup)="closePopup()" (triggerRefresh)="triggerRefresh()"></app-upload>
+} -->
 
 @if(showSelectedReply){
 <div #overlay class="dark-overlay lowerz">

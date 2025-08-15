@@ -1,0 +1,17 @@
+<div #overlay class="newOverlay">
+	<textarea [(ngModel)]="replyData" minlength="1" maxlength="1000"></textarea>
+	<div>
+		<a (click)="fileInputTwo.click()">file{{forwhat() == 'thread' ? '*' : ''}}</a>
+		<a (click)="saveReply()">send</a>
+		<a (click)="animateExit()">close</a>
+	</div>
+	<div>
+		<A class="name">{{replyFile?.name}}</A>
+	</div>
+	<div>
+		@if (fileUploadProgress > 0) {
+			<progress max="100" [value]="fileUploadProgress"></progress>
+		}
+	</div>
+	<input (change)="fileSelected($event)" #fileInputTwo type="file" accept="image/*, video/*" hidden />
+</div>

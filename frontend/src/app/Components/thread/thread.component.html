@@ -1,5 +1,5 @@
 <div class="contain">
-	<h1 (click)="setShowThreadPopup(true)" class="pointer">
+	<h1 (click)="showThreadPopup()" class="pointer">
 		threads
 	</h1>
 
@@ -30,31 +30,19 @@
 
 	<div class="flexColumn">
 		@if((threadList$ | async); as threadList){
-		@if(threadList.length > 0){
-		@for (thread of threadList; track thread.id) {
-		<app-threadchild [data]="thread" [index]="$index"></app-threadchild>
-		}
-		}@else {
-		<p>no threads yet!</p>
-		}
-	}
+			@if(threadList.length > 0){
+				@for (thread of threadList; track thread.id) {
+					<app-threadchild [data]="thread" [index]="$index"></app-threadchild>
+				}
+			}@else {
+				<p>no threads yet</p>
+			}
+		}	
 	</div>
 	
-	@if(showThreadPopup){
-	<div #overlay class="dark-overlay insideOverlay">
-		<textarea [(ngModel)]="threadData"></textarea>
-		<div>
-			<a (click)="fileInputOne.click()">file*</a>
-			<a (click)="createThread()">send</a>
-			<a (click)="closeThreadPopup()">close</a>
-		</div>
-		<a>{{threadFile?.name}}</a>
-		@if (fileUploadProgress > 0) {
-			<progress max="100" [value]="fileUploadProgress"></progress>
-		}
-		<input (change)="fileSelected($event, 1)" #fileInputOne type="file" accept="image/*, video/*" hidden />
-	</div>
-	}
+	<!-- @if(showThreadPopup){
+		<app-upload forwhat="thread" [currentBoard]="currentBoard" (closepopup)="closePopup()" (triggerRefresh)="triggerRefresh()"></app-upload>
+	} -->
 
 	<br />
 </div>

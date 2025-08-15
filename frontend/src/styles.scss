@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/cdk/overlay-prebuilt.css';
+
 * {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-sizing: border-box;
@@ -57,6 +59,7 @@ img {
     cursor: pointer;
 }
 
+
 .dark-overlay {
     position: fixed;
     top: 0;
@@ -64,7 +67,7 @@ img {
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.90);
-    z-index: 9999;
+    z-index: 3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -95,6 +98,36 @@ img {
 	}
 }
 
+.newOverlay{
+    
+    
+
+    /* Animation starting state */
+    opacity: 0;
+    transform: scale(0.95);
+    animation: fadeSlideIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+	textarea {
+        padding: 12px;
+		height: 30vh;
+		width: 90vw;
+    }
+
+	div{
+		display: flex;
+		justify-content: center;
+	}
+    a {
+        margin : 16px 16px;
+		color: white;
+    }
+
+	progress{
+		accent-color: white;
+		width: 50vw;
+	}
+}
+
+
 @keyframes fadeSlideIn {
     0% {
         opacity: 0;
@@ -120,7 +153,7 @@ img {
 }
 
 .fade-out {
-    animation: fadeSlideOut 0.2s ease forwards;
+    animation: fadeSlideOut 0.1s ease forwards;
 }
 
 

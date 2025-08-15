@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, ElementRef, OnInit, output, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, output, viewChild } from '@angular/core';
 import { catchError, filter, interval, last, map, merge, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { InternaldataService } from '../../Services/internaldata.service';
 import { ThreadchildComponent } from '../threadchild/threadchild.component';
@@ -7,11 +7,12 @@ import { ExternaldataService } from '../../Services/externaldata.service';
 import { FormsModule } from '@angular/forms';
 import { thread } from '../../Models/thread';
 import { ActivatedRoute } from '@angular/router';
-import { HttpEventType } from '@angular/common/http';
+import { UploadComponent } from '../upload/upload.component';
+import {Dialog} from '@angular/cdk/dialog';
 
 @Component({
 	selector: 'app-thread',
-	imports: [AsyncPipe, ThreadchildComponent, FormsModule],
+	imports: [AsyncPipe, ThreadchildComponent, FormsModule, UploadComponent],
 	templateUrl: './thread.component.html',
 	styleUrl: './thread.component.scss'
 })
@@ -22,13 +23,15 @@ export class ThreadComponent implements OnInit {
 	private refreshTrigger$ = new Subject<void>();
 
 	//create thread popup
-	overlay = viewChild<ElementRef>('overlay')
-	showThreadPopup = false
-	threadData = ''
-	threadFile: File | undefined | null
-	fileUploadProgress = 0
-
-	constructor(private internalData: InternaldataService, private externalData: ExternaldataService, private route: ActivatedRoute) { }
+	
+	// showThreadPopup = false
+	
+	constructor(
+		private internalData: InternaldataService,
+		private externalData: ExternaldataService,
+		private route: ActivatedRoute,
+		private dialog : Dialog
+	) { }
 
 	ngOnInit(): void {
 		this.threadList$ = merge(
@@ -71,52 +74,31 @@ export class ThreadComponent implements OnInit {
 	//   }
 	// }
 
-	setShowThreadPopup(value: boolean) {
-		this.showThreadPopup = value
+	// closePopup(){
+	// 	this.setShowThreadPopup(false)
+	// }
+
+	// triggerRefresh(){
+	// 	this.refreshTrigger$.next()
+	// }
+
+	
+	showThreadPopup() {
+		const dialogRef = this.dialog.open<boolean>(UploadComponent, {
+			data : {
+				forwhat : 'thread',
+				currentBoard : this.currentBoard
+			}
+		})
+
+		dialogRef.closed.subscribe((res)=>{
+			//if closed after adding a new post
+			if(res == true){
+				this.refreshTrigger$.next()
+			}
+		})
 	}
 
-	closeThreadPopup() {
-		this.overlay()?.nativeElement.classList.add('fade-out')
-		setTimeout(() => {
-			this.setShowThreadPopup(false)
-		}, 300);
-	}
-
-	fileSelected(event: Event, index: number) {
-		this.threadFile = (event.target as HTMLInputElement).files?.item(0)
-	}
-
-	createThread() {
-		if (this.threadData.trim().length == 0) return;
-		const body = new FormData()
-		body.append('content', this.threadData)
-		body.append('file', this.threadFile as Blob)
-		this.externalData.postThread(body, this.currentBoard)
-			.pipe(
-				tap(event => {
-					if (event.type == HttpEventType.UploadProgress) {
-						this.fileUploadProgress = Math.round(100 * event.loaded / (event.total ?? 1));
-					}
-					else if (event.type === HttpEventType.Response) {
-						this.fileUploadProgress = 0
-					}
-				}),
-				last()
-			)
-			.subscribe({
-				next: (res) => {
-					//reset data
-					this.closeThreadPopup()
-					this.threadFile = null
-					this.threadData = ''
-					//refresh data\
-					this.refreshTrigger$.next()
-					// this.internalData.boardSubject.next(this.currentBoard)
-				},
-				error: (err) => {
-
-				}
-			})
-	}
-
+	
+	
 }
