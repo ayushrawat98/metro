@@ -12,7 +12,7 @@ import {Dialog} from '@angular/cdk/dialog';
 
 @Component({
 	selector: 'app-thread',
-	imports: [AsyncPipe, ThreadchildComponent, FormsModule, UploadComponent],
+	imports: [AsyncPipe, ThreadchildComponent, FormsModule],
 	templateUrl: './thread.component.html',
 	styleUrl: './thread.component.scss'
 })

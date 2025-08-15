@@ -13,7 +13,7 @@ import { Dialog } from '@angular/cdk/dialog';
 
 @Component({
 	selector: 'app-reply',
-	imports: [AsyncPipe, ReplychildComponent, FormsModule, UploadComponent],
+	imports: [AsyncPipe, ReplychildComponent, FormsModule],
 	templateUrl: './reply.component.html',
 	styleUrl: './reply.component.scss'
 })
