@@ -1,0 +1,9 @@
+<div #container>
+	@if (data.file != "") {
+		<img [src]="fileUrl + 't-' + data.file" alt="something" class="floatLeft">
+	}
+	<ng-container>{{data.content}}</ng-container>
+	<br/>
+	
+		<a (click)="emitReplyId()">reply</a>
+</div>

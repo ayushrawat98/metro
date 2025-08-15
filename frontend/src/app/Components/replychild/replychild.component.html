@@ -4,11 +4,11 @@
 	}
 	<ng-container>{{data().content}}</ng-container>
 	<br/>
-	@if(data().replyList?.length > 0){
+	@if(data().replyList?.length){
 		<div class="replyBlockContainer">
-			<a (click)="emitReplyId()" style="display: block;">reply</a>
+			<a (click)="emitReplyId()"  style="display: block;">reply</a>
 			@for (item of data().replyList; track item.id) {
-				<div (click)="selectReply(item)" class="replyBlocks">{{$index+1}}</div>
+				<div (click)="selectReply(item, $event)"  class="replyBlocks">{{$index+1}}</div>
 			}
 		</div>
 	}@else {

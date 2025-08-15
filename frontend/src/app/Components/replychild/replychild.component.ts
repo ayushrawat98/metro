@@ -1,6 +1,5 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, LOCALE_ID, output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, input, output } from '@angular/core';
 import { ContentComponent } from '../../Classes/content';
-import { DecimalPipe } from '@angular/common';
 import { reply } from '../../Models/thread';
 
 @Component({
@@ -9,17 +8,17 @@ import { reply } from '../../Models/thread';
 	styleUrl: './replychild.component.scss',
 	changeDetection : ChangeDetectionStrategy.OnPush
 })
-export class ReplychildComponent extends ContentComponent implements AfterViewInit {
+export class ReplychildComponent extends ContentComponent<reply> implements AfterViewInit {
 
 	replyId = output<number>()
-	selectedReply = output<reply>()
+	selectedReply = output<{item : reply, element:HTMLElement}>()
 
 	emitReplyId(): void {
 		this.replyId.emit(this.data().id)
 	}
 
-	selectReply(item: reply) {
-		this.selectedReply.emit(item)
+	selectReply(item: reply, event : Event) {
+		this.selectedReply.emit({item : item, element : event.target as HTMLElement})
 	}
 
 }

@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, input } from '@angul
 import { ContentComponent } from '../../Classes/content';
 import { ScrollService } from '../../Services/scroll.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { thread } from '../../Models/thread';
 
 @Component({
   selector: 'app-threadchild',
@@ -10,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './threadchild.component.scss',
   changeDetection : ChangeDetectionStrategy.OnPush
 })
-export class ThreadchildComponent extends ContentComponent implements AfterViewInit {
+export class ThreadchildComponent extends ContentComponent<thread> implements AfterViewInit {
 
   constructor(private router : Router, private route : ActivatedRoute, private scrollService: ScrollService) {
     super()

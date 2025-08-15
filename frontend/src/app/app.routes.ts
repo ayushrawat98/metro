@@ -1,15 +1,13 @@
 import { Routes } from '@angular/router';
-import { ThreadwrapperComponent } from './Components/threadwrapper/threadwrapper.component';
-import { ReplyComponent } from './Components/reply/reply.component';
 
 export const routes: Routes = [
 	{
 		path : 'boards/:boardName',
-		component : ThreadwrapperComponent,
+		loadComponent : () => import('./Components/threadwrapper/threadwrapper.component').then(t => t.ThreadwrapperComponent),
 		children : [
 			{
 				path : 'threads/:threadId',
-				component : ReplyComponent
+				loadComponent : () => import('./Components/reply/reply.component').then(r => r.ReplyComponent)
 			}
 		]
 	}

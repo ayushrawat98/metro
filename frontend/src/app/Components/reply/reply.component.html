@@ -14,16 +14,3 @@
 	<br />
 </div>
 
-<!-- @if(showReplyPopup){
-	<app-upload forwhat="reply" [currentBoard]="currentBoard" [replyTo]="replyTo" [threadId]="currentThread" (closepopup)="closePopup()" (triggerRefresh)="triggerRefresh()"></app-upload>
-} -->
-
-@if(showSelectedReply){
-<div #overlay class="dark-overlay lowerz">
-	<div style="background-color: white;width: 350px; padding: 12px;">
-	<app-replychild [data]="selectedReply" [index]="0" (replyId)="createNewReply($event)"></app-replychild>
-	</div>
-	<a style="color: white;" (click)="setShowSelectedReply(false)">close</a>
-</div>
-}
-

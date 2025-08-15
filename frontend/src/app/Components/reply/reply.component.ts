@@ -10,6 +10,9 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpEventType } from '@angular/common/http';
 import { UploadComponent } from '../upload/upload.component';
 import { Dialog } from '@angular/cdk/dialog';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { ReplymicroComponent } from '../replymicro/replymicro.component';
 
 @Component({
 	selector: 'app-reply',
@@ -32,7 +35,8 @@ export class ReplyComponent implements OnInit {
 		private internalData: InternaldataService,
 		private externalData: ExternaldataService,
 		private route: ActivatedRoute,
-		private dialog : Dialog
+		private dialog: Dialog,
+		private overlay: Overlay
 	) {
 		this.currentBoard = this.internalData.currentBoard
 	}
@@ -50,15 +54,6 @@ export class ReplyComponent implements OnInit {
 			map(data => this.mapFunction(data))
 		)
 	}
-
-
-	//  ngAfterViewInit(): void {
-	// 	//cant just add the class because I want staggered animation
-	// 	setTimeout(() => {
-	// 		this.container()?.nativeElement.classList.add('flippedIn')
-	// 	}, this.index() * 60);
-	// }
-
 
 	mapFunction(data: reply[]): reply[] {
 
@@ -90,30 +85,73 @@ export class ReplyComponent implements OnInit {
 
 	createNewReply(event: number) {
 		this.replyTo = event
-		// if (this.replyData.length != 0) {
-		//   this.replyData += '\n'
-		// }
-		// this.replyData += '>>' + event + '\n'
-		// this.setShowReplyPopup(true)
+
 		let dialogRef = this.dialog.open<boolean>(UploadComponent, {
-			data : {
-				forwhat : 'reply',
-				currentBoard : this.currentBoard,
-				replyTo : this.replyTo,
-				threadId : this.currentThread
+			data: {
+				forwhat: 'reply',
+				currentBoard: this.currentBoard,
+				replyTo: this.replyTo,
+				threadId: this.currentThread
 			}
 		})
 
 		dialogRef.closed.subscribe((res) => {
-			if(res == true){
+			if (res == true) {
 				this.refreshTrigger$.next()
 			}
 		})
 	}
 
-	showSelectedReply = false
-	selectedReply!: reply
-	setSelectedReply = (value: reply) => { this.selectedReply = value; this.setShowSelectedReply(true); console.log(this.selectedReply) }
-	setShowSelectedReply = (value: boolean) => this.showSelectedReply = value
+	overlayRef!: OverlayRef
+	setSelectedReply(replyData: { item: reply, element: HTMLElement }) {
+		// Close any existing overlay
+		if (this.overlayRef) {
+			this.overlayRef.dispose();
+		}
+
+		const positionStrategy = this.overlay.position()
+			.flexibleConnectedTo(replyData.element)   // position relative to clicked element
+			.withPositions([
+				{
+					originX: 'start',
+					originY: 'bottom',   // overlay appears below the origin
+					overlayX: 'center',
+					overlayY: 'top'
+				},
+				{
+					originX: 'start',    // fallback if not enough space
+					originY: 'top',
+					overlayX: 'start',
+					overlayY: 'bottom'
+				}
+			])
+			.withFlexibleDimensions(true)  // keeps overlay size fixed
+			.withPush(true);
+
+		this.overlayRef = this.overlay.create({
+			positionStrategy: positionStrategy,
+			hasBackdrop: true,
+			backdropClass: 'custom-overlay-backdrop',
+		});
+
+		this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());
+
+		const portal = new ComponentPortal(ReplymicroComponent);
+		const componentRef = this.overlayRef.attach(portal);
+
+		// Pass data into the overlayed ReplyChildComponent
+		componentRef.instance.data = replyData.item;
+		componentRef.instance.index = -1
+
+		// If ReplyChildComponent has outputs, you can subscribe here
+		componentRef.instance.replyId.subscribe((id: number) => {
+			this.createNewReply(id)
+		});
+	}
+
+	// showSelectedReply = false
+	// selectedReply!: reply
+	// setSelectedReply = (value: any) => { this.selectedReply = value.item; this.setShowSelectedReply(true); console.log(this.selectedReply) }
+	// setShowSelectedReply = (value: boolean) => this.showSelectedReply = value
 
 }
