@@ -95,7 +95,8 @@ export class ReplyComponent implements OnInit {
 				replyTo: this.replyTo,
 				threadId: this.currentThread
 			},
-			autoFocus : false
+			autoFocus : false,
+			restoreFocus : false
 		})
 
 		dialogRef.closed.subscribe((res) => {
@@ -158,7 +159,8 @@ export class ReplyComponent implements OnInit {
 				id : id,
 				data : this.currentReplyList
 			},
-			autoFocus : false
+			autoFocus : false,
+			restoreFocus : false
 		})
 	}
 }

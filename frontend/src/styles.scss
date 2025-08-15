@@ -100,7 +100,7 @@ img.small {
 .newOverlay{
     
     
-
+	width: 80vw;
     /* Animation starting state */
     opacity: 0;
     transform: scale(0.95);
@@ -108,7 +108,7 @@ img.small {
 	textarea {
         padding: 12px;
 		height: 30vh;
-		width: 90vw;
+		width: 100%;
     }
 
 	div{
@@ -200,4 +200,13 @@ img.small {
 }
 .custom-overlay-backdrop {
   background: rgba(0, 0, 0, 0.3); /* black with 30% opacity */
+}
+/* For Angular CDK dialog */
+.cdk-overlay-pane:focus {
+  outline: none;
+}
+
+/* For Angular Material dialog */
+.mat-mdc-dialog-surface:focus {
+  outline: none;
 }

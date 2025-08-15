@@ -14,7 +14,10 @@ import {Dialog} from '@angular/cdk/dialog';
 	selector: 'app-thread',
 	imports: [AsyncPipe, ThreadchildComponent, FormsModule],
 	templateUrl: './thread.component.html',
-	styleUrl: './thread.component.scss'
+	styleUrl: './thread.component.scss',
+	host : {
+		'tabIndex' : '-1'
+	}
 })
 export class ThreadComponent implements OnInit {
 
@@ -89,7 +92,8 @@ export class ThreadComponent implements OnInit {
 				forwhat : 'thread',
 				currentBoard : this.currentBoard
 			},
-			autoFocus : false
+			autoFocus : false,
+			restoreFocus : false
 		})
 
 		dialogRef.closed.subscribe((res)=>{

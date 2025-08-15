@@ -4,21 +4,24 @@ import { reply } from '../../Models/thread';
 import { environment } from '../../../environments/environment.development';
 
 @Component({
-  selector: 'app-expandmedia',
-  imports: [],
-  templateUrl: './expandmedia.component.html',
-  styleUrl: './expandmedia.component.scss'
+	selector: 'app-expandmedia',
+	imports: [],
+	templateUrl: './expandmedia.component.html',
+	styleUrl: './expandmedia.component.scss',
+	host: {
+		'tabIndex': '-1'
+	}
 })
 export class ExpandmediaComponent {
 
-	files! : reply[]
-	startingPoint! : number
+	files!: reply[]
+	startingPoint!: number
 	serverUrl = environment.files
 
 	constructor(
-		private dialogRef : DialogRef<string>,
-		@Inject(DIALOG_DATA) private dialogData : {id : number, data : reply[]}
-	) {}
+		private dialogRef: DialogRef<string>,
+		@Inject(DIALOG_DATA) private dialogData: { id: number, data: reply[] }
+	) { }
 
 	ngOnInit() {
 		//filter the replies with files
@@ -27,14 +30,14 @@ export class ExpandmediaComponent {
 		this.startingPoint = this.files.findIndex(x => x.id == this.dialogData.id)
 	}
 
-	increase(){
-		if(this.startingPoint+1 < this.files.length){
+	increase() {
+		if (this.startingPoint + 1 < this.files.length) {
 			++this.startingPoint
 		}
 	}
 
-	decrease(){
-		if(this.startingPoint != 0){
+	decrease() {
+		if (this.startingPoint != 0) {
 			--this.startingPoint
 		}
 	}
