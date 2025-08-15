@@ -1,12 +1,13 @@
 import { AsyncPipe } from '@angular/common';
 import {  Component, ElementRef, OnInit, output, viewChild, viewChildren } from '@angular/core';
-import { catchError, filter, interval, map, merge, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs';
+import { catchError, filter, interval, last, map, merge, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { InternaldataService } from '../../Services/internaldata.service';
 import { ReplychildComponent } from '../replychild/replychild.component';
 import { FormsModule } from '@angular/forms';
 import { ExternaldataService } from '../../Services/externaldata.service';
 import { reply, thread } from '../../Models/thread';
 import { ActivatedRoute } from '@angular/router';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
 	selector: 'app-reply',
@@ -26,6 +27,7 @@ export class ReplyComponent implements OnInit {
 	replyFile: File | undefined | null
 	overlay = viewChild<ElementRef>('overlay')
 	replyTo!: number
+	fileUploadProgress = 0
 
 	constructor(private internalData: InternaldataService, private externalData: ExternaldataService, private route : ActivatedRoute) { }
 
@@ -101,7 +103,19 @@ export class ReplyComponent implements OnInit {
 		body.append('file', this.replyFile as Blob)
 		body.append('replyto', this.replyTo.toString())
 		body.append('boardname' , this.internalData.currentBoard)
-		this.externalData.postReply(body, this.currentThread).subscribe({
+		this.externalData.postReply(body, this.currentThread)
+		.pipe(
+				tap(event => {
+					if (event.type == HttpEventType.UploadProgress) {
+						this.fileUploadProgress = Math.round(100 * event.loaded / (event.total ?? 1));
+					}
+					else if (event.type === HttpEventType.Response) {
+						this.fileUploadProgress = 0
+					}
+				}),
+				last()
+			)
+		.subscribe({
 			next: (res) => {
 				//reset data
 				this.closeReplyPopup()

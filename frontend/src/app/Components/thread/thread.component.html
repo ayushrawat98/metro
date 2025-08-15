@@ -49,6 +49,9 @@
 			<a (click)="closeThreadPopup()">close</a>
 		</div>
 		<a>{{threadFile?.name}}</a>
+		@if (fileUploadProgress > 0) {
+			<progress max="100" [value]="fileUploadProgress"></progress>
+		}
 		<input (change)="fileSelected($event, 1)" #fileInputOne type="file" accept="image/*, video/*" hidden />
 	</div>
 	}

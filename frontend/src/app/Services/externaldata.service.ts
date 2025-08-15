@@ -17,7 +17,7 @@ export class ExternaldataService {
   }
 
   postThread(body : any, boardName : string){
-    return this.http.post<any>(this.url + 'boards/' + boardName, body)
+    return this.http.post<any>(this.url + 'boards/' + boardName, body, {reportProgress : true, observe : 'events'})
   }
 
   getReplies(threadId : string | number){
@@ -25,7 +25,7 @@ export class ExternaldataService {
   }
 
   postReply(body : any, threadId : string | number){
-    return this.http.post<any>(this.url + 'threads/' + threadId, body)
+    return this.http.post<any>(this.url + 'threads/' + threadId, body, {reportProgress : true, observe : 'events'})
   }
 
 }

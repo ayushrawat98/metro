@@ -23,6 +23,9 @@
 			<a (click)="closeReplyPopup()">close</a>
 		</div>
 		<A>{{replyFile?.name}}</A>
+		@if (fileUploadProgress > 0) {
+			<progress max="100" [value]="fileUploadProgress"></progress>
+		}
 		<input (change)="fileSelected($event)" #fileInputTwo type="file" accept="image/*, video/*" hidden />
 	</div>
 }
