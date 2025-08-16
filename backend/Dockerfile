@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install --production
 
 # Install ffmpeg & other dependencies
-RUN apk add --no-cache ffmpeg ffprobe
+RUN apk add --no-cache ffmpeg
 
 # Copy source code
 COPY . .
