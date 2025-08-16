@@ -7,10 +7,10 @@ import { tap, last } from 'rxjs';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 
 @Component({
-  selector: 'app-upload',
-  imports: [FormsModule],
-  templateUrl: './upload.component.html',
-  styleUrl: './upload.component.scss'
+	selector: 'app-upload',
+	imports: [FormsModule],
+	templateUrl: './upload.component.html',
+	styleUrl: './upload.component.scss'
 })
 export class UploadComponent {
 
@@ -28,14 +28,16 @@ export class UploadComponent {
 	replyData = ''
 	replyFile: File | undefined | null
 	fileUploadProgress = 0
+	showError = false
+	errorMessage = ""
 
-	constructor(private externalData : ExternaldataService){}
+	constructor(private externalData: ExternaldataService) { }
 
 	fileSelected(event: Event) {
 		this.replyFile = (event.target as HTMLInputElement).files?.item(0)
 	}
 
-	closeReplyPopup(){
+	closeReplyPopup() {
 		// this.closepopup.emit(true)
 		this.dialogRef.close(false)
 	}
@@ -47,24 +49,33 @@ export class UploadComponent {
 		}, 300);
 	}
 
-	saveReply(){
-		if(this.forwhat() == 'reply'){
+	saveReply() {
+		if (this.forwhat() == 'reply') {
 			this.createReply()
-		}else{
+		} else {
 			this.createThread()
 		}
 	}
 
+	errorHandler = (err : any) => {
+		this.showError = true
+		this.errorMessage = err.error
+		setTimeout(() => {
+			this.showError = false
+			this.errorMessage = ""
+		}, 2000);
+	}
+
 	createReply() {
-		if(this.replyData.trim().length == 0) return;
+		if (this.replyData.trim().length == 0) return;
 		const body = new FormData()
-		body.append('content', this.replyData.trim().slice(0,1000))
+		body.append('content', this.replyData.trim().slice(0, 1000))
 		body.append('file', this.replyFile as Blob)
 		body.append('ogfilename', this.replyFile?.name ?? "aparichit")
 		body.append('replyto', String(this.replyTo()))
-		body.append('boardname' , this.currentBoard())
+		body.append('boardname', this.currentBoard())
 		this.externalData.postReply(body, this.threadId() ?? -1)
-		.pipe(
+			.pipe(
 				tap(event => {
 					if (event.type == HttpEventType.UploadProgress) {
 						this.fileUploadProgress = Math.round(100 * event.loaded / (event.total ?? 1));
@@ -75,28 +86,26 @@ export class UploadComponent {
 				}),
 				last()
 			)
-		.subscribe({
-			next: (res) => {
-				//reset data
-				this.animateExit()
-				this.dialogRef.close(true)
-				// this.setShowSelectedReply(false)
-				this.replyFile = null
-				this.replyData = ''
-				//refresh data
-				// this.triggerRefresh.emit(true)
-				// this.internalData.threadSubject.next(this.currentThread)
-			},
-			error: (err) => {
-
-			}
-		})
+			.subscribe({
+				next: (res) => {
+					//reset data
+					this.animateExit()
+					this.dialogRef.close(true)
+					// this.setShowSelectedReply(false)
+					this.replyFile = null
+					this.replyData = ''
+					//refresh data
+					// this.triggerRefresh.emit(true)
+					// this.internalData.threadSubject.next(this.currentThread)
+				},
+				error: this.errorHandler
+			})
 	}
 
 	createThread() {
 		if (this.replyData.trim().length == 0) return;
 		const body = new FormData()
-		body.append('content', this.replyData.trim().slice(0,1000))
+		body.append('content', this.replyData.trim().slice(0, 1000))
 		body.append('file', this.replyFile as Blob)
 		body.append('ogfilename', this.replyFile?.name ?? "aparichit")
 		this.externalData.postThread(body, this.currentBoard())
@@ -122,9 +131,7 @@ export class UploadComponent {
 					// this.triggerRefresh.emit(true)
 					// this.internalData.boardSubject.next(this.currentBoard)
 				},
-				error: (err) => {
-
-				}
+				error: this.errorHandler
 			})
 	}
 

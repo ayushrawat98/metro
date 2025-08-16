@@ -5,13 +5,27 @@
 	<ng-container>{{data().content}}</ng-container>
 	<br/>
 	@if(data().replyList?.length){
-		<div class="replyBlockContainer">
-			<a (click)="replyId.emit(data().id)"  style="display: block;">reply</a>
+		<a (click)="replyId.emit(data().id)"  >reply</a>
 			@for (item of data().replyList; track item.id) {
-				<div (click)="selectReply(item, $event)"  class="replyBlocks">{{$index+1}}</div>
+				<span (click)="selectReply(item, $event)" style="margin: 6px; padding: 4px 6px; border: 1px solid black; display: inline-block;">{{$index+1}}</span>
 			}
-		</div>
 	}@else {
 		<a (click)="replyId.emit(data().id)">reply</a>
 	}
 </div>
+
+		
+			<!-- <a (click)="replyId.emit(data().id)"  >reply</a>
+			@for (item of data().replyList; track item.id) {
+				<span (click)="selectReply(item, $event)" style="margin: 4px 4px; padding: 4px 4px; border: 1px solid black; display: inline-block;">{{$index+1}}</span>
+			}
+		
+	
+
+
+	<div class="replyBlockContainer">
+			<a (click)="replyId.emit(data().id)"  style="display: block;">reply</a>
+			@for (item of data().replyList; track item.id) {
+				<div (click)="selectReply(item, $event)"  class="replyBlocks">{{$index+1}}</div>
+			}
+		</div> -->

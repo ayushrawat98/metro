@@ -8,12 +8,12 @@ const ffmpeg = require('fluent-ffmpeg');
 // ffmpeg.setFfmpegPath('C:\\Users\\aayus\\Downloads\\ffmpeg-master-latest-win64-gpl\\bin\\ffmpeg.exe')
 
 const filefilter = (req, file, cb) => {
-	let allowed = ['video/mp4', 'video/webm', 'image/jpg', 'image/jpeg', 'image/png', 'image/gif']
+	let allowed = ['video/mp4', 'video/webm', 'image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/webp']
 	if (allowed.includes(file.mimetype)) {
 		cb(null, true);
 	} else {
 		cb({ message: 'Unsupported File Format' }, false)
-	}
+	}	
 };
 
 const storage = multer.diskStorage({

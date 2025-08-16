@@ -3,6 +3,7 @@ const router = express.Router()
 const db = require('../db')
 const upload = require('../multer')
 const thumbnail = require('../thumbnail')
+const { ratelimit } = require('../ratelimit')
 
 //return all threads in this board
 router.get('/:boardName', async(req, res, next) => {
@@ -11,7 +12,7 @@ router.get('/:boardName', async(req, res, next) => {
 })
 
 //create new thread in current board
-router.post('/:boardName', upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
+router.post('/:boardName', ratelimit, upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
     if(!req.file){
         return res.status(500).send("Image is required")
     }
