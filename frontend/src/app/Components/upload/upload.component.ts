@@ -44,7 +44,7 @@ export class UploadComponent {
 		this.overlay()?.nativeElement.classList.add('fade-out')
 		setTimeout(() => {
 			this.closeReplyPopup()
-		}, 250);
+		}, 300);
 	}
 
 	saveReply(){
@@ -60,6 +60,7 @@ export class UploadComponent {
 		const body = new FormData()
 		body.append('content', this.replyData.trim().slice(0,1000))
 		body.append('file', this.replyFile as Blob)
+		body.append('ogfilename', this.replyFile?.name ?? "aparichit")
 		body.append('replyto', String(this.replyTo()))
 		body.append('boardname' , this.currentBoard())
 		this.externalData.postReply(body, this.threadId() ?? -1)
@@ -97,6 +98,7 @@ export class UploadComponent {
 		const body = new FormData()
 		body.append('content', this.replyData.trim().slice(0,1000))
 		body.append('file', this.replyFile as Blob)
+		body.append('ogfilename', this.replyFile?.name ?? "aparichit")
 		this.externalData.postThread(body, this.currentBoard())
 			.pipe(
 				tap(event => {

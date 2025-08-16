@@ -14,6 +14,7 @@ class DB{
 					threadid integer,
                     replyto integer,
                     content text not null,
+					ogfilename text not null,
                     file text not null,
                     mimetype text not null,
                     replycount integer default 0,
@@ -35,9 +36,9 @@ class DB{
         this.queries = {
             getThreads : this.db.prepare('select * from posts where boardname = ? and threadid is null order by created_at desc'),
             getThread : this.db.prepare('select * from posts where id = ?'),
-            createThread : this.db.prepare('insert into posts (boardname, content, file, mimetype, created_at) values (?,?,?,?, ?)'),
+            createThread : this.db.prepare('insert into posts (boardname, content, ogfilename, file, mimetype, created_at) values (?,?,?,?, ?,?)'),
             getReplies : this.db.prepare('select * from posts where threadid = ?'),
-            createReply : this.db.prepare('insert into posts (boardname, threadid, content, file, mimetype, created_at, replyto) values (?,?,?,?,?,?,?)'),
+            createReply : this.db.prepare('insert into posts (boardname, threadid, content, ogfilename, file, mimetype, created_at, replyto) values (?,?,?,?,?, ?,?,?)'),
             updateReplyCount : this.db.prepare('update posts set replycount = replycount + 1 where id = ?')
         }
     }
@@ -51,7 +52,7 @@ class DB{
     }
 
     createThread(data){
-        return this.queries.createThread.run(data.boardName, data.content, data.file, data.mimetype, data.createdat)
+        return this.queries.createThread.run(data.boardName, data.content, data.ogfilename, data.file, data.mimetype, data.createdat)
     }
 
     getReplies(threadId){
@@ -61,7 +62,7 @@ class DB{
     }
 
     createReply(data){
-        let result =  this.queries.createReply.run(data.boardname, data.threadId, data.content, data.file, data.mimetype, data.createdat, data.replyto)
+        let result =  this.queries.createReply.run(data.boardname, data.threadId, data.content, data.ogfilename, data.file, data.mimetype, data.createdat, data.replyto)
         if(result){
             this.queries.updateReplyCount.run(data.threadId)
         }

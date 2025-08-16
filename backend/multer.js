@@ -3,10 +3,12 @@ const fs = require("fs")
 const sharp = require("sharp")
 const path = require("path")
 const stream = require('stream')
+const ffmpeg = require('fluent-ffmpeg');
+
+// ffmpeg.setFfmpegPath('C:\\Users\\aayus\\Downloads\\ffmpeg-master-latest-win64-gpl\\bin\\ffmpeg.exe')
 
 const filefilter = (req, file, cb) => {
-	// 'video/mp4', 'video/webm',
-	let allowed = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
+	let allowed = ['video/mp4', 'video/webm', 'image/jpg', 'image/jpeg', 'image/png', 'image/gif']
 	if (allowed.includes(file.mimetype)) {
 		cb(null, true);
 	} else {
@@ -20,89 +22,122 @@ const storage = multer.diskStorage({
 	},
 	filename: function (req, file, cb) {
 		const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-		cb(null, uniqueSuffix + "-" + file.originalname)
+		cb(null, uniqueSuffix)
 	}
 })
 
 let newStorage = {
 	_handleFile(req, file, cb) {
 		const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-		let ogfilePath = path.join(__dirname, 'data', 'files', uniqueSuffix + file.originalname)
-		let thumbfilePath = path.join(__dirname, 'data', 'files', 't-' + uniqueSuffix + file.originalname)
+		let ogfilePath = path.join(__dirname, 'data', 'files', uniqueSuffix + "-" + file.originalname)
+		let thumbfilePath = path.join(__dirname, 'data', 'files', 't-' + uniqueSuffix + "-" + file.originalname)
 
-		// // Duplicate incoming stream
-		// const pass1 = new stream.PassThrough();
-		// const pass2 = new stream.PassThrough();
-		// file.stream.pipe(pass1);
-		// file.stream.pipe(pass2);
-
-		// // Original WebP
-		// const ogPromise = pass1.pipe(sharp().webp({ quality: 80 }).toFile(ogfilePath));
-
-		// // Thumbnail WebP
-		// const thumbPromise = pass2
-		// 	.pipe(sharp()
-		// 		.resize(100, 100, {
-		// 			fit: "contain",
-		// 			background: { r: 0, g: 0, b: 0, alpha: 1 }
-		// 		})
-		// 		.webp({ quality: 80 })
-		// 		.toFile(thumbfilePath)
-		// 	);
-
-		// Promise.all([ogPromise, thumbPromise])
-		// 	.then(() => {
-		// 		cb(null, {
-		// 			mimetype: file.mimetype,
-		// 			filename: uniqueSuffix + file.originalname,
-		// 			ogpath: ogfilePath,
-		// 			thumbpath: thumbfilePath
-		// 		});
-		// 	})
-		// 	.catch(cb);
-
-
-
-
-		// Create two independent streams from the same upload
 		const ogStream = new stream.PassThrough();
 		const thumbStream = new stream.PassThrough();
 
 		file.stream.pipe(ogStream);
 		file.stream.pipe(thumbStream);
 
-		// Process original
-		const ogPromise = new Promise((resolve, reject) => {
-			ogStream
-				.pipe(sharp().webp({ quality: 80 }))
-				.pipe(fs.createWriteStream(ogfilePath))
-				.on("finish", resolve)
-				.on("error", reject);
-		});
+		if (file.mimetype == 'image/gif') {
+			const ogPromise = new Promise((resolve, reject) => {
+				ogStream
+					.pipe(fs.createWriteStream(ogfilePath))
+					.on("finish", resolve)
+					.on("error", reject);
+			});
 
-		// Process thumbnail
-		const thumbPromise = new Promise((resolve, reject) => {
-			thumbStream
-				.pipe(
-					sharp()
-						.resize(100, 100, { fit: "cover", position: "center" })
-						.webp({ quality: 100 })
-				)
-				.pipe(fs.createWriteStream(thumbfilePath))
-				.on("finish", resolve)
-				.on("error", reject);
-		});
+			const thumbPromise = new Promise((resolve, reject) => {
+				thumbStream
+					.pipe(
+						sharp()
+							.resize(100, 100, { fit: "cover", position: "center" })
+							.webp({ quality: 100 })
+					)
+					.pipe(fs.createWriteStream(thumbfilePath))
+					.on("finish", resolve)
+					.on("error", reject);
+			});
 
-		Promise.all([ogPromise, thumbPromise])
-			.then(() => {
-				cb(null, {
-					mimetype: file.mimetype,
-					filename: uniqueSuffix + file.originalname,
-					ogpath: ogfilePath,
-					thumbpath: thumbfilePath
-				});
-			})
-			.catch(cb);
+			Promise.all([ogPromise, thumbPromise])
+				.then(() => {
+					cb(null, {
+						mimetype: file.mimetype,
+						filename: uniqueSuffix + "-" + file.originalname,
+						ogpath: ogfilePath,
+						thumbpath: thumbfilePath
+					});
+				})
+				.catch((err) => cb(err, null));
+
+		} else if (file.mimetype.startsWith('video')) {
+
+			const ogPromise = new Promise((resolve, reject) => {
+
+				ogStream
+					.pipe(fs.createWriteStream(ogfilePath))
+					.on("close", resolve)
+					.on("error", reject);
+			});
+
+			const thumbPromise = ogPromise.then(() =>
+				new Promise((resolve, reject) => {
+					ffmpeg(ogfilePath)
+						.on("end", resolve)
+						.on("error", reject)
+						.frames(1)
+						.outputOptions(["-vf", "thumbnail"])
+						.size("100x100")
+						.save(thumbfilePath);
+				})
+			);
+
+			Promise.all([ogPromise, thumbPromise])
+				.then(() => {
+					console.log("all promise")
+					cb(null, {
+						mimetype: file.mimetype,
+						filename: uniqueSuffix + "-" + file.originalname,
+						ogpath: ogfilePath,
+						thumbpath: thumbfilePath
+					});
+				})
+				.catch((err) => cb(err, null));
+
+
+		} else {
+			// Process original
+			const ogPromise = new Promise((resolve, reject) => {
+				ogStream
+					.pipe(sharp().webp({ quality: 80 }))
+					.pipe(fs.createWriteStream(ogfilePath))
+					.on("finish", resolve)
+					.on("error", reject);
+			});
+
+			// Process thumbnail
+			const thumbPromise = new Promise((resolve, reject) => {
+				thumbStream
+					.pipe(
+						sharp()
+							.resize(100, 100, { fit: "cover", position: "center" })
+							.webp({ quality: 100 })
+					)
+					.pipe(fs.createWriteStream(thumbfilePath))
+					.on("finish", resolve)
+					.on("error", reject);
+			});
+
+			Promise.all([ogPromise, thumbPromise])
+				.then(() => {
+					cb(null, {
+						mimetype: file.mimetype,
+						filename: uniqueSuffix + "-" + file.originalname,
+						ogpath: ogfilePath,
+						thumbpath: thumbfilePath
+					});
+				})
+				.catch((err) => cb(err, null));
+		}
 	},
 	_removeFile(req, file, cb) {
 		try {
@@ -115,5 +150,5 @@ let newStorage = {
 	}
 }
 
-const upload = multer({ storage: newStorage, limits: { fileSize: 5 * 1024 * 1024 }, fileFilter: filefilter })
+const upload = multer({ storage: storage, limits: { fileSize: 5 * 1024 * 1024 }, fileFilter: filefilter })
 module.exports = upload

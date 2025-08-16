@@ -1,8 +1,8 @@
 
 <div class="flexColumn">
-	<p class="fileName">{{files[startingPoint].file}}</p>
+	<p class="fileName">{{files[startingPoint].ogfilename}}</p>
 	@if (files[startingPoint].mimetype.startsWith('image')) {
-		<img [src] = " serverUrl + files[startingPoint].file"  />
+		<img [src] = " serverUrl + files[startingPoint].file" [alt]="files[startingPoint].ogfilename" />
 	} @else {
 		<video [src] = "serverUrl + files[startingPoint].file" controls autoplay></video>
 	}

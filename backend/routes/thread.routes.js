@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const db = require('../db')
 const upload = require('../multer')
+const thumbnail = require('../thumbnail')
 
 
 //get all replies for a thread
@@ -11,10 +12,11 @@ router.get('/:threadId', async (req, res, next) => {
 })
 
 //add new reply to the thread
-router.post('/:threadId', upload.single('file'), async(req, res, next) => {
+router.post('/:threadId', upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
     const body = {
         threadId : req.params.threadId,
         content : req.body.content,
+		ogfilename : req.body.ogfilename,
         file : req.file ? req.file?.filename : "",
         mimetype : req.file ? req.file?.mimetype : "",
         replyto : req.body.replyto,
