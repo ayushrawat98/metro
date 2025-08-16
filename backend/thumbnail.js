@@ -7,7 +7,9 @@ const ffmpeg = require('fluent-ffmpeg');
 
 
 exports.thumbnail = async (req, res, next) => {
-
+	if(req.file == undefined || req.file == null){
+		return next()
+	}
 	let ogfilePath = path.join(__dirname, 'data', 'files', req.file.filename)
 	let thumbfilePath = path.join(__dirname, 'data', 'files', 't-' + req.file.filename)
 
@@ -37,6 +39,9 @@ exports.thumbnail = async (req, res, next) => {
 }
 
 exports.compress = async (req, res, next) => {
+	if(req.file == undefined || req.file == null){
+		return next()
+	}
 	if((req.file.mimetype.startsWith('video')) || req.file.mimetype == 'image/gif'){
 		return next()
 	}
