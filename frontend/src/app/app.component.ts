@@ -7,18 +7,20 @@ import { ExternaldataService } from './Services/externaldata.service';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  imports: [BoardComponent, FormsModule, RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+	selector: 'app-root',
+	imports: [BoardComponent, FormsModule, RouterOutlet],
+	templateUrl: './app.component.html',
+	styleUrl: './app.component.scss'
 })
 export class AppComponent implements AfterViewInit {
-  title = 'metro';
-  scrollContainer = viewChild<ElementRef<HTMLElement>>('container')
+	title = 'metro';
+	scrollContainer = viewChild<ElementRef<HTMLElement>>('container')
+	
 
-  constructor(private scrollService : ScrollService, private internalData : InternaldataService, private externalData : ExternaldataService){}
+	constructor(private scrollService: ScrollService, private internalData: InternaldataService, private externalData: ExternaldataService) { }
+	
 
-  ngAfterViewInit(): void {
-    this.scrollService.registerContainer(this.scrollContainer())
-  }
+	ngAfterViewInit(): void {
+		this.scrollService.registerContainer(this.scrollContainer())
+	}
 }

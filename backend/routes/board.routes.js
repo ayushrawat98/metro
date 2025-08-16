@@ -14,8 +14,11 @@ router.get('/:boardName', async(req, res, next) => {
 //create new thread in current board
 router.post('/:boardName', ratelimit, upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
     if(!req.file){
-        return res.status(500).send("Image is required")
+        return res.status(500).send("image is required")
     }
+	if(!['b', 'fit', 'fa', 'g', 'art', 'music', 'movies'].includes(req.params.boardName)){
+		return res.status(400).send("board does not exist")
+	}
     const body = {
         boardName : req.params.boardName,
         content : req.body.content,
