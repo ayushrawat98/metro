@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    container_name: metro_app
+    ports:
+      - "3000:80"
+    volumes:
+      - ./backend/data:/app/data   # <-- bind mount
+    restart: unless-stopped
