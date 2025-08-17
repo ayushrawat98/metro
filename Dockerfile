@@ -1,0 +1,30 @@
+#angular
+FROM node:20-alpine AS frontend-build
+
+WORKDIR /app
+COPY frontend/package*.json ./
+RUN npm install
+COPY frontend/ .
+RUN npm run build
+
+#nginx for node and angular
+FROM node:20-alpine
+
+WORKDIR /app
+COPY backend/package*.json ./
+RUN npm install --production
+RUN apk add --no-cache ffmpeg nginx
+
+# Copy backend source
+COPY backend/ .
+
+# Copy Angular build to Nginx html folder
+COPY --from=frontend-build /app/dist/metro/browser/ /usr/share/nginx/html
+
+# Copy custom nginx.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+# Run Nginx (frontend) + Node (backend) together
+CMD sh -c "nginx -g 'daemon off;' & npm start"
