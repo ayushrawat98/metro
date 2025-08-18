@@ -57,10 +57,14 @@ export class UploadComponent {
 		}
 	}
 
+	timeoutref! : any
 	errorHandler = (err : any) => {
+		if(this.timeoutref){
+			clearTimeout(this.timeoutref)
+		}
 		this.showError = true
 		this.errorMessage = err.error
-		setTimeout(() => {
+		this.timeoutref = setTimeout(() => {
 			this.showError = false
 			this.errorMessage = ""
 		}, 2000);
