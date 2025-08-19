@@ -66,6 +66,15 @@ export class ReplyComponent implements OnInit {
 			map.get(r.replyto)?.replyList?.push({ ...r })
 		}
 
+		for (let r of data) {
+			let reply = map.get(r.replyto)
+			// if(reply){
+			let clone : reply = Object.assign({}, reply)
+			delete clone['replyList']
+			map.get(r.id)?.replyList?.unshift(clone)
+			// }
+		}
+
 		let result: reply[] = []
 
 		map.forEach(x => result.push(x))

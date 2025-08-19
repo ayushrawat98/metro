@@ -7,7 +7,9 @@
 	@if(data().replyList?.length){
 		<a (click)="replyId.emit(data().id)"  >reply</a>
 			@for (item of data().replyList; track item.id) {
-				<span (click)="selectReply(item, $event)" style="margin: 6px; padding: 4px 6px; border: 1px solid black; display: inline-block;">{{$index+1}}</span>
+				@if(item.id){
+				<span (click)="selectReply(item, $event)" style="margin: 6px; padding: 4px 6px; border: 1px solid black; display: inline-block;">{{$index}}</span>
+				}
 			}
 	}@else {
 		<a (click)="replyId.emit(data().id)">reply</a>
