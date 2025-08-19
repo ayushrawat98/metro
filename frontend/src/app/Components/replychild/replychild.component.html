@@ -1,6 +1,6 @@
 <div #container class="content">
 	@if (data().file != "") {
-		<img (click)="expandMedia.emit(data().id)" [src]="fileUrl + 't-' + data().file" [alt]="data().ogfilename" class="floatLeft small">
+		<img (click)="expandMedia.emit(data().id)" [src]="fileUrl + 't-' + data().file" [alt]="data().ogfilename" loading="lazy" class="floatLeft small">
 	}
 	<ng-container>{{data().content}}</ng-container>
 	<br/>
