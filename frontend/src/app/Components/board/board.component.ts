@@ -9,7 +9,7 @@ import { ScrollService } from '../../Services/scroll.service';
 	styleUrl: './board.component.scss'
 })
 export class BoardComponent {
-	boards = ['b', 'fit', 'fa', 'g', 'art', 'music', 'movies']
+	boards = ['b']
 
 	constructor(private scrollService: ScrollService, private router: Router) { }
 
@@ -19,20 +19,20 @@ export class BoardComponent {
 	}
 
 	//pranks
-	song = viewChild<ElementRef<HTMLAudioElement>>('song')
-	songstate = 'pause'
-	ngOnInit() {
-		setTimeout(() => {
-			this.song()?.nativeElement.play()
-		}, 3000);
-	}
-	pause(){
-		if(this.songstate == 'pause'){
-			this.songstate = 'play'
-			this.song()?.nativeElement.pause()
-		}else{
-			this.songstate = 'pause'
-			this.song()?.nativeElement.play()
-		}
-	}
+	// song = viewChild<ElementRef<HTMLAudioElement>>('song')
+	// songstate = 'pause'
+	// ngOnInit() {
+	// 	setTimeout(() => {
+	// 		this.song()?.nativeElement.play()
+	// 	}, 3000);
+	// }
+	// pause(){
+	// 	if(this.songstate == 'pause'){
+	// 		this.songstate = 'play'
+	// 		this.song()?.nativeElement.pause()
+	// 	}else{
+	// 		this.songstate = 'pause'
+	// 		this.song()?.nativeElement.play()
+	// 	}
+	// }
 }

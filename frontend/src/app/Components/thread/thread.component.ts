@@ -42,7 +42,7 @@ export class ThreadComponent implements OnInit {
 				map(value => value.get('boardName') ?? 'noboard')
 			),
 			this.refreshTrigger$.pipe(map(value => this.currentBoard)),
-			interval(15000).pipe(map(value => this.currentBoard))
+			interval(60000).pipe(map(value => this.currentBoard))
 		).pipe(
 			tap(board => {
 				this.currentBoard = board
