@@ -9,10 +9,11 @@ import { thread } from '../../Models/thread';
 import { ActivatedRoute } from '@angular/router';
 import { UploadComponent } from '../upload/upload.component';
 import {Dialog} from '@angular/cdk/dialog';
+import { SortThreadPipe } from '../../Pipes/sort-thread.pipe';
 
 @Component({
 	selector: 'app-thread',
-	imports: [AsyncPipe, ThreadchildComponent, FormsModule],
+	imports: [AsyncPipe, ThreadchildComponent, FormsModule, SortThreadPipe],
 	templateUrl: './thread.component.html',
 	styleUrl: './thread.component.scss',
 	host : {

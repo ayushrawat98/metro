@@ -58,6 +58,7 @@ export class ReplyComponent implements OnInit {
 	}
 
 	mapFunction(data: reply[]): reply[] {
+		if(data.length == 0) return []
 
 		let map = new Map<number, reply>()
 

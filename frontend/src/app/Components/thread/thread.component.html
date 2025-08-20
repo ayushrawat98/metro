@@ -31,7 +31,7 @@
 	<div class="flexColumn">
 		@if((threadList$ | async); as threadList){
 			@if(threadList.length > 0){
-				@for (thread of threadList; track thread.id) {
+				@for (thread of threadList | sortThread; track thread.id) {
 					<app-threadchild class="animateContainer" [data]="thread" [index]="$index"></app-threadchild>
 				}
 			}@else {

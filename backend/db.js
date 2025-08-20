@@ -18,7 +18,8 @@ class DB{
                     file text not null,
                     mimetype text not null,
                     replycount integer default 0,
-                    created_at text not null
+                    created_at text not null,
+					updated_at text
                 );
 
 				
@@ -36,10 +37,11 @@ class DB{
         this.queries = {
             getThreads : this.db.prepare('select * from posts where boardname = ? and threadid is null order by created_at desc'),
             getThread : this.db.prepare('select * from posts where id = ?'),
-            createThread : this.db.prepare('insert into posts (boardname, content, ogfilename, file, mimetype, created_at) values (?,?,?,?, ?,?)'),
+            createThread : this.db.prepare('insert into posts (boardname, content, ogfilename, file, mimetype, created_at, updated_at) values (?,?,?,?, ?,?,?)'),
             getReplies : this.db.prepare('select * from posts where threadid = ?'),
             createReply : this.db.prepare('insert into posts (boardname, threadid, content, ogfilename, file, mimetype, created_at, replyto) values (?,?,?,?,?, ?,?,?)'),
-            updateReplyCount : this.db.prepare('update posts set replycount = replycount + 1 where id = ?')
+            updateReplyCount : this.db.prepare('update posts set replycount = replycount + 1 where id = ?'),
+			updateDate : this.db.prepare('update posts set updated_at = ? where id = ?')
         }
     }
 
@@ -52,7 +54,7 @@ class DB{
     }
 
     createThread(data){
-        return this.queries.createThread.run(data.boardName, data.content, data.ogfilename, data.file, data.mimetype, data.createdat)
+        return this.queries.createThread.run(data.boardName, data.content, data.ogfilename, data.file, data.mimetype, data.createdat, data.createdat)
     }
 
     getReplies(threadId){
@@ -65,6 +67,7 @@ class DB{
         let result =  this.queries.createReply.run(data.boardname, data.threadId, data.content, data.ogfilename, data.file, data.mimetype, data.createdat, data.replyto)
         if(result){
             this.queries.updateReplyCount.run(data.threadId)
+			this.queries.updateDate.run(new Date().toISOString(), data.threadId)
         }
         return result
     }

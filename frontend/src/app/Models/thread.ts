@@ -6,7 +6,8 @@ export type thread = {
     file : string,
     mimetype : string,
     replycount : number,
-    created_at : string
+    created_at : string,
+	updated_at : string
 }
 
 export type reply = {
@@ -17,6 +18,7 @@ export type reply = {
 	ogfilename : string,
     file : string,
     mimetype : string,
-    created_at : string
+    created_at : string,
+	updated_at : string
     replyList? : reply[]
 }
