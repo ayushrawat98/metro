@@ -10,5 +10,10 @@ export const routes: Routes = [
 				loadComponent : () => import('./Components/reply/reply.component').then(r => r.ReplyComponent)
 			}
 		]
+	},
+	{
+		path : '**',
+		redirectTo : 'boards/b',
+		pathMatch : 'full'
 	}
 ];

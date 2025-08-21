@@ -3,6 +3,8 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     width: 100vw;
+	// max-width: 1800px;
+	// margin: auto;
     height: 100vh;
 	-ms-overflow-style: none;
     /* IE and Edge */
@@ -22,6 +24,10 @@
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
+}
+
+.boards{
+	width: 80%;
 }
 
 // hide scrollbar

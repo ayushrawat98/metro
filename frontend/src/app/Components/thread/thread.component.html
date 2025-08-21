@@ -32,7 +32,7 @@
 		@if((threadList$ | async); as threadList){
 			@if(threadList.length > 0){
 				@for (thread of threadList | sortThread; track thread.id) {
-					<app-threadchild class="animateContainer" [data]="thread" [index]="$index"></app-threadchild>
+					<app-threadchild class="animateContainer " [data]="thread" [index]="$index"></app-threadchild>
 				}
 			}@else {
 				<p>no threads yet</p>
