@@ -7,8 +7,15 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    color: black;
     scroll-behavior: smooth;
+}
+
+.darkMode{
+	background-color: black;
+	color: rgb(193, 193, 193);
+	h1{
+		background-color: black;
+	}
 }
 
 h1 {
@@ -18,6 +25,7 @@ h1 {
     position: sticky;
     top: 0;
     background-color: white;
+	color : inherit;
     z-index: 2;
 }
 
@@ -120,7 +128,7 @@ img.small {
 	}
     a {
         margin : 16px 16px;
-		color: white;
+		color: whitesmoke;
     }
 
 	progress{

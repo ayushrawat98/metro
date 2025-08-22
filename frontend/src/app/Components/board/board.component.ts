@@ -10,6 +10,7 @@ import { ScrollService } from '../../Services/scroll.service';
 })
 export class BoardComponent {
 	boards = ['b']
+	currentColorMode = output<string>()
 
 	constructor(private scrollService: ScrollService, private router: Router) { }
 
@@ -18,6 +19,11 @@ export class BoardComponent {
 		this.scrollService.scrollBy(300)
 	}
 
+	colorMode = 'light'
+	changeMode(){
+		this.colorMode = this.colorMode == 'light' ? 'dark' : 'light'
+		this.currentColorMode.emit(this.colorMode)
+	}
 	//pranks
 	// song = viewChild<ElementRef<HTMLAudioElement>>('song')
 	// songstate = 'pause'

@@ -23,4 +23,10 @@ export class AppComponent implements AfterViewInit {
 	ngAfterViewInit(): void {
 		this.scrollService.registerContainer(this.scrollContainer())
 	}
+
+	colorMode = 'light'
+	changeColorMode(mode : string){
+		this.colorMode = mode
+		// document.body.classList.add(this.colorMode == 'dark' ? 'darkMode' : '');
+	}
 }
