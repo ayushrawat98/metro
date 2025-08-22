@@ -58,7 +58,7 @@ export class ReplyComponent implements OnInit {
 	}
 
 
-	mapFunction(data : reply[]) : reply[] {
+	mapFunction(data: reply[]): reply[] {
 		let regex = />>([0-9]+)/g
 		let converted = data.map(x => {
 			let replyto = []
@@ -71,10 +71,10 @@ export class ReplyComponent implements OnInit {
 		for (let a of converted) {
 			for (let b of a.repliedTo) {
 				let temp = converted.find(x => x.id == b)
-				if(temp){
-					if(temp.repliesFrom){
+				if (temp) {
+					if (temp.repliesFrom) {
 						temp.repliesFrom.push(a.id)
-					}else{
+					} else {
 						temp.repliesFrom = [a.id]
 					}
 				}
@@ -131,7 +131,8 @@ export class ReplyComponent implements OnInit {
 				unsavedReplyData: this.unsavedReplyData
 			},
 			autoFocus: false,
-			restoreFocus: false
+			restoreFocus: false,
+			disableClose : true
 		})
 
 		dialogRef.closed.subscribe((res) => {

@@ -4,7 +4,7 @@
 	}
 	@for(item of data().content | convertLink; track $index){
 		@if (item.type == 'link') {
-			<span (click)="selectReply(item.value, $event)">&gt;&gt;{{item.value}}</span>
+			<span style="font-size: 16px;" (click)="selectReply(item.value, $event)">&gt;&gt;{{item.value}}</span>
 		}@else {
 			<span>{{item.value}}</span>
 		}
