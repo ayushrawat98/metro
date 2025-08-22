@@ -26,7 +26,7 @@ export class ReplyComponent implements OnInit {
 	replyList$!: Observable<reply[]>
 	currentThread!: string
 	currentBoard!: string
-	currentReplyList! : reply[]
+	currentReplyList!: reply[]
 	totalMedia = 0
 	private refreshTrigger$ = new Subject<void>();
 
@@ -57,67 +57,95 @@ export class ReplyComponent implements OnInit {
 		)
 	}
 
-	mapFunction(data: reply[]): reply[] {
-		if(data.length == 0) return []
 
-		let map = new Map<number, reply>()
+	mapFunction(data : reply[]) : reply[] {
+		let regex = />>([0-9]+)/g
+		let converted = data.map(x => {
+			let replyto = []
+			for (let a of x.content.matchAll(regex)) {
+				replyto.push(Number(a[1]))
+			}
+			return { ...x, repliedTo: Array.from(new Set(replyto)) }
+		})
 
-		for (let r of data) {
-			map.set(r.id, { ...r, replyList: [] })
-			map.get(r.replyto)?.replyList?.push({ ...r })
+		for (let a of converted) {
+			for (let b of a.repliedTo) {
+				let temp = converted.find(x => x.id == b)
+				if(temp){
+					if(temp.repliesFrom){
+						temp.repliesFrom.push(a.id)
+					}else{
+						temp.repliesFrom = [a.id]
+					}
+				}
+			}
 		}
-
-		for (let r of data) {
-			let reply = map.get(r.replyto)
-			// if(reply){
-			let clone : reply = Object.assign({}, reply)
-			delete clone['replyList']
-			map.get(r.id)?.replyList?.unshift(clone)
-			// }
-		}
-
-		let result: reply[] = []
-
-		map.forEach(x => result.push(x))
-
-		return result
+		return converted
 	}
 
-	// closePopup() {
-	// 	this.setShowReplyPopup(false)
+	// mapFunction(data: reply[]): reply[] {
+	// 	if(data.length == 0) return []
+
+	// 	let map = new Map<number, reply>()
+
+	// 	for (let r of data) {
+	// 		map.set(r.id, { ...r, replyList: [] })
+	// 		map.get(r.replyto)?.replyList?.push({ ...r })
+	// 	}
+
+	// 	for (let r of data) {
+	// 		let reply = map.get(r.replyto)
+	// 		// if(reply){
+	// 		let clone : reply = Object.assign({}, reply)
+	// 		delete clone['replyList']
+	// 		map.get(r.id)?.replyList?.unshift(clone)
+	// 		// }
+	// 	}
+
+	// 	let result: reply[] = []
+
+	// 	map.forEach(x => result.push(x))
+
+	// 	return result
 	// }
 
-	// triggerRefresh() {
-	// 	this.refreshTrigger$.next()
-	// }
-
-	// setShowReplyPopup(value: boolean) {
-	// 	this.showReplyPopup = value
-	// }
-
+	unsavedReplyData = ''
 	createNewReply(event: number) {
 		this.replyTo = event
 
-		let dialogRef = this.dialog.open<boolean>(UploadComponent, {
+		if (this.unsavedReplyData.length == 0) {
+			this.unsavedReplyData = ">>" + this.replyTo + "\n"
+		} else if (this.unsavedReplyData.charAt(this.unsavedReplyData.length - 1) == '\n') {
+			this.unsavedReplyData += ">>" + this.replyTo + "\n"
+		}
+		else {
+			this.unsavedReplyData += "\n>>" + this.replyTo + "\n"
+		}
+
+		let dialogRef = this.dialog.open<dialogReturnData>(UploadComponent, {
 			data: {
 				forwhat: 'reply',
 				currentBoard: this.currentBoard,
 				replyTo: this.replyTo,
-				threadId: this.currentThread
+				threadId: this.currentThread,
+				unsavedReplyData: this.unsavedReplyData
 			},
-			autoFocus : false,
-			restoreFocus : false
+			autoFocus: false,
+			restoreFocus: false
 		})
 
 		dialogRef.closed.subscribe((res) => {
-			if (res == true) {
+			if (res?.completed == true) {
 				this.refreshTrigger$.next()
+				this.unsavedReplyData = ''
+			} else {
+				this.unsavedReplyData = res?.unsavedReplyData ?? ''
 			}
 		})
 	}
 
 	overlayRef!: OverlayRef
-	setSelectedReply(replyData: { item: reply, element: HTMLElement }) {
+	setSelectedReply(replyData: { item: number, element: HTMLElement }) {
 		// Close any existing overlay
 		if (this.overlayRef) {
 			this.overlayRef.dispose();
@@ -154,7 +182,7 @@ export class ReplyComponent implements OnInit {
 		const componentRef = this.overlayRef.attach(portal);
 
 		// Pass data into the overlayed ReplyChildComponent
-		componentRef.instance.data = replyData.item;
+		componentRef.instance.data = this.currentReplyList.filter(x => x.id == replyData.item)[0];
 		componentRef.instance.index = -1
 
 		// If ReplyChildComponent has outputs, you can subscribe here
@@ -163,14 +191,20 @@ export class ReplyComponent implements OnInit {
 		});
 	}
 
-	expandMedia(id : number){
+	expandMedia(id: number) {
 		let dialogRef = this.dialog.open<string>(ExpandmediaComponent, {
 			data: {
-				id : id,
-				data : this.currentReplyList
+				id: id,
+				data: this.currentReplyList
 			},
-			autoFocus : false,
-			restoreFocus : false
+			autoFocus: false,
+			restoreFocus: false
 		})
 	}
+}
+
+
+type dialogReturnData = {
+	unsavedReplyData: string,
+	completed: boolean
 }

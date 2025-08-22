@@ -15,7 +15,7 @@ import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 export class UploadComponent {
 
 	data = inject(DIALOG_DATA);
-	dialogRef = inject(DialogRef<boolean>);
+	dialogRef = inject(DialogRef<{unsavedReplyData : string, completed : boolean}>);
 
 	forwhat = input<string>(this.data.forwhat) //thread or reply
 	replyTo = input<number>(this.data.replyTo) //required for reply
@@ -25,7 +25,7 @@ export class UploadComponent {
 	// triggerRefresh = output<boolean>()
 	overlay = viewChild<ElementRef>('overlay')
 
-	replyData = ''
+	replyData = this.data.unsavedReplyData
 	replyFile: File | undefined | null
 	fileUploadProgress = 0
 	showError = false
@@ -39,7 +39,7 @@ export class UploadComponent {
 
 	closeReplyPopup() {
 		// this.closepopup.emit(true)
-		this.dialogRef.close(false)
+		this.dialogRef.close({unsavedReplyData : this.replyData,completed : false})
 	}
 
 	animateExit() {
@@ -94,7 +94,7 @@ export class UploadComponent {
 				next: (res) => {
 					//reset data
 					this.animateExit()
-					this.dialogRef.close(true)
+					this.dialogRef.close({unsavedReplyData : '', completed : true})
 					// this.setShowSelectedReply(false)
 					this.replyFile = null
 					this.replyData = ''
@@ -128,7 +128,7 @@ export class UploadComponent {
 				next: (res) => {
 					//reset data
 					this.animateExit()
-					this.dialogRef.close(true)
+					this.dialogRef.close({unsavedReplyData : '' , completed : true})
 					this.replyFile = null
 					this.replyData = ''
 					//refresh data\

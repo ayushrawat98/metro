@@ -1,23 +1,28 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, Input, input, output } from '@angular/core';
 import { ContentComponent } from '../../Classes/content';
 import { reply } from '../../Models/thread';
+import { ConvertLinkPipe } from '../../Pipes/convert-link.pipe';
 
 @Component({
 	selector: 'app-replychild',
 	templateUrl: './replychild.component.html',
 	styleUrl: './replychild.component.scss',
+	imports : [ConvertLinkPipe],
 	changeDetection : ChangeDetectionStrategy.OnPush
 })
 export class ReplychildComponent extends ContentComponent<reply> implements AfterViewInit {
 
 	replyId = output<number>()
-	selectedReply = output<{item : reply, element:HTMLElement}>()
+	// selectedReply = output<{item : reply, element:HTMLElement}>()
+	selectedReply = output<{item : number, element:HTMLElement}>()
 	expandMedia = output<number>()
 
-	selectReply(item: reply, event : Event) {
-		this.selectedReply.emit({item : item, element : event.target as HTMLElement})
+	// selectReply(item: reply, event : Event) {
+	// 	this.selectedReply.emit({item : item, element : event.target as HTMLElement})
+	// }
+
+	selectReply(id : string|number, event : Event){
+		this.selectedReply.emit({item : Number(id), element : event.target as HTMLElement})
 	}
-
-
 
 }

@@ -20,5 +20,11 @@ export type reply = {
     mimetype : string,
     created_at : string,
 	updated_at : string
-    replyList? : reply[]
+    repliedTo? : number[],
+	repliesFrom? : number[]
+}
+
+export type Converted = {
+	type : string,
+	value : string
 }

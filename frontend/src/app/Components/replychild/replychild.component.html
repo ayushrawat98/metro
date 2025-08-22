@@ -2,14 +2,18 @@
 	@if (data().file != "") {
 		<img (click)="expandMedia.emit(data().id)" [src]="fileUrl + 't-' + data().file" [alt]="data().ogfilename" loading="lazy" class="floatLeft small">
 	}
-	<ng-container>{{data().content}}</ng-container>
+	@for(item of data().content | convertLink; track $index){
+		@if (item.type == 'link') {
+			<span (click)="selectReply(item.value, $event)">&gt;&gt;{{item.value}}</span>
+		}@else {
+			<span>{{item.value}}</span>
+		}
+	}
 	<br/>
-	@if(data().replyList?.length){
+	@if(data().repliesFrom?.length){
 		<a class=" italics" (click)="replyId.emit(data().id)">reply</a>
-			@for (item of data().replyList; track item.id) {
-				@if(item.id){
-				<a (click)="selectReply(item, $event)" style="margin: 4px 8px;">&gt;&gt;{{$index == 0 ? 'X' : $index}}</a>
-				}
+			@for (item of data().repliesFrom; track item) {
+				<a (click)="selectReply(item, $event)" style="margin: 4px 8px;">&gt;&gt;{{item}}</a>
 			}
 	}@else {
 		<a class="italics" (click)="replyId.emit(data().id)">reply</a>
