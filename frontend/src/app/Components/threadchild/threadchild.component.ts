@@ -9,7 +9,10 @@ import { thread } from '../../Models/thread';
   imports: [],
   templateUrl: './threadchild.component.html',
   styleUrl: './threadchild.component.scss',
-  changeDetection : ChangeDetectionStrategy.OnPush
+  changeDetection : ChangeDetectionStrategy.OnPush,
+  host : {
+	'(click)' : 'threadClicked()'
+  }
 })
 export class ThreadchildComponent extends ContentComponent<thread> implements AfterViewInit {
 
