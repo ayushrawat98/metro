@@ -1,5 +1,8 @@
 <div #container class="content" (click)="threadClicked()" >
     <img [src]="fileUrl + 't-' + data().file" [alt]="data().ogfilename" loading="lazy" class="floatLeft small">
     {{data().content.length > 180 ? data().content.slice(0,180) + '...' : data().content}}
-    <br /><a>{{data().replycount}} replies</a>
+	@if(data().content.length <= 180){
+		<br/>
+	}
+    <span class="links">{{data().replycount}} replies</span>
 </div>
