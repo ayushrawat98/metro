@@ -11,9 +11,9 @@
 	}
 	<br/>
 	@if(data().repliesFrom?.length){
-		<a class=" italics" (click)="replyId.emit(data().id)">reply</a>
+		<a class="italics" style="font-size: 14px;" (click)="replyId.emit(data().id)">reply</a>
 			@for (item of data().repliesFrom; track item) {
-				<a (click)="selectReply(item, $event)" style="margin: 4px 8px;">&gt;&gt;{{item}}</a>
+				<a style="font-size: 14px;" (click)="selectReply(item, $event)" style="margin: 4px 8px;">&gt;&gt;{{item}}</a>
 			}
 	}@else {
 		<a class="italics" (click)="replyId.emit(data().id)">reply</a>
