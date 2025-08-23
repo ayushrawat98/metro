@@ -31,9 +31,9 @@ h1 {
 
 a {
     text-decoration: none;
-    font-size: 24px;
+    // font-size: 24px;
     white-space: nowrap;
-    font-weight: 350;
+    // font-weight: 350;
     cursor: pointer;
 }
 
@@ -67,8 +67,9 @@ img.small {
     min-height: 50px;
     cursor: pointer;
 	word-wrap: break-word;
-	font-size: 24px;
-	font-weight: 350;
+	white-space: pre-line;
+	// font-size: 24px;
+	// font-weight: 350;
 }
 
 
