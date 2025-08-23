@@ -88,7 +88,7 @@ export class ThreadComponent implements OnInit {
 
 	
 	showThreadPopup() {
-		const dialogRef = this.dialog.open<boolean>(UploadComponent, {
+		const dialogRef = this.dialog.open<dialogReturnData>(UploadComponent, {
 			data : {
 				forwhat : 'thread',
 				currentBoard : this.currentBoard
@@ -99,7 +99,7 @@ export class ThreadComponent implements OnInit {
 
 		dialogRef.closed.subscribe((res)=>{
 			//if closed after adding a new post
-			if(res == true){
+			if(res?.completed == true){
 				this.refreshTrigger$.next()
 			}
 		})
@@ -107,4 +107,10 @@ export class ThreadComponent implements OnInit {
 
 	
 	
+}
+
+
+type dialogReturnData = {
+	unsavedReplyData: string,
+	completed: boolean
 }

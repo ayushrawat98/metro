@@ -4,7 +4,7 @@
 	}
 	@for(item of data().content | convertLink; track $index){
 		@if (item.type == 'link') {
-			<a class="links" (click)="selectReply(item.value, $event)">&gt;&gt;{{item.value}}</a>
+			<a  (click)="selectReply(item.value, $event)">&gt;&gt;{{item.value}}</a>
 		}@else {
 			<span>{{item.value}}</span>
 		}
@@ -12,9 +12,9 @@
 	<br/>
 	@if(data().repliesFrom?.length){
 		<a class="italics" (click)="replyId.emit(data().id)" style="margin-right: 12px; font-size: 18px;">reply</a>
-			@for (item of data().repliesFrom; track item) {
+			<!-- @for (item of data().repliesFrom; track item) {
 				<a class="links" (click)="selectReply(item, $event)" style="margin-right: 12px;">&gt;&gt;{{item}}</a>
-			}
+			} -->
 	}@else {
 		<a class="italics" style="font-size: 18px;" (click)="replyId.emit(data().id)">reply</a>
 	}
