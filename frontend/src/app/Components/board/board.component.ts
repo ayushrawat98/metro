@@ -9,7 +9,7 @@ import { ScrollService } from '../../Services/scroll.service';
 	styleUrl: './board.component.scss'
 })
 export class BoardComponent {
-	boards = ['b', 'yoga', 'fa', 'g', 'meta']
+	boards = ['b', 'yog', 'fa', 'g', 'meta']
 	currentColorMode = output<string>()
 
 	constructor(private scrollService: ScrollService, private router: Router) { }
