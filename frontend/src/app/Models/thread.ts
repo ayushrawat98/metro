@@ -26,5 +26,6 @@ export type reply = {
 
 export type Converted = {
 	type : string,
-	value : string
+	value : string,
+	shownValue? : string
 }

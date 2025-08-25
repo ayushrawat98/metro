@@ -50,9 +50,12 @@ export class ReplyComponent implements OnInit {
 			this.refreshTrigger$.pipe(map(value => this.currentThread)),
 			interval(60000).pipe(map(value => this.currentThread))
 		).pipe(
-			tap(id => this.currentThread = id),
+			tap(id => {
+				this.currentThread = id
+				localStorage.setItem("currentThread", id)
+			}),
 			switchMap(id => this.externalData.getReplies(id).pipe(catchError(error => of([])))),
-			map(data => this.mapFunction(data)),
+			// map(data => this.mapFunction(data)),
 			tap(data => this.currentReplyList = data)
 		)
 	}

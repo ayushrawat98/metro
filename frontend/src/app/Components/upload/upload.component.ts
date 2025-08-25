@@ -98,6 +98,7 @@ export class UploadComponent {
 					// this.setShowSelectedReply(false)
 					this.replyFile = null
 					this.replyData = ''
+					this.setUserReplyList(res)
 					//refresh data
 					// this.triggerRefresh.emit(true)
 					// this.internalData.threadSubject.next(this.currentThread)
@@ -131,12 +132,22 @@ export class UploadComponent {
 					this.dialogRef.close({unsavedReplyData : '' , completed : true})
 					this.replyFile = null
 					this.replyData = ''
+					this.setUserReplyList(res)
 					//refresh data\
 					// this.triggerRefresh.emit(true)
 					// this.internalData.boardSubject.next(this.currentBoard)
 				},
 				error: this.errorHandler
 			})
+	}
+
+	setUserReplyList(res : any){
+		let old = localStorage.getItem("replies")
+		if(old){
+			localStorage.setItem("replies", old + res.body.lastInsertRowid + ",")
+		}else{
+			localStorage.setItem("replies", res.body.lastInsertRowid + ",")
+		}
 	}
 
 }
