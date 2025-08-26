@@ -22,7 +22,7 @@ exports.thumbnail = async (req, res, next) => {
 	} else if (req.file.mimetype.startsWith('video')) {
 		ffmpeg(ogfilePath)
 			.frames(1)
-			.outputOptions(["-vf", "thumbnail"])
+			.outputOptions(["-vf", "thumbnail,scale=100:100:force_original_aspect_ratio=increase,crop=100:100"])
 			.size("100x100")
 			.format("image2")   
 			.save(thumbfilePath)

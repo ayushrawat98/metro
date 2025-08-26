@@ -1,6 +1,7 @@
 import { Component, ElementRef, output, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ScrollService } from '../../Services/scroll.service';
+import { InternaldataService } from '../../Services/internaldata.service';
 
 @Component({
 	selector: 'app-board',
@@ -9,21 +10,29 @@ import { ScrollService } from '../../Services/scroll.service';
 	styleUrl: './board.component.scss'
 })
 export class BoardComponent {
-	boards = ['b', 'yog', 'fa', 'g', 'meta']
-	currentColorMode = output<string>()
+	boards = ['b', 'yog', 'meta']
 
-	constructor(private scrollService: ScrollService, private router: Router) { }
+	constructor(
+		private scrollService: ScrollService,
+		private router: Router,
+		public internalData : InternaldataService
+	) { }
 
+	//any board link clicked
 	boardChanged(value: string) {
 		this.router.navigate(['boards', value])
 		this.scrollService.scrollBy(300)
 	}
 
-	colorMode = 'light'
 	changeMode(){
-		this.colorMode = this.colorMode == 'light' ? 'dark' : 'light'
-		this.currentColorMode.emit(this.colorMode)
+		let newTheme = this.internalData.currentTheme()  == 'light' ? 'dark' : 'light'
+		this.internalData.currentTheme.set(newTheme as "light" | "dark")
+		localStorage.setItem("theme", newTheme)
 	}
+
+
+
+
 	//pranks
 	// song = viewChild<ElementRef<HTMLAudioElement>>('song')
 	// songstate = 'pause'

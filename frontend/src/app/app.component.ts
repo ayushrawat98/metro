@@ -3,7 +3,6 @@ import { BoardComponent } from "./Components/board/board.component";
 import { ScrollService } from './Services/scroll.service';
 import { InternaldataService } from './Services/internaldata.service';
 import { FormsModule } from '@angular/forms';
-import { ExternaldataService } from './Services/externaldata.service';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -17,16 +16,23 @@ export class AppComponent implements AfterViewInit {
 	scrollContainer = viewChild<ElementRef<HTMLElement>>('container')
 	
 
-	constructor(private scrollService: ScrollService, private internalData: InternaldataService, private externalData: ExternaldataService) { }
+	constructor(
+		private scrollService: ScrollService,
+		public internalData: InternaldataService,
+	) { }
 	
+	ngOnInit(): void {
+		let pastTheme = localStorage.getItem("theme")
+		if(pastTheme){
+			this.internalData.currentTheme.set(pastTheme as "light" | "dark")
+		}
+	}
 
 	ngAfterViewInit(): void {
 		this.scrollService.registerContainer(this.scrollContainer())
-	}
-
-	colorMode = 'light'
-	changeColorMode(mode : string){
-		this.colorMode = mode
-		// document.body.classList.add(this.colorMode == 'dark' ? 'darkMode' : '');
+		//if old visitor , auto scroll to right
+		if(localStorage.getItem("old")){
+			this.scrollService.scrollBy(300)
+		}
 	}
 }

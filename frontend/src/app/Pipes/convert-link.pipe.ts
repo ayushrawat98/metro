@@ -1,10 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Converted } from '../Models/thread';
+import { InternaldataService } from '../Services/internaldata.service';
 
 @Pipe({
 	name: 'convertLink'
 })
 export class ConvertLinkPipe implements PipeTransform {
+
+	constructor(private internalData : InternaldataService){}
 
 	transform(content: string, ...args: unknown[]): Converted[] {
 		const regex = />>(\d+)/g;
@@ -12,7 +15,7 @@ export class ConvertLinkPipe implements PipeTransform {
 		let lastIndex = 0;
 		let match;
 		let yourreplies = localStorage.getItem("replies")?.split(',')
-		let currentThread = localStorage.getItem("currentThread")
+		let currentThread = this.internalData.currentThread()
 
 		while ((match = regex.exec(content)) !== null) {
 			if (match.index > lastIndex) {

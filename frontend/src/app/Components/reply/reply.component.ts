@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, ElementRef, OnInit, output, viewChild, viewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, output, Signal, viewChild, viewChildren } from '@angular/core';
 import { catchError, filter, interval, last, map, merge, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { InternaldataService } from '../../Services/internaldata.service';
 import { ReplychildComponent } from '../replychild/replychild.component';
@@ -24,8 +24,6 @@ import { ExpandmediaComponent } from '../expandmedia/expandmedia.component';
 export class ReplyComponent implements OnInit {
 
 	replyList$!: Observable<reply[]>
-	currentThread!: string
-	currentBoard!: string
 	currentReplyList!: reply[]
 	totalMedia = 0
 	private refreshTrigger$ = new Subject<void>();
@@ -38,22 +36,17 @@ export class ReplyComponent implements OnInit {
 		private route: ActivatedRoute,
 		private dialog: Dialog,
 		private overlay: Overlay
-	) {
-		this.currentBoard = this.internalData.currentBoard
-	}
+	) {}
 
 	ngOnInit(): void {
 		this.replyList$ = merge(
 			this.route.paramMap.pipe(
 				map(value => value.get('threadId') ?? '-1')
 			),
-			this.refreshTrigger$.pipe(map(value => this.currentThread)),
-			interval(60000).pipe(map(value => this.currentThread))
+			this.refreshTrigger$.pipe(map(value => this.internalData.currentThread())),
+			interval(60000).pipe(map(value => this.internalData.currentThread()))
 		).pipe(
-			tap(id => {
-				this.currentThread = id
-				localStorage.setItem("currentThread", id)
-			}),
+			tap(id => { this.internalData.currentThread.set(id) }),
 			switchMap(id => this.externalData.getReplies(id).pipe(catchError(error => of([])))),
 			// map(data => this.mapFunction(data)),
 			tap(data => this.currentReplyList = data)
@@ -128,9 +121,9 @@ export class ReplyComponent implements OnInit {
 		let dialogRef = this.dialog.open<dialogReturnData>(UploadComponent, {
 			data: {
 				forwhat: 'reply',
-				currentBoard: this.currentBoard,
+				currentBoard: this.internalData.currentBoard(),
 				replyTo: this.replyTo,
-				threadId: this.currentThread,
+				threadId: this.internalData.currentThread(),
 				unsavedReplyData: this.unsavedReplyData
 			},
 			autoFocus: false,

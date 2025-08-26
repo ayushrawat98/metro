@@ -23,7 +23,6 @@ import { SortThreadPipe } from '../../Pipes/sort-thread.pipe';
 export class ThreadComponent implements OnInit {
 
 	threadList$!: Observable<thread[]>
-	currentBoard!: string
 	private refreshTrigger$ = new Subject<void>();
 
 	//create thread popup
@@ -42,12 +41,11 @@ export class ThreadComponent implements OnInit {
 			this.route.paramMap.pipe(
 				map(value => value.get('boardName') ?? 'noboard')
 			),
-			this.refreshTrigger$.pipe(map(value => this.currentBoard)),
-			interval(60000).pipe(map(value => this.currentBoard))
+			this.refreshTrigger$.pipe(map(value => this.internalData.currentBoard())),
+			interval(60000).pipe(map(value => this.internalData.currentBoard()))
 		).pipe(
 			tap(board => {
-				this.currentBoard = board
-				this.internalData.currentBoard = board
+				this.internalData.currentBoard.set(board)
 			}
 			),
 			switchMap(board =>
@@ -91,7 +89,7 @@ export class ThreadComponent implements OnInit {
 		const dialogRef = this.dialog.open<dialogReturnData>(UploadComponent, {
 			data : {
 				forwhat : 'thread',
-				currentBoard : this.currentBoard
+				currentBoard : this.internalData.currentBoard()
 			},
 			autoFocus : false,
 			restoreFocus : false

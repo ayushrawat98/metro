@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
+import { ThreadwrapperComponent } from './Components/threadwrapper/threadwrapper.component';
 
 export const routes: Routes = [
 	{
 		path : 'boards/:boardName',
-		loadComponent : () => import('./Components/threadwrapper/threadwrapper.component').then(t => t.ThreadwrapperComponent),
+		component : ThreadwrapperComponent,
 		children : [
 			{
 				path : 'threads/:threadId',
