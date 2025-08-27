@@ -12,6 +12,14 @@ router.get('/:threadId', async (req, res, next) => {
     return res.send(result)
 })
 
+router.delete('/:threadId', async(req, res, next) => {
+	if(req.query.key != 'lele'){
+		return res.send("false")
+	}
+    const result = db.deleteThread(req.params.threadId)
+    return res.send(result)
+})
+
 //add new reply to the thread
 router.post('/:threadId', ratelimit(5000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
     const body = {
