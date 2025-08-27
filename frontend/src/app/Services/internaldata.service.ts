@@ -1,5 +1,5 @@
 import { ElementRef, Injectable, signal } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { thread } from '../Models/thread';
 
 @Injectable({
@@ -12,5 +12,9 @@ export class InternaldataService {
   currentBoard = signal<string>('')
   currentThread = signal<number|string>(-1)
   currentTheme = signal<"light"|"dark">("light")
+
+//   showGlobalProgressBar = signal<boolean>(false)
+  globalProgressBarValue = signal<number>(0)
+  refreshThreadTrigger$ = new Subject<void>()
   
 }

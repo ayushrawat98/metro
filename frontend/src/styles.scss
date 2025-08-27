@@ -3,134 +3,150 @@
 @import '@angular/cdk/overlay-prebuilt.css';
 
 * {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    scroll-behavior: smooth;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	scroll-behavior: smooth;
 }
 
-.darkMode{
+.darkMode {
 	background-color: black;
 	color: rgb(193, 193, 193);
-	h1{
+
+	h1 {
 		background-color: black;
 	}
 }
 
 h1 {
-    font-size: 72px;
-    font-weight: 300;
-    margin-bottom: 36px;
-    position: sticky;
-    top: 0;
-    background-color: white;
-	color : inherit;
-    z-index: 2;
+	font-size: 72px;
+	font-weight: 300;
+	margin-bottom: 36px;
+	position: sticky;
+	top: 0;
+	background-color: white;
+	color: inherit;
+	z-index: 2;
 }
 
 a {
-    text-decoration: none;
-    font-size: 18px;
-    white-space: nowrap;
-    // font-weight: 350;
-    cursor: pointer;
+	text-decoration: none;
+	font-size: 18px;
+	white-space: nowrap;
+	// font-weight: 350;
+	cursor: pointer;
 }
 
 img.small {
-    height: 100px;
-    width: 100px;
-    margin-right: 12px;
+	height: 100px;
+	width: 100px;
+	margin-right: 12px;
 }
 
-.contain{
-	padding : 0px 24px;
+.contain {
+	padding: 0px 24px;
 }
 
 .floatLeft {
-    float: left;
+	float: left;
 }
 
 .flexColumn {
-    display: flex;
-    flex-direction: column;
-    gap: 36px;
+	display: flex;
+	flex-direction: column;
+	gap: 36px;
 }
 
-.animateContainer{
+.animateContainer {
 	perspective: 600px;
 }
 
 .content {
-    transform-origin: left;
-    opacity: 0;
-    min-height: 50px;
+	transform-origin: left;
+	opacity: 0;
+	min-height: 50px;
 	word-wrap: break-word;
 	white-space: pre-line;
 	font-size: 18px;
 }
 
 
+.globalProgressBar {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 8px;
+	z-index: 3;
+	border-radius: 0;
+}
+
+
+
 .dark-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.20);
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 12px;
-	.div{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.20);
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 12px;
+
+	.div {
 		background-color: white;
 	}
 }
 
-.insideOverlay{
+.insideOverlay {
 	textarea {
-        padding: 12px;
+		padding: 12px;
 		height: 30vh;
 		width: 90vw;
-    }
+	}
 
-    a {
-        
-        margin-right: 36px;
-    }
+	a {
 
-	progress{
+		margin-right: 36px;
+	}
+
+	progress {
 		accent-color: white;
 		width: 90vw;
 	}
 }
 
-.newOverlay{
-    
-    
+.newOverlay {
+
+
 	width: 80vw;
-    /* Animation starting state */
-    opacity: 0;
-    transform: scale(0.95);
-    animation: fadeSlideIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+	/* Animation starting state */
+	opacity: 0;
+	transform: scale(0.95);
+	animation: fadeSlideIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
 	textarea {
-        padding: 12px;
+		padding: 12px;
 		height: 30vh;
 		width: 100%;
-    }
+	}
 
-	div{
+	div {
 		display: flex;
 		justify-content: center;
 	}
-    a {
-        margin : 16px 16px;
-		color: whitesmoke;
-    }
 
-	progress{
+	a {
+		margin: 16px 16px;
+		color: whitesmoke;
+	}
+
+	progress {
 		// accent-color: white;
 		width: 50vw;
 	}
@@ -138,90 +154,93 @@ img.small {
 
 
 @keyframes fadeSlideIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.95);
-    }
+	0% {
+		opacity: 0;
+		transform: scale(0.95);
+	}
 
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 
 @keyframes fadeSlideOut {
-    0% {
-        opacity: 1;
-        transform: scale(1);
-    }
+	0% {
+		opacity: 1;
+		transform: scale(1);
+	}
 
-    100% {
-        opacity: 0;
-        transform: scale(0.95);
-    }
+	100% {
+		opacity: 0;
+		transform: scale(0.95);
+	}
 }
 
 .fade-out {
-    animation: fadeSlideOut 0.1s ease forwards;
+	animation: fadeSlideOut 0.1s ease forwards;
 }
 
 
 @keyframes flipOutLeft3D {
-    0% {
-        transform: rotateY(0deg);
-        opacity: 1;
-    }
+	0% {
+		transform: rotateY(0deg);
+		opacity: 1;
+	}
 
-    100% {
-        transform: rotateY(-90deg);
-        opacity: 0;
-    }
+	100% {
+		transform: rotateY(-90deg);
+		opacity: 0;
+	}
 }
 
 
 
 @keyframes flipIn {
-    0% {
-        transform: rotateY(90deg);
-        opacity: 0;
-    }
+	0% {
+		transform: rotateY(90deg);
+		opacity: 0;
+	}
 
-    100% {
-        transform: rotateY(0deg);
-        opacity: 1;
-    }
+	100% {
+		transform: rotateY(0deg);
+		opacity: 1;
+	}
 }
 
 .flippedIn {
-    animation: flipIn 0.3s linear forwards;
+	animation: flipIn 0.3s linear forwards;
 }
 
 .flippedOut {
-    animation: flipOutLeft3D 0.3s linear forwards;
+	animation: flipOutLeft3D 0.3s linear forwards;
 }
 
 
 .pointer {
-    cursor: pointer;
+	cursor: pointer;
 }
 
-.cdk-overlay-dark-backdrop{
-	background:rgba(0,0,0,.9)
+.cdk-overlay-dark-backdrop {
+	background: rgba(0, 0, 0, .9)
 }
+
 .custom-overlay-backdrop {
-  background: rgba(0, 0, 0, 0.3); /* black with 30% opacity */
+	background: rgba(0, 0, 0, 0.3);
+	/* black with 30% opacity */
 }
+
 /* For Angular CDK dialog */
 .cdk-overlay-pane:focus {
-  outline: none;
+	outline: none;
 }
 
 /* For Angular Material dialog */
 .mat-mdc-dialog-surface:focus {
-  outline: none;
+	outline: none;
 }
 
-.links{
+.links {
 	// font-weight: bold;
 	font-size: 12px;
 	text-decoration: underline;

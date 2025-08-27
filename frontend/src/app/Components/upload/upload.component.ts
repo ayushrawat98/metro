@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ExternaldataService } from '../../Services/externaldata.service';
 import { InternaldataService } from '../../Services/internaldata.service';
 import { HttpEventType } from '@angular/common/http';
-import { tap, last } from 'rxjs';
+import { tap, last, map, throwError, of, mergeMap } from 'rxjs';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 
 @Component({
@@ -15,7 +15,7 @@ import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 export class UploadComponent {
 
 	data = inject(DIALOG_DATA);
-	dialogRef = inject(DialogRef<{unsavedReplyData : string, completed : boolean}>);
+	dialogRef = inject(DialogRef<{ unsavedReplyData: string, completed: boolean }>);
 
 	forwhat = input<string>(this.data.forwhat) //thread or reply
 	replyTo = input<number>(this.data.replyTo) //required for reply
@@ -25,13 +25,13 @@ export class UploadComponent {
 	// triggerRefresh = output<boolean>()
 	overlay = viewChild<ElementRef>('overlay')
 
-	replyData = this.data.unsavedReplyData
+	replyData = this.data.unsavedReplyData ?? ''
 	replyFile: File | undefined | null
 	fileUploadProgress = 0
 	showError = false
 	errorMessage = ""
 
-	constructor(private externalData: ExternaldataService) { }
+	constructor(private externalData: ExternaldataService, public internalData: InternaldataService) { }
 
 	fileSelected(event: Event) {
 		this.replyFile = (event.target as HTMLInputElement).files?.item(0)
@@ -39,7 +39,7 @@ export class UploadComponent {
 
 	closeReplyPopup() {
 		// this.closepopup.emit(true)
-		this.dialogRef.close({unsavedReplyData : this.replyData,completed : false})
+		this.dialogRef.close({ unsavedReplyData: this.replyData, completed: false })
 	}
 
 	animateExit() {
@@ -57,9 +57,9 @@ export class UploadComponent {
 		}
 	}
 
-	timeoutref! : any
-	errorHandler = (err : any) => {
-		if(this.timeoutref){
+	timeoutref!: any
+	errorHandler = (err: any) => {
+		if (this.timeoutref) {
 			clearTimeout(this.timeoutref)
 		}
 		this.showError = true
@@ -107,20 +107,48 @@ export class UploadComponent {
 			})
 	}
 
+		showErrorMessage(msg : string){
+		if (this.timeoutref) {
+			clearTimeout(this.timeoutref)
+		}
+		this.showError = true
+		this.errorMessage = msg
+		this.timeoutref = setTimeout(() => {
+			this.showError = false
+			this.errorMessage = ""
+		}, 2000);
+	}
+
 	createThread() {
-		if (this.replyData.trim().length == 0) return;
+		if (this.replyData.trim().length == 0){
+			this.showErrorMessage("Thread cannot be empty")
+			return
+		}else if(!this.replyFile){
+			this.showErrorMessage("File is required")
+			return
+		}else if(this.replyFile  && this.replyFile?.size > 5000000){
+			this.showErrorMessage("File size should be less than 5 MB")
+			return
+		}
 		const body = new FormData()
-		body.append('content', this.replyData.trim().slice(0, 1000).replace(/p+a+j+e+t+/gi, "paneer"))
+		body.append('content', this.replyData.trim().slice(0, 1000).replace(/p+a+j+e+t+/gi, "Raja Ji"))
 		body.append('file', this.replyFile as Blob)
 		body.append('ogfilename', this.replyFile?.name ?? "aparichit")
 		this.externalData.postThread(body, this.currentBoard())
 			.pipe(
 				tap(event => {
+					if(event.type == 0){
+						this.dialogRef.close({ unsavedReplyData: '', completed: true })
+					}
 					if (event.type == HttpEventType.UploadProgress) {
 						this.fileUploadProgress = Math.round(100 * event.loaded / (event.total ?? 1));
+						this.internalData.globalProgressBarValue.set(this.fileUploadProgress)
+
 					}
 					else if (event.type === HttpEventType.Response) {
 						this.fileUploadProgress = 0
+						this.internalData.globalProgressBarValue.set(this.fileUploadProgress)
+
 					}
 				}),
 				last()
@@ -128,11 +156,12 @@ export class UploadComponent {
 			.subscribe({
 				next: (res) => {
 					//reset data
-					this.animateExit()
-					this.dialogRef.close({unsavedReplyData : '' , completed : true})
+					// this.animateExit()
+					// this.dialogRef.close({ unsavedReplyData: '', completed: true })
 					this.replyFile = null
 					this.replyData = ''
 					this.setUserReplyList(res)
+					this.internalData.refreshThreadTrigger$.next()
 					//refresh data\
 					// this.triggerRefresh.emit(true)
 					// this.internalData.boardSubject.next(this.currentBoard)
@@ -141,11 +170,11 @@ export class UploadComponent {
 			})
 	}
 
-	setUserReplyList(res : any){
+	setUserReplyList(res: any) {
 		let old = localStorage.getItem("replies")
-		if(old){
+		if (old) {
 			localStorage.setItem("replies", old + res.body.lastInsertRowid + ",")
-		}else{
+		} else {
 			localStorage.setItem("replies", res.body.lastInsertRowid + ",")
 		}
 	}
