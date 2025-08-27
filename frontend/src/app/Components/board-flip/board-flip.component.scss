@@ -7,7 +7,7 @@
 
 .parent{
 	position: relative;
-	transition: transform 2s;
+	transition: transform 2s cubic-bezier(0.42, 0, 0, 1.41) 300ms;
 	transform-style: preserve-3d; 
 	height: 24px;
 }
