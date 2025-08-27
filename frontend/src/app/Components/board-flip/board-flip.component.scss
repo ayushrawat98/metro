@@ -1,0 +1,28 @@
+.front{
+	 backface-visibility: hidden;
+	 position: absolute;
+	 height: 100%;
+	 width: 100%;
+}
+
+.parent{
+	position: relative;
+	transition: transform 2s;
+	transform-style: preserve-3d; 
+	height: 24px;
+}
+
+.parent:hover{
+	transform: rotateX(180deg);
+}
+
+.behind{
+	position: absolute;
+	transform: rotateX(180deg);
+	backface-visibility: hidden;
+	height: 100%;
+	width: 100%;
+}
+.animateFlip{
+	transform: rotateX(180deg);
+}

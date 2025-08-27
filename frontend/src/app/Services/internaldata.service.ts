@@ -9,7 +9,7 @@ export class InternaldataService {
 
   constructor() { }
 
-  currentBoard = signal<string>('b')
+  currentBoard = signal<string>('')
   currentThread = signal<number|string>(-1)
   currentTheme = signal<"light"|"dark">("light")
   

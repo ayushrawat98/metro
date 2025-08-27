@@ -2,15 +2,20 @@ import { Component, ElementRef, output, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ScrollService } from '../../Services/scroll.service';
 import { InternaldataService } from '../../Services/internaldata.service';
+import { BoardFlipComponent } from '../board-flip/board-flip.component';
 
 @Component({
 	selector: 'app-board',
-	imports: [],
+	imports: [BoardFlipComponent],
 	templateUrl: './board.component.html',
 	styleUrl: './board.component.scss'
 })
 export class BoardComponent {
-	boards = ['b', 'yog', 'meta']
+	boards = [
+		{name : 'b', desc : '/random/'},
+		{name : 'yog', desc : '/योग, Lit, Philosophy/'},
+		{name : 'meta', desc : '/abuse admin here/'}
+	]
 
 	constructor(
 		private scrollService: ScrollService,
