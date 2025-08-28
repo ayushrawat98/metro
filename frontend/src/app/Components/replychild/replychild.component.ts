@@ -2,12 +2,13 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, Input, input, output
 import { ContentComponent } from '../../Classes/content';
 import { reply } from '../../Models/thread';
 import { ConvertLinkPipe } from '../../Pipes/convert-link.pipe';
+import { RemoveSpacePipe } from '../../Pipes/remove-space.pipe';
 
 @Component({
 	selector: 'app-replychild',
 	templateUrl: './replychild.component.html',
 	styleUrl: './replychild.component.scss',
-	imports : [ConvertLinkPipe],
+	imports : [ConvertLinkPipe, RemoveSpacePipe],
 	changeDetection : ChangeDetectionStrategy.OnPush
 })
 export class ReplychildComponent extends ContentComponent<reply> implements AfterViewInit {

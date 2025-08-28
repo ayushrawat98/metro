@@ -6,7 +6,7 @@
 		@if (item.type == 'link') {
 			<a  (click)="selectReply(item.value, $event)">&gt;&gt;{{item.shownValue}}</a>
 		}@else {
-			<span>{{item.value}}</span>
+			<span>{{item.value | removeSpace}}</span>
 		}
 	}
 	<br/>
