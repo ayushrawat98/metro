@@ -10,10 +10,14 @@ export abstract class ContentComponent<T> {
 
 	ngAfterViewInit(): void {
 		//cant just add the class because I want staggered animation
-		if(this.index() > 8) return;
-		setTimeout(() => {
+		if (this.index() < 8) {
+			setTimeout(() => {
+				this.container()?.nativeElement.classList.add('flippedIn')
+			}, this.index() * 70);
+		} else {
 			this.container()?.nativeElement.classList.add('flippedIn')
-		}, this.index() * 70);
+		}
+
 	}
 
 }
