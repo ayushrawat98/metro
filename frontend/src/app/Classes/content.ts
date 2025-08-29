@@ -12,7 +12,7 @@ export abstract class ContentComponent<T> {
 		//cant just add the class because I want staggered animation
 		setTimeout(() => {
 			this.container()?.nativeElement.classList.add('flippedIn')
-		}, this.index() * 60);
+		}, this.index() * 10);
 	}
 
 }
