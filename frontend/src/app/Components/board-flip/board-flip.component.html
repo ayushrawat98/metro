@@ -1,13 +1,8 @@
 <div class="parent" [class.animateFlip]="flip">
-	<div class="front">
-		@if(slash()){
-			/{{board()}}/
-		}@else {
-			{{board()}}
-		}
-		
-	</div>
-	<div class="behind">
+	<a class="front">
+		/{{board()}}/
+	</a>
+	<a class="behind">
 		{{desc()}}
-	</div>
+	</a>
 </div>

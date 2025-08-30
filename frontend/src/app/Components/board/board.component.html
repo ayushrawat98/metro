@@ -5,7 +5,7 @@
 
 	<div class="flexColumn shorter">
 		@for (board of boards; track $index) {
-		<app-board-flip style="height: 24px; font-size: 18px;" [board]="board.name" [desc]="board.desc" [slash]="true" (click)="boardChanged(board.name)"></app-board-flip>
+			<app-board-flip [board]="board.name" [desc]="board.desc" (click)="boardChanged(board.name)"></app-board-flip>
 		}
 		<a class="big" (click)="changeMode()">/{{internalData.currentTheme()}}/</a>
 		<!-- <a (click)="pause()">/{{songstate}}/</a> -->
@@ -13,4 +13,4 @@
 </div>
 
 <!-- pranks -->
-<!-- <audio #song src="LMFAO-SFPR.mp3" hidden autoplay></audio> -->
+ <!-- <audio #song src="LMFAO-SFPR.mp3" hidden autoplay></audio> -->

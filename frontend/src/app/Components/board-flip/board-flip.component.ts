@@ -10,7 +10,6 @@ export class BoardFlipComponent {
 	flip = false
 	board = input<string>()
 	desc = input<string>()
-	slash = input<boolean>(false)
 	constructor() {
 		setTimeout(() => {
 			this.flip = true

@@ -10,11 +10,10 @@ import { ActivatedRoute } from '@angular/router';
 import { UploadComponent } from '../upload/upload.component';
 import {Dialog} from '@angular/cdk/dialog';
 import { SortThreadPipe } from '../../Pipes/sort-thread.pipe';
-import { BoardFlipComponent } from '../board-flip/board-flip.component';
 
 @Component({
 	selector: 'app-thread',
-	imports: [AsyncPipe, ThreadchildComponent, FormsModule, SortThreadPipe, BoardFlipComponent],
+	imports: [AsyncPipe, ThreadchildComponent, FormsModule, SortThreadPipe],
 	templateUrl: './thread.component.html',
 	styleUrl: './thread.component.scss',
 	host : {
