@@ -1,6 +1,6 @@
 <div class="contain">
-	<h1 (click)="showThreadPopup()" class="pointer">
-		threads
+	<h1 (click)="showThreadPopup()" class="pointer" >
+		<app-board-flip style="height: 96px;"  [board]="'threads'" [desc]="'create'"></app-board-flip>
 	</h1>
 
 	<!-- (click)="emitEvent()" -->
