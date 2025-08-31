@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, input } from '@angular/core';
 import { ContentComponent } from '../../Classes/content';
 import { ScrollService } from '../../Services/scroll.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { thread } from '../../Models/thread';
 })
 export class ThreadchildComponent extends ContentComponent<thread> implements AfterViewInit {
 
-  constructor(private router : Router, private route : ActivatedRoute, private scrollService: ScrollService) {
+  constructor(private router : Router, private route : ActivatedRoute,@Inject('mainContainer') private scrollService: ScrollService) {
     super()
   }
 

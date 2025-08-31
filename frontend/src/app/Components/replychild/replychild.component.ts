@@ -1,8 +1,9 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, input, output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, Input, input, output } from '@angular/core';
 import { ContentComponent } from '../../Classes/content';
 import { reply } from '../../Models/thread';
 import { ConvertLinkPipe } from '../../Pipes/convert-link.pipe';
 import { RemoveSpacePipe } from '../../Pipes/remove-space.pipe';
+import { ScrollService } from '../../Services/scroll.service';
 
 @Component({
 	selector: 'app-replychild',
@@ -21,6 +22,16 @@ export class ReplychildComponent extends ContentComponent<reply> implements Afte
 	// selectReply(item: reply, event : Event) {
 	// 	this.selectedReply.emit({item : item, element : event.target as HTMLElement})
 	// }
+
+	constructor(
+		@Inject('repliesContainer') private scrollService : ScrollService
+	){
+		super()
+	}
+	
+	scrollBottom(){
+		this.scrollService.scrollBottom()
+	}
 
 	selectReply(id : string|number, event : Event){
 		this.selectedReply.emit({item : Number(id), element : event.target as HTMLElement})

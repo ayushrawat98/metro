@@ -10,12 +10,16 @@
 		}
 	}
 	<br/>
-	@if(data().repliesFrom?.length){
+	<a  (click)="replyId.emit(data().id)" style="text-decoration: underline;">reply</a>
+	@if(!data().threadid){
+		<a style="text-decoration: underline; margin-left: 12px;" (click)="scrollBottom()">down</a>
+	}
+	<!-- @if(data().repliesFrom?.length){
 		<a  (click)="replyId.emit(data().id)" style="margin-right: 12px; text-decoration: underline;">reply</a>
-			<!-- @for (item of data().repliesFrom; track item) {
+			@for (item of data().repliesFrom; track item) {
 				<a class="links" (click)="selectReply(item, $event)" style="margin-right: 12px;">&gt;&gt;{{item}}</a>
-			} -->
+			}
 	}@else {
 		<a  (click)="replyId.emit(data().id)" style="text-decoration: underline;">reply</a>
-	}
+	} -->
 </div>

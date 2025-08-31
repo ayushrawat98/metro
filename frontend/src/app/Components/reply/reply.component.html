@@ -1,8 +1,9 @@
-<div class="contain">
+<div class="contain" >
 	<h1>
 		replies
 	</h1>
 
+	
 	<div class="flexColumn extra">
 		@if((replyList$ | async); as replyList){
 			@for (reply of replyList; track reply.id) {
@@ -13,5 +14,13 @@
 
 	<br />
 	<br />
+
+	<a style="text-decoration: underline" (click)="scrollUp()">up</a>
+
+	<br />
+	<br />
+
 </div>
 
+
+	

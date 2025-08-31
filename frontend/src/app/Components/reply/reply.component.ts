@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, ElementRef, OnInit, output, Signal, viewChild, viewChildren } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, output, Signal, viewChild, viewChildren } from '@angular/core';
 import { catchError, filter, interval, last, map, merge, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { InternaldataService } from '../../Services/internaldata.service';
 import { ReplychildComponent } from '../replychild/replychild.component';
@@ -14,6 +14,7 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ReplymicroComponent } from '../replymicro/replymicro.component';
 import { ExpandmediaComponent } from '../expandmedia/expandmedia.component';
+import { ScrollService } from '../../Services/scroll.service';
 
 @Component({
 	selector: 'app-reply',
@@ -35,7 +36,8 @@ export class ReplyComponent implements OnInit {
 		private externalData: ExternaldataService,
 		private route: ActivatedRoute,
 		private dialog: Dialog,
-		private overlay: Overlay
+		private overlay: Overlay,
+		@Inject('repliesContainer') private scrollService : ScrollService
 	) {}
 
 	ngOnInit(): void {
@@ -197,6 +199,10 @@ export class ReplyComponent implements OnInit {
 			autoFocus: false,
 			restoreFocus: false
 		})
+	}
+
+	scrollUp(){
+		this.scrollService.scrollUp()
 	}
 }
 

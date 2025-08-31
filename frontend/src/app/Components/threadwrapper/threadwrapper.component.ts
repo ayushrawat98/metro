@@ -1,4 +1,4 @@
-import { Component, ElementRef, viewChild } from '@angular/core';
+import { Component, ElementRef, Inject, viewChild } from '@angular/core';
 import { ScrollService } from '../../Services/scroll.service';
 import { RouterOutlet } from '@angular/router';
 import { ThreadComponent } from '../thread/thread.component';
@@ -7,16 +7,22 @@ import { ThreadComponent } from '../thread/thread.component';
 @Component({
 	selector: 'app-threadwrapper',
 	imports: [RouterOutlet, RouterOutlet, ThreadComponent],
-	providers : [ScrollService],
+	providers : [{provide : 'mainContainer' , useClass : ScrollService}, {provide : 'repliesContainer' , useClass : ScrollService}],
 	templateUrl: './threadwrapper.component.html',
 	styleUrl: './threadwrapper.component.scss'
 })
 export class ThreadwrapperComponent {
 	scrollContainer = viewChild<ElementRef<HTMLElement>>('container')
+	repliesContainer = viewChild<ElementRef<HTMLElement>>('repliesContainer')
 
-	constructor(private scrollService: ScrollService) { }
+	constructor(
+		@Inject('mainContainer') private scrollServiceMain: ScrollService,
+		@Inject('repliesContainer') private scrollServiceReplies: ScrollService
+	) { }
 
 	ngAfterViewInit(): void {
-		this.scrollService.registerContainer(this.scrollContainer())
+		this.scrollServiceMain.registerContainer(this.scrollContainer())
+		this.scrollServiceReplies.registerContainer(this.repliesContainer())
+
 	}
 }
