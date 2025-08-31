@@ -35,7 +35,7 @@ class DB{
             `
         )
         this.queries = {
-            getThreads : this.db.prepare('select * from posts where boardname = ? and threadid is null order by created_at desc limit 50'),
+            getThreads : this.db.prepare('select * from posts where boardname = ? and threadid is null order by created_at desc limit 100'),
             getThread : this.db.prepare('select * from posts where id = ?'),
 			deleteThread : this.db.prepare('delete from posts where id = ?'),
             createThread : this.db.prepare('insert into posts (boardname, content, ogfilename, file, mimetype, created_at, updated_at) values (?,?,?,?, ?,?,?)'),
