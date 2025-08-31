@@ -22,7 +22,7 @@ export class SortThreadPipe implements PipeTransform {
 
 	score(r: number, t: string): number {
 		let time = Math.trunc((Date.now() - new Date(t).getTime()) / (1000*60*60)) + 1
-		return ((r*2)+50)*(0.9**time)
+		return (r+50)*(0.99**time)
 	}
 
 }
