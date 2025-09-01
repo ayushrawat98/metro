@@ -8,7 +8,7 @@ export class SortThreadPipe implements PipeTransform {
 
 	transform(value: thread[], ...args: unknown[]): thread[] {
 		let temp = [...value]
-		return temp.sort((a, b) => this.score(b.replycount, b.created_at) - this.score(a.replycount, a.created_at))
+		return temp.sort((a, b) => this.score(b.replycount, b.created_at, b.updated_at) - this.score(a.replycount, a.created_at, a.updated_at))
 		// return temp.sort((a : thread, b : thread) =>  {
 		// 	if(a.updated_at  > b.updated_at){
 		// 		return -1
@@ -20,9 +20,10 @@ export class SortThreadPipe implements PipeTransform {
 		// })
 	}
 
-	score(r: number, t: string): number {
+	score(r: number, t: string, t2 : string): number {
 		let time = (Date.now() - new Date(t).getTime()) / (1000*60*60)
-		return (r+50)*(0.99**time)
+		let lastupdate = 24 - ((Date.now() - new Date(t2).getTime()) / (1000*60*60))
+		return ((r+50)*(0.99**time))+lastupdate
 	}
 
 }
