@@ -1,5 +1,7 @@
 <div #overlay class="newOverlay">
-	<textarea [(ngModel)]="replyData" minlength="1" maxlength="1000"></textarea>
+	<div>
+		<textarea [(ngModel)]="replyData" minlength="1" maxlength="1000"></textarea>
+	</div>
 	<div>
 		<a class="big" (click)="fileInputTwo.click()">file{{forwhat() == 'thread' ? '*' : ''}}</a>
 		<a class="big" (click)="saveReply()">send</a>
