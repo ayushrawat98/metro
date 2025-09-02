@@ -14,7 +14,7 @@ export class BoardComponent {
 	boards = [
 		{name : 'b', desc : '/random/'},
 		{name : 'yog', desc : '/योग, Lit, Philosophy/'},
-		{name : 'pol', desc : '/ayega to modi hi/'},
+		// {name : 'pol', desc : '/ayega to modi hi/'},
 		{name : 'meta', desc : '/abuse admin here/'},
 	]
 
