@@ -201,8 +201,15 @@ export class ReplyComponent implements OnInit {
 		})
 	}
 
-	scrollUp(){
-		this.scrollService.scrollUp()
+
+	scrollDown = true
+	scroll(){
+		if(this.scrollDown){
+			this.scrollService.scrollBottom()
+		}else{
+			this.scrollService.scrollUp()
+		}
+		this.scrollDown = !this.scrollDown
 	}
 }
 

@@ -23,16 +23,11 @@ export class ReplychildComponent extends ContentComponent<reply> implements Afte
 	// 	this.selectedReply.emit({item : item, element : event.target as HTMLElement})
 	// }
 
-	constructor(
-		@Inject('repliesContainer') private scrollService : ScrollService
-	){
+	constructor(){
 		super()
 	}
 	
-	scrollBottom(){
-		this.scrollService.scrollBottom()
-	}
-
+	
 	selectReply(id : string|number, event : Event){
 		this.selectedReply.emit({item : Number(id), element : event.target as HTMLElement})
 	}
