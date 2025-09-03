@@ -21,7 +21,8 @@ export type reply = {
     created_at : string,
 	updated_at : string
     repliedTo? : number[],
-	repliesFrom? : number[]
+	repliesFrom? : number[],
+	username : string
 }
 
 export type Converted = {

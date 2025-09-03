@@ -4,6 +4,7 @@ const db = require('../db')
 const upload = require('../multer')
 const thumbnail = require('../thumbnail')
 const { ratelimit } = require('../ratelimit')
+const uniqueName = require('../unique')
 const map = {}
 
 //get all replies for a thread
@@ -21,7 +22,7 @@ router.delete('/:threadId', async(req, res, next) => {
 })
 
 //add new reply to the thread
-router.post('/:threadId', ratelimit(5000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
+router.post('/:threadId', ratelimit(5000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, uniqueName.uniqueName, async(req, res, next) => {
     const body = {
         threadId : req.params.threadId,
         content : req.body.content,
@@ -30,7 +31,8 @@ router.post('/:threadId', ratelimit(5000, map), upload.single('file'), thumbnail
         mimetype : req.file ? req.file?.mimetype : "",
         replyto : req.body.replyto,
 		boardname : req.body.boardname,
-        createdat : new Date().toISOString()
+        createdat : new Date().toISOString(),
+		username : req.uniqueName
     }
     const result = db.createReply(body)
     return res.send(result)

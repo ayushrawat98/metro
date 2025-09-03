@@ -2,9 +2,12 @@
 	@if (data().file != "") {
 		<img (click)="expandMedia.emit(data().id)" [src]="fileUrl + 't-' + data().file" [alt]="data().ogfilename" loading="lazy" class="floatLeft small">
 	}
+	@if(data().username){
+			<span style="font-style: italic;">{{data().username}}</span><br/>
+		}
 	@for(item of data().content | convertLink; track $index){
 		@if (item.type == 'link') {
-			<a  (click)="selectReply(item.value, $event)">&gt;&gt;{{item.shownValue}}</a>
+			<a class="blue"  (click)="selectReply(item.value, $event)">&gt;&gt;{{item.shownValue}}</a>
 		}@else {
 			<span>{{item.value | removeSpace}}</span>
 		}

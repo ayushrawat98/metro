@@ -4,6 +4,7 @@ const db = require('../db')
 const upload = require('../multer')
 const thumbnail = require('../thumbnail')
 const { ratelimit } = require('../ratelimit')
+const uniqueName = require('../unique')
 const map = {}
 
 //return all threads in this board
@@ -13,7 +14,7 @@ router.get('/:boardName', async(req, res, next) => {
 })
 
 //create new thread in current board
-router.post('/:boardName', ratelimit(15000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
+router.post('/:boardName', ratelimit(15000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, uniqueName.uniqueName, async(req, res, next) => {
     if(!req.file){
         return res.status(500).send("image is required")
     }
@@ -26,7 +27,8 @@ router.post('/:boardName', ratelimit(15000, map), upload.single('file'), thumbna
 		ogfilename : req.body.ogfilename,
         file : req.file.filename,
         mimetype : req.file.mimetype,
-        createdat : new Date().toISOString()
+        createdat : new Date().toISOString(),
+		username : req.uniqueName
     }
     const result = db.createThread(body)
     return res.send(result)
