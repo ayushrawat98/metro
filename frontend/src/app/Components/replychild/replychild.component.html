@@ -4,7 +4,9 @@
 	}
 	@if(data().username){
 			<span style="font-style: italic; font-size: 14px;">{{data().username}}</span><br/>
-		}
+	}@else {
+		<span style="font-style: italic; font-size: 14px;">	Killer_Tiger</span><br/>
+	}
 	@for(item of data().content | convertLink; track $index){
 		@if (item.type == 'link') {
 			<a class="blue"  (click)="selectReply(item.value, $event)">&gt;&gt;{{item.shownValue}}</a>
