@@ -22,7 +22,7 @@ export class ThreadchildComponent extends ContentComponent<thread> implements Af
 
   threadClicked(): void {
 	this.router.navigate(['threads', this.data().id],{relativeTo: this.route})
-    this.scrollService.scrollBy(310)
+    this.scrollService.scrollBy(400)
 	if(!localStorage.getItem("old")){
 		localStorage.setItem("old", "yes")
 	}
