@@ -21,3 +21,13 @@
 .italics{
 	font-style: italic;
 }
+
+.username{
+	font-weight: 300;font-size: 13px;display: none;
+}
+
+.content:hover{
+	.username{
+		display: inline;
+	}
+}
