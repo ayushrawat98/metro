@@ -15,10 +15,11 @@
 		}
 	}
 	<br/>
-	<a  (click)="replyId.emit(data().id)" style="font-weight: 300">reply</a>
-	 @if(data().username){
-			<a style="font-weight: 300; margin-left: 12px;">{{data().username}}</a>	
+	<a  (click)="replyId.emit(data().id)" style="font-weight: 300">reply 
+		@if(data().username){
+			: {{data().username}}
 	}
+	</a>
 	<!-- @if(!data().threadid){
 		<a style="text-decoration: underline; margin-left: 12px;" (click)="scrollBottom()">down</a>
 	} -->
