@@ -2,6 +2,10 @@
 	@if (data().file != "") {
 		<img (click)="expandMedia.emit(data().id)" [src]="fileUrl + 't-' + data().file" [alt]="data().ogfilename" loading="lazy" class="floatLeft small">
 	}
+@if(data().username){
+		<span style="font-weight: 300;font-size: 13px;">{{data().username}}<br/></span>
+	}
+	
 	<!-- @if(data().username){
 			<span style="font-style: italic; font-size: 14px;">{{data().username}}</span><br/>
 	}@else {
@@ -15,11 +19,12 @@
 		}
 	}
 	<br/>
-	<a  (click)="replyId.emit(data().id)" style="font-weight: 300">reply 
-		@if(data().username){
-			: {{data().username}}
-	}
+	
+	<a  (click)="replyId.emit(data().id)" style="text-decoration: underline;">reply 
 	</a>
+	
+
+	
 	<!-- @if(!data().threadid){
 		<a style="text-decoration: underline; margin-left: 12px;" (click)="scrollBottom()">down</a>
 	} -->

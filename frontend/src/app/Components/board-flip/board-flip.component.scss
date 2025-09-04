@@ -1,5 +1,6 @@
 .front{
 	 backface-visibility: hidden;
+	 -webkit-backface-visibility: hidden;
 	 position: absolute;
 	 height: 100%;
 	 width: 100%;
@@ -18,11 +19,12 @@
 
 .behind{
 	position: absolute;
-	transform: rotateX(180deg);
+	transform: rotateX(180deg) translateZ(0);
 	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
 	height: 100%;
 	width: 100%;
 }
 .animateFlip{
-	transform: rotateX(180deg);
+	transform: rotateX(180deg) translateZ(0);
 }
