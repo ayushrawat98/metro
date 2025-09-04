@@ -6,6 +6,7 @@ exports.uniqueName = async (req, res, next) => {
 		dictionaries: [adjectives, animals], // colors can be omitted here as not used
 		seed: ip.getClientIp(req)
 	});
+	console.log(ip.getClientIp(req), shortName)
 	req.uniqueName = shortName
 	next()
 }
