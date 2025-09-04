@@ -1,7 +1,7 @@
 const ip = require("request-ip")
 
 exports.ratelimit = (increasetime = 5000, map) => async (req, res, next) => {
-	const address = ip.getClientIp(req)
+	const address =  req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress;
 	const currenttime = Date.now()
 	if(map[address] == undefined){
 		map[address] = currenttime + increasetime

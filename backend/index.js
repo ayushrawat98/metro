@@ -10,9 +10,14 @@ const app = express()
 // app.use('/files', express.static(path.join(__dirname, 'data', 'files')));
 // app.use(cors())
 // app.use(express.json())
+app.set("trust proxy", true);
 
 app.use('/boards', boardRoutes)
 app.use('/threads', threadRoutes)
+
+app.use((error, req, res, next) => {
+	return res.status(500).json(error.message)
+})
 
 app.listen(3000, () => {
     console.log("Server running at Port 3000.")
