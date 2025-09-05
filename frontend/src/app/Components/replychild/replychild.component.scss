@@ -22,6 +22,17 @@
 	font-style: italic;
 }
 
-.username{
-	font-weight: 300;font-size: 13px;
+.details{
+	display: flex;
+	// justify-content: space-between;
+	gap: 12px;
+	font-weight: 300;
+	font-size: 13px;
+	padding: 5px 0px;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }

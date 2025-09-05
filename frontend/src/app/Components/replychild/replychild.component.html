@@ -1,39 +1,22 @@
 <div #container class="content">
-	@if (data().file != "") {
-		<img (click)="expandMedia.emit(data().id)" [src]="fileUrl + 't-' + data().file" [alt]="data().ogfilename" loading="lazy" class="floatLeft small">
-	}
-@if(data().username){
-		<span class="username">{{data().username}}<br/></span>
-	}
 	
-	<!-- @if(data().username){
-			<span style="font-style: italic; font-size: 14px;">{{data().username}}</span><br/>
-	}@else {
-		<span style="font-style: italic; font-size: 14px;">	Killer_Tiger</span><br/>
-	} -->
-	@for(item of data().content | convertLink; track $index){
-		@if (item.type == 'link') {
-			<a class="blue"  (click)="selectReply(item.value, $event)">&gt;&gt;{{item.shownValue}}</a>
-		}@else {
-			<span>{{item.value | removeSpace}}</span>
+	<div class="clearfix">
+		@if (data().file != "") {
+		<img (click)="expandMedia.emit(data().id)" [src]="fileUrl + 't-' + data().file" [alt]="data().ogfilename"
+			loading="lazy" class="floatLeft small">
 		}
-	}
-	<br/>
-	
-	<a  (click)="replyId.emit(data().id)" style="text-decoration: underline;">reply 
-	</a>
-	
 
-	
-	<!-- @if(!data().threadid){
-		<a style="text-decoration: underline; margin-left: 12px;" (click)="scrollBottom()">down</a>
-	} -->
-	<!-- @if(data().repliesFrom?.length){
-		<a  (click)="replyId.emit(data().id)" style="margin-right: 12px; text-decoration: underline;">reply</a>
-			@for (item of data().repliesFrom; track item) {
-				<a class="links" (click)="selectReply(item, $event)" style="margin-right: 12px;">&gt;&gt;{{item}}</a>
-			}
-	}@else {
-		<a  (click)="replyId.emit(data().id)" style="text-decoration: underline;">reply</a>
-	} -->
+		@for(item of data().content | convertLink; track $index){
+		@if (item.type == 'link') {
+		<a class="blue" (click)="selectReply(item.value, $event)">&gt;&gt;{{item.shownValue}}</a>
+		}@else {
+		<span>{{item.value | removeSpace}}</span>
+		}
+	}s
+	</div>
+	<div class="details">
+		<span>{{data().username ? data().username : "anonymous_mouse"}}</span>
+		<span>{{data().created_at | smartdate}}</span>
+		<span (click)="replyId.emit(data().id)" style="cursor: pointer;">reply</span>
+	</div>
 </div>
