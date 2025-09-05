@@ -5,6 +5,11 @@
 
 @media(min-width:1200px) {
     .header{
-		visibility: hidden;
+		display: none;
 	}
+
+	.shorter{
+		margin-top: 36px;
+	}
+	
 }
