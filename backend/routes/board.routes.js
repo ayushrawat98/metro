@@ -5,6 +5,7 @@ const upload = require('../multer')
 const thumbnail = require('../thumbnail')
 const { ratelimit } = require('../ratelimit')
 const uniqueName = require('../unique')
+const farmHash = require('farmhash')
 const map = {}
 
 //return all threads in this board
@@ -31,6 +32,9 @@ router.post('/:boardName', ratelimit(15000, map), upload.single('file'), thumbna
 		username : req.uniqueName
     }
     const result = db.createThread(body)
+	//set the username or hash for current thread
+	let newusername = farmHash.hash32WithSeed(req.realIp, Number(result.lastInsertRowid)).toFixed(0)
+	db.updateUsername(newusername, result.lastInsertRowid)
     return res.send(result)
 })
 

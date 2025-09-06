@@ -43,7 +43,8 @@ class DB{
             getReplies : this.db.prepare('select * from posts where threadid = ?'),
             createReply : this.db.prepare('insert into posts (boardname, threadid, content, ogfilename, file, mimetype, created_at, replyto, username) values (?,?,?,?,?, ?,?,?,?)'),
             updateReplyCount : this.db.prepare('update posts set replycount = replycount + 1 where id = ?'),
-			updateDate : this.db.prepare('update posts set updated_at = ? where id = ?')
+			updateDate : this.db.prepare('update posts set updated_at = ? where id = ?'),
+			updateUsername : this.db.prepare('update posts set username = ? where id = ?')
         }
     }
 
@@ -77,6 +78,10 @@ class DB{
         }
         return result
     }
+
+	updateUsername(username, id){
+		this.queries.updateUsername.run(username, id)
+	}
 }
 
 const instance = new DB()
