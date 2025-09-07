@@ -1,8 +1,23 @@
-<div class="parent" [class.animateFlip]="flip">
-	<a class="front">
-		/{{board()}}/
-	</a>
-	<a class="behind">
-		{{desc()}}
-	</a>
-</div>
+@if(type() == 'link'){
+	<div class="parent" [class.animateFlip]="flip">
+		<a class="front">
+			/{{board()}}/
+		</a>
+		<a class="behind">
+			{{desc()}}
+		</a>
+	</div>
+}
+
+@if(type() == 'header'){
+	<div class="parentHeader" [class.animateFlip]="flip">
+		<div class="front">
+			{{board()}}
+		</div>
+		<div class="behind">
+			{{desc()}}
+		</div>
+	</div>
+}
+
+

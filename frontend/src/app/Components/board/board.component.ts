@@ -13,9 +13,9 @@ import { BoardFlipComponent } from '../board-flip/board-flip.component';
 export class BoardComponent {
 	boards = [
 		{name : 'b', desc : '/random/'},
-		{name : 'yog', desc : '/योग, Lit, Philosophy/'},
+		{name : 'yog', desc : '/योग/'},
 		// {name : 'pol', desc : '/ayega to modi hi/'},
-		{name : 'meta', desc : '/abuse admin here/'},
+		{name : 'meta', desc : '/abuse admin/'},
 	]
 
 	constructor(

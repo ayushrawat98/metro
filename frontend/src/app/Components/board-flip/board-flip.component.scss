@@ -10,7 +10,15 @@
 	position: relative;
 	transition: transform 2s cubic-bezier(0.42, 0, 0, 1.41) 300ms;
 	transform-style: preserve-3d; 
-	height: 24px;
+	height: calc(18px * 1.5)
+}
+
+.parentHeader{
+	position: relative;
+	transition: transform 2s cubic-bezier(0.42, 0, 0, 1.41) 300ms;
+	transform-style: preserve-3d; 
+	// font-size: inherit;
+	height: calc(72px * 1.5)
 }
 
 // .parent:hover{
