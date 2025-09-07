@@ -5,6 +5,7 @@ import { ConvertLinkPipe } from '../../Pipes/convert-link.pipe';
 import { RemoveSpacePipe } from '../../Pipes/remove-space.pipe';
 import { ScrollService } from '../../Services/scroll.service';
 import { SmartdatePipe } from '../../Pipes/smartdate.pipe';
+import { InternaldataService } from '../../Services/internaldata.service';
 
 @Component({
 	selector: 'app-replychild',
@@ -24,7 +25,7 @@ export class ReplychildComponent extends ContentComponent<reply> implements Afte
 	// 	this.selectedReply.emit({item : item, element : event.target as HTMLElement})
 	// }
 
-	constructor(){
+	constructor(public internalData : InternaldataService){
 		super()
 	}
 	

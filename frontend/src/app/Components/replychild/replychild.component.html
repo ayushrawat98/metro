@@ -2,8 +2,8 @@
 	
 	<div class="clearfix">
 		@if (data().file != "") {
-		<img (click)="expandMedia.emit(data().id)" [src]="fileUrl + 't-' + data().file" [alt]="data().ogfilename"
-			loading="lazy" class="floatLeft small">
+			<img (click)="expandMedia.emit(data().id)" [src]="fileUrl + 't-' + data().file" [alt]="data().ogfilename"
+				loading="lazy" class="floatLeft small">
 		}
 
 		@for(item of data().content | convertLink; track $index){
@@ -13,10 +13,19 @@
 		<span>{{item.value | removeSpace}}</span>
 		}
 		}
+
+		@if (internalData.currentView() == 'clean') {
+			<br>
+			<a style="text-decoration: underline;" (click)="replyId.emit(data().id)">reply</a>
+		}
 	</div>
-	<div class="details">
+
+	@if (internalData.currentView() == 'detailed') {
+		<div class="details">
 		<span>{{data().username ? data().username : "anonymous_mouse"}}</span>
 		<span>{{data().created_at | smartdate}}</span>
 		<span (click)="replyId.emit(data().id)" style="cursor: pointer;">reply</span>
 	</div>
+	}
+	
 </div>

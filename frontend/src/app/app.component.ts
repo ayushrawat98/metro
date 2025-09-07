@@ -23,8 +23,12 @@ export class AppComponent implements AfterViewInit {
 	
 	ngOnInit(): void {
 		let pastTheme = localStorage.getItem("theme")
+		let pastView = localStorage.getItem("view")
 		if(pastTheme){
 			this.internalData.currentTheme.set(pastTheme as "light" | "dark")
+		}
+		if(pastView){
+			this.internalData.currentView.set(pastView as "clean" | "detailed")
 		}
 	}
 

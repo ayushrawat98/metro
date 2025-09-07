@@ -36,6 +36,11 @@ export class BoardComponent {
 		localStorage.setItem("theme", newTheme)
 	}
 
+	changeView(){
+		let newTheme = this.internalData.currentView()  == 'clean' ? 'detailed' : 'clean'
+		this.internalData.currentView.set(newTheme as "clean" | "detailed")
+		localStorage.setItem("view", newTheme)
+	}
 
 
 

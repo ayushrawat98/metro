@@ -8,6 +8,7 @@
 			<app-board-flip [board]="board.name" [desc]="board.desc" (click)="boardChanged(board.name)"></app-board-flip>
 		}
 		<a class="big" (click)="changeMode()">/{{internalData.currentTheme()}}/</a>
+		<a class="big" (click)="changeView()">/{{internalData.currentView()}}/</a>
 		<!-- <a (click)="pause()">/{{songstate}}/</a> -->
 	</div>
 </div>

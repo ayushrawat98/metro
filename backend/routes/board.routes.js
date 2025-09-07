@@ -34,13 +34,13 @@ router.post('/:boardName', ratelimit(15000, map), upload.single('file'), thumbna
     }
     const result = db.createThread(body)
 	//set the username or hash for current thread
-	// let newusername = farmHash.hash32WithSeed(req.realIp, Number(result.lastInsertRowid)).toFixed(0)
-	// db.updateUsername(newusername, result.lastInsertRowid)
-	const newusername = uniqueNamesGenerator({
-		dictionaries: [colors, adjectives, animals], // colors can be omitted here as not used
-		seed: req.realIp + result.lastInsertRowid
-	});
+	let newusername = farmHash.hash32WithSeed(req.realIp, Number(result.lastInsertRowid)).toFixed(0)
 	db.updateUsername(newusername, result.lastInsertRowid)
+	// const newusername = uniqueNamesGenerator({
+	// 	dictionaries: [colors, adjectives, animals], // colors can be omitted here as not used
+	// 	seed: req.realIp + result.lastInsertRowid
+	// });
+	// db.updateUsername(newusername, result.lastInsertRowid)
     return res.send(result)
 })
 
