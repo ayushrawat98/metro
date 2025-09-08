@@ -17,8 +17,8 @@ export class BoardComponent {
 		{name : 'fa', desc : '/fashion/'},
 		{name : 'g', desc : '/technology/'},
 		{name : 'dharm', desc : '/धर्म/'},
-		{name : 'out', desc : '/बाहर जाओ और	घास	स्पर्श करो/'},
-		{name : 'media', desc : '/music & movies/'},
+		{name : 'out', desc : '/बाहर जाओ/'},
+		{name : 'media', desc : '/music & movie/'},
 		{name : 'meta', desc : '/abuse admin/'},
 	]
 
