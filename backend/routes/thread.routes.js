@@ -5,6 +5,8 @@ const upload = require('../multer')
 const thumbnail = require('../thumbnail')
 const { ratelimit } = require('../ratelimit')
 const uniqueName = require('../unique')
+const path = require("path")
+const fs = require('fs')
 const map = {}
 
 //get all replies for a thread
@@ -16,6 +18,13 @@ router.get('/:threadId', async (req, res, next) => {
 router.delete('/:threadId', async(req, res, next) => {
 	if(req.query.key != 'lele'){
 		return res.send("false")
+	}
+	const threadclone = db.getThread(req.params.threadId)
+	if(threadclone.file.trim().length > 0){
+		const deletefile = path.join(__dirname,'..', 'data', 'files', threadclone.file)
+		fs.unlinkSync(deletefile)
+		const deletethumbnail = path.join(__dirname,'..', 'data', 'files', 't-'+threadclone.file)
+		fs.unlinkSync(deletethumbnail)
 	}
     const result = db.deleteThread(req.params.threadId)
     return res.send(result)
