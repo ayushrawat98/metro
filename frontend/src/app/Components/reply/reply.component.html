@@ -9,6 +9,8 @@
 			@for (reply of replyList; track reply.id) {
 				<app-replychild class="animateContainer" [data]="reply" [index]="$index" (replyId)="createNewReply($event)" (selectedReply)="setSelectedReply($event)" (expandMedia)="expandMedia($event)"></app-replychild>
 			}
+		}@else {
+			loading...
 		}
 	</div>
 
