@@ -1,9 +1,9 @@
 @if(type() == 'link'){
 	<div class="parent" [class.animateFlip]="flip">
-		<a class="front globalFront">
+		<a class="front ">
 			/{{board()}}/
 		</a>
-		<a class="behind">
+		<a class="behind globalBack">
 			{{desc()}}
 		</a>
 	</div>
@@ -11,10 +11,10 @@
 
 @if(type() == 'header'){
 	<div class="parentHeader" [class.animateFlip]="flip">
-		<div class="front globalFront">
+		<div class="front ">
 			{{board()}}
 		</div>
-		<div class="behind">
+		<div class="behind globalBack">
 			{{desc()}}
 		</div>
 	</div>

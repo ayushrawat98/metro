@@ -4,7 +4,7 @@
 	 position: absolute;
 	 height: 100%;
 	 width: 100%;
-	 background-color: white;
+	 
 }
 
 .parent{
@@ -31,6 +31,7 @@
 	transform: rotateX(180deg) translateZ(0);
 	backface-visibility: hidden;
 	-webkit-backface-visibility: hidden;
+	background-color: white;
 	height: 100%;
 	width: 100%;
 }
