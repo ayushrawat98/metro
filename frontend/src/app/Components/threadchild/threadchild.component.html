@@ -1,6 +1,6 @@
 <div #container class="content" (click)="threadClicked()" >
     <img [src]="fileUrl + 't-' + data().file" [alt]="data().ogfilename" loading="lazy" class="floatLeft small">
-    {{data().content.length > 200 ? data().content.slice(0,200) + '...' : data().content}}
+    {{data().content.length > 280 ? data().content.slice(0,280) + '...' : data().content}}
 	 <!-- {{data().content}} -->
 	<!-- @if(data().content.length <= 180){
 		<br/>

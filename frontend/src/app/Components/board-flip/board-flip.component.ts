@@ -17,6 +17,6 @@ export class BoardFlipComponent {
 			setTimeout(() => {
 				this.flip = false
 			}, 3000);
-		}, Math.random()*6000);
+		}, Math.random()*30000);
 	}
 }

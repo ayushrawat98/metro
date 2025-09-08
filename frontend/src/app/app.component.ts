@@ -35,10 +35,5 @@ export class AppComponent implements AfterViewInit {
 
 	ngAfterViewInit(): void {
 		this.scrollService.registerContainer(this.scrollContainer())
-		//if old visitor , auto scroll to right
-		if(localStorage.getItem("old")){
-			this.scrollService.scrollBy(300)
-			this.router.navigate(['boards','b'])
-		}
 	}
 }

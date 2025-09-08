@@ -20,7 +20,7 @@ router.post('/:boardName', ratelimit(15000, map), upload.single('file'), thumbna
     if(!req.file){
         return res.status(500).send("image is required")
     }
-	if(!['b', 'yog', 'meta'].includes(req.params.boardName)){
+	if(!['b', 'yog', 'fa','g','dharm','meta'].includes(req.params.boardName)){
 		return res.status(400).send("board does not exist")
 	}
     const body = {

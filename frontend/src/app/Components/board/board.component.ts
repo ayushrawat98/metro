@@ -14,6 +14,9 @@ export class BoardComponent {
 	boards = [
 		{name : 'b', desc : '/random/'},
 		{name : 'yog', desc : '/योग/'},
+		{name : 'fa', desc : '/fashion/'},
+		{name : 'g', desc : '/technology/'},
+		{name : 'dharm', desc : '/धर्म/'},
 		{name : 'meta', desc : '/abuse admin/'},
 	]
 
