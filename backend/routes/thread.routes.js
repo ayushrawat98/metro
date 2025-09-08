@@ -22,7 +22,7 @@ router.delete('/:threadId', async(req, res, next) => {
 })
 
 //add new reply to the thread
-router.post('/:threadId', ratelimit(5000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, uniqueName.uniqueName, async(req, res, next) => {
+router.post('/:threadId', ratelimit(10000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, uniqueName.uniqueName, async(req, res, next) => {
     const body = {
         threadId : req.params.threadId,
         content : req.body.content,

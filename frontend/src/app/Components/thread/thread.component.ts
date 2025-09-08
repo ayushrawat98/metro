@@ -58,34 +58,6 @@ export class ThreadComponent implements OnInit {
 		)
 
 	}
-
-
-	// showForm() {
-	//   if (this.flipOut.every(x => x == false)) {
-	//     this.scrollContainer = this.internalData.threadScrollContainer
-	//     let elementskipped = Math.trunc(((this.scrollContainer?.nativeElement.scrollTop ?? 0) + 96) / 124) - 1
-	//     for (let i = elementskipped; i < elementskipped + 8; ++i) {
-	//       setTimeout(() => {
-	//         this.flipOut[i] = true
-	//       }, 50 * (i + 1 - elementskipped));
-	//     }
-	//     setTimeout(() => {
-	//       this.showCreateThreadForm = true
-	//     }, 600);
-	//   } else {
-	//     this.flipOut = Array(50).fill(false)
-	//     this.showCreateThreadForm = false
-	//   }
-	// }
-
-	// closePopup(){
-	// 	this.setShowThreadPopup(false)
-	// }
-
-	// triggerRefresh(){
-	// 	this.refreshTrigger$.next()
-	// }
-
 	
 	showThreadPopup() {
 		const dialogRef = this.dialog.open<dialogReturnData>(UploadComponent, {

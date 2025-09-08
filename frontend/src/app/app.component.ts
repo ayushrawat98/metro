@@ -3,7 +3,7 @@ import { BoardComponent } from "./Components/board/board.component";
 import { ScrollService } from './Services/scroll.service';
 import { InternaldataService } from './Services/internaldata.service';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
 	selector: 'app-root',
@@ -19,6 +19,7 @@ export class AppComponent implements AfterViewInit {
 	constructor(
 		private scrollService: ScrollService,
 		public internalData: InternaldataService,
+		public router : Router
 	) { }
 	
 	ngOnInit(): void {
@@ -37,6 +38,7 @@ export class AppComponent implements AfterViewInit {
 		//if old visitor , auto scroll to right
 		if(localStorage.getItem("old")){
 			this.scrollService.scrollBy(300)
+			this.router.navigate(['boards','b'])
 		}
 	}
 }

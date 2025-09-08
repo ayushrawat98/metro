@@ -23,6 +23,5 @@ export class ThreadwrapperComponent {
 	ngAfterViewInit(): void {
 		this.scrollServiceMain.registerContainer(this.scrollContainer())
 		this.scrollServiceReplies.registerContainer(this.repliesContainer())
-
 	}
 }

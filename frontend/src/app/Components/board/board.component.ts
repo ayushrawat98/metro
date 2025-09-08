@@ -14,7 +14,6 @@ export class BoardComponent {
 	boards = [
 		{name : 'b', desc : '/random/'},
 		{name : 'yog', desc : '/योग/'},
-		// {name : 'pol', desc : '/ayega to modi hi/'},
 		{name : 'meta', desc : '/abuse admin/'},
 	]
 

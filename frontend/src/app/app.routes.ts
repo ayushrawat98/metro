@@ -14,7 +14,7 @@ export const routes: Routes = [
 	},
 	{
 		path : '**',
-		redirectTo : 'boards/b',
+		redirectTo : '',
 		pathMatch : 'full'
 	}
 ];
