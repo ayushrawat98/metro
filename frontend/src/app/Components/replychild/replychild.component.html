@@ -8,7 +8,7 @@
 
 		@for(item of data().content | convertLink; track $index){
 		@if (item.type == 'link') {
-		<a style="font-weight: 350;" class="blue" (click)="selectReply(item.value, $event)">{{item.shownValue}}</a>
+		<a style="font-weight: 300;" class="blue" (click)="selectReply(item.value, $event)">{{item.shownValue}}</a>
 		}@else {
 		<span>{{item.value | removeSpace}}</span>
 		}
@@ -16,7 +16,7 @@
 
 		@if (internalData.currentView() == 'clean') {
 			<br>
-			<a style="font-weight: 350;"   (click)="replyId.emit(data().id)">reply</a>
+			<a style="font-weight: 300;"   (click)="replyId.emit(data().id)">reply</a>
 		}
 	</div>
 
