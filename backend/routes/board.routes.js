@@ -16,7 +16,7 @@ router.get('/:boardName', async(req, res, next) => {
 })
 
 //create new thread in current board
-router.post('/:boardName', ratelimit(15000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, uniqueName.uniqueName, async(req, res, next) => {
+router.post('/:boardName', ratelimit(15000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
     if(!req.file){
         return res.status(500).send("image is required")
     }
@@ -30,12 +30,12 @@ router.post('/:boardName', ratelimit(15000, map), upload.single('file'), thumbna
         file : req.file.filename,
         mimetype : req.file.mimetype,
         createdat : new Date().toISOString(),
-		username : req.uniqueName
+		username : 'anonymouse'
     }
     const result = db.createThread(body)
 	//set the username or hash for current thread
-	let newusername = farmHash.hash32WithSeed(req.realIp, Number(result.lastInsertRowid)).toFixed(0)
-	db.updateUsername(newusername, result.lastInsertRowid)
+	// let newusername = farmHash.hash32WithSeed(req.realIp, Number(result.lastInsertRowid)).toFixed(0)
+	// db.updateUsername(newusername, result.lastInsertRowid)
 	// const newusername = uniqueNamesGenerator({
 	// 	dictionaries: [colors, adjectives, animals], // colors can be omitted here as not used
 	// 	seed: req.realIp + result.lastInsertRowid
