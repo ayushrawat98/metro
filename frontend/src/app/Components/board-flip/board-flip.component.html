@@ -1,6 +1,6 @@
 @if(type() == 'link'){
 	<div class="parent" [class.animateFlip]="flip">
-		<a class="front">
+		<a class="front globalFront">
 			/{{board()}}/
 		</a>
 		<a class="behind">
@@ -11,7 +11,7 @@
 
 @if(type() == 'header'){
 	<div class="parentHeader" [class.animateFlip]="flip">
-		<div class="front">
+		<div class="front globalFront">
 			{{board()}}
 		</div>
 		<div class="behind">
