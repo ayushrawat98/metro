@@ -8,15 +8,15 @@
 
 		@for(item of data().content | convertLink; track $index){
 		@if (item.type == 'link') {
-		<a class="blue" (click)="selectReply(item.value, $event)">{{item.shownValue}}</a>
+		<a class="blue" (click)="selectReply(item.value, $event)">&gt;&gt;{{item.shownValue}}</a>
 		}@else {
-		<span style="font-weight: 500;">{{item.value | removeSpace}}</span>
+		<span>{{item.value | removeSpace}}</span>
 		}
 		}
 
 		@if (internalData.currentView() == 'clean') {
 			<br>
-			<a  (click)="replyId.emit(data().id)">reply</a>
+			<a style="text-decoration: underline;"  (click)="replyId.emit(data().id)">reply</a>
 		}
 	</div>
 
