@@ -11,8 +11,8 @@
 		<a class="blue" (click)="selectReply(item.value, $event)">&gt;&gt;{{item.shownValue}}</a>
 		}@else if(item.type == 'text') {
 		<span>{{item.value | removeSpace}}</span>
-		}@else if(item.type == 'greentext'){
-			<span style="color: rgb(0, 64, 0);">{{item.value | removeSpace}}</span>
+		}@else if(item.type == 'greenline'){
+			<span style="color: rgb(0, 75, 0);">{{item.value | removeSpace}}</span>
 		}
 		}
 
