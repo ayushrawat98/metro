@@ -8,17 +8,17 @@
 
 		@for(item of data().content | convertLink; track $index){
 		@if (item.type == 'link') {
-		<a class="blue" (click)="selectReply(item.value, $event)">&gt;&gt;{{item.shownValue}}</a>
+		<a class="blue" style="font-size: 16px;" (click)="selectReply(item.value, $event)">&gt;&gt;{{item.shownValue}}</a>
 		}@else if(item.type == 'text') {
 		<span>{{item.value | removeSpace}}</span>
 		}@else if(item.type == 'greenline'){
-			<span style="color: rgb(0, 75, 0);">{{item.value | removeSpace}}</span>
+			<span style="color: rgb(0, 75, 0)">{{item.value | removeSpace}}</span>
 		}
 		}
 
 		@if (internalData.currentView() == 'clean') {
 			<br>
-			<a style="text-decoration: underline;"  (click)="replyId.emit(data().id)">reply</a>
+			<a style="text-decoration: underline; font-size: 16px;"  (click)="replyId.emit(data().id)">reply</a>
 		}
 	</div>
 
