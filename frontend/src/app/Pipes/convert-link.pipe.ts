@@ -23,7 +23,7 @@ export class ConvertLinkPipe implements PipeTransform {
 				let before = content.slice(lastIndex, match.index);
 
 				// Split into lines and check for > greenline
-				before.split("\n").forEach(line => {
+				before.replaceAll('\r\n', '\n').split("\n").forEach(line => {
 					if (line.startsWith(">")) {
 						parts.push({ type: 'greenline', value: line });
 					} else if (line.length > 0) {
@@ -46,10 +46,10 @@ export class ConvertLinkPipe implements PipeTransform {
 
 		if (lastIndex < content.length) {
 			let remaining = content.slice(lastIndex);
-			remaining.split("\n").forEach(line => {
+			remaining.replaceAll('\r\n', '\n').split("\n").forEach(line => {
 				if (line.startsWith(">")) {
 					parts.push({ type: 'greenline', value: line });
-				} else if (line.length > 0) {
+				} else if (line.length > 0 && line != '\r') {
 					parts.push({ type: 'text', value: line, shownValue: line });
 				}
 			});
