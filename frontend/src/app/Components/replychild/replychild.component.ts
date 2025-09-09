@@ -14,7 +14,7 @@ import { InternaldataService } from '../../Services/internaldata.service';
 	imports : [ConvertLinkPipe, RemoveSpacePipe, SmartdatePipe],
 	changeDetection : ChangeDetectionStrategy.OnPush
 })
-export class ReplychildComponent extends ContentComponent<reply> implements AfterViewInit {
+export class ReplychildComponent extends ContentComponent<reply> {
 
 	replyId = output<number>()
 	// selectedReply = output<{item : reply, element:HTMLElement}>()

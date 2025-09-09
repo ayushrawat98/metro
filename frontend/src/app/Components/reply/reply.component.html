@@ -7,7 +7,8 @@
 	<div class="flexColumn extra">
 		@if((replyList$ | async); as replyList){
 			@for (reply of replyList; track reply.id) {
-				<app-replychild class="animateContainer" [data]="reply" [index]="$index" (replyId)="createNewReply($event)" (selectedReply)="setSelectedReply($event)" (expandMedia)="expandMedia($event)"></app-replychild>
+				 <!-- [index]="$index" -->
+				<app-replychild class="animateContainer" [data]="reply" [style.--i]="$index < 8 ? $index : 1" (replyId)="createNewReply($event)" (selectedReply)="setSelectedReply($event)" (expandMedia)="expandMedia($event)"></app-replychild>
 			}
 		}@else {
 			loading...

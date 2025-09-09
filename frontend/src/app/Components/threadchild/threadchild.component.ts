@@ -14,7 +14,7 @@ import { thread } from '../../Models/thread';
 	'(click)' : 'threadClicked()'
   }
 })
-export class ThreadchildComponent extends ContentComponent<thread> implements AfterViewInit {
+export class ThreadchildComponent extends ContentComponent<thread> {
 
   constructor(private router : Router, private route : ActivatedRoute,@Inject('mainContainer') private scrollService: ScrollService) {
     super()

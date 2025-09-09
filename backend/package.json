@@ -19,5 +19,8 @@
     "request-ip": "^3.3.0",
     "sharp": "^0.34.3",
     "unique-names-generator": "^4.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.1"
   }
 }
