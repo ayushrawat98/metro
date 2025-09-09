@@ -16,7 +16,7 @@ router.get('/:boardName', async(req, res, next) => {
 })
 
 //create new thread in current board
-router.post('/:boardName', ratelimit(15000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
+router.post('/:boardName', ratelimit(60000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
     if(!req.file){
         return res.status(500).send("image is required")
     }
