@@ -13,7 +13,8 @@
 
 .containerBlock {
     flex-shrink: 0;
-    scroll-snap-align: start;
+	scroll-snap-stop: always;
+    scroll-snap-align: center;
     height: 100%;
     width: 100%;
     overflow-y: auto;
