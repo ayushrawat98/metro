@@ -4,7 +4,8 @@ class DB{
     db;
     queries;
     constructor(){
-        this.db = sqlite('./data/database/metro.db')
+        this.db = sqlite('./data/database/metro.db', {})
+		db.pragma('cache_size = 100000');
         this.db.pragma('journal_mode = WAL')
         this.db.exec(
             `
