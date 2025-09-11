@@ -4,7 +4,7 @@ import { ThreadwrapperComponent } from './Components/threadwrapper/threadwrapper
 export const routes: Routes = [
 	{
 		path : 'boards/:boardName',
-		component : ThreadwrapperComponent,
+		loadComponent : () => import('./Components/threadwrapper/threadwrapper.component').then(r => r.ThreadwrapperComponent),
 		children : [
 			{
 				path : 'threads/:threadId',

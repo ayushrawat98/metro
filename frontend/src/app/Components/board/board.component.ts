@@ -1,4 +1,4 @@
-import { Component, ElementRef, output, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, output, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ScrollService } from '../../Services/scroll.service';
 import { InternaldataService } from '../../Services/internaldata.service';
@@ -22,11 +22,9 @@ export class BoardComponent {
 		{name : 'meta', desc : '/abuse admin/'},
 	]
 
-	constructor(
-		private scrollService: ScrollService,
-		private router: Router,
-		public internalData : InternaldataService
-	) { }
+	scrollService = inject(ScrollService)
+	router = inject(Router)
+	internalData = inject(InternaldataService)
 
 	//any board link clicked
 	boardChanged(value: string) {

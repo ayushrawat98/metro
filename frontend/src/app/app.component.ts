@@ -12,7 +12,6 @@ import { Router, RouterOutlet } from '@angular/router';
 	styleUrl: './app.component.scss'
 })
 export class AppComponent implements AfterViewInit {
-	title = 'metro';
 	scrollContainer = viewChild<ElementRef<HTMLElement>>('container')
 	
 

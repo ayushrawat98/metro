@@ -1,5 +1,5 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { Component, Inject } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { reply } from '../../Models/thread';
 import { environment } from '../../../environments/environment.development';
 
@@ -18,10 +18,8 @@ export class ExpandmediaComponent {
 	startingPoint!: number
 	serverUrl = environment.files
 
-	constructor(
-		private dialogRef: DialogRef<string>,
-		@Inject(DIALOG_DATA) private dialogData: { id: number, data: reply[] }
-	) { }
+	dialogRef = inject(DialogRef<string>)
+	dialogData = inject<{ id: number, data: reply[] }>(DIALOG_DATA)
 
 	ngOnInit() {
 		//filter the replies with files
