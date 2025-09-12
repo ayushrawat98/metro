@@ -44,6 +44,11 @@ export class BoardComponent {
 		localStorage.setItem("view", newTheme)
 	}
 
+	changeReply(){
+		this.internalData.currentReply.update((value) => !value)
+		localStorage.setItem("simpleReply", this.internalData.currentReply() ? 'true' : 'false')
+	}
+
 
 
 	//pranks

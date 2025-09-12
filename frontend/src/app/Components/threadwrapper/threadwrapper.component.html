@@ -1,11 +1,14 @@
-<div #container class="container">
-  
-  <div class="containerBlock threads hideScroll">
-    <app-thread ></app-thread>
-  </div>
-  
-  <div #repliesContainer class="containerBlock replies">
-    <router-outlet></router-outlet>
-  </div>
+<div #container class="container hideScroll">
+
+	<div class="containerBlock threads hideScroll">
+		<app-thread></app-thread>
+	</div>
+
+	<div class="containerBlock replies" style="position: relative;overflow: hidden;">
+		<div #repliesContainer class="hideScroll scrollable">
+			<router-outlet></router-outlet>
+		</div>
+		<div (click)="scroll()" class="scrollPointer pointer">{{scrollDown ? '&darr;' : '&uarr;'}}</div>
+	</div>
 
 </div>

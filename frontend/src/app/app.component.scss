@@ -4,13 +4,7 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     width: 100vw;
-	// max-width: 1800px;
-	// margin: auto;
     height: 100vh;
-	-ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
 }
 
 .containerBlock {
@@ -19,18 +13,7 @@
     scroll-snap-align: center;
     height: 100%;
     width: 100%;
-    // padding: 0px 24px;
     overflow-y: auto;
-    // hide scrollbar
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
-}
-
-// hide scrollbar
-.containerBlock::-webkit-scrollbar {
-    display: none;
 }
 
 

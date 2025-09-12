@@ -16,8 +16,10 @@
 			}
 		}
 
-		@if (internalData.currentView() == 'clean') {
+		@if (internalData.currentReply()) {
 			<a style="text-decoration: underline; font-size: 14px;"  (click)="replyId.emit(data().id)">reply</a>
+		}@else {
+			<a style="font-size: 14px;"  (click)="replyId.emit(data().id)">#{{data().id}}</a>
 		}
 	</div>
 
