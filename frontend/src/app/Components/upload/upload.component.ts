@@ -73,7 +73,7 @@ export class UploadComponent {
 	createReply() {
 		if (this.replyData.trim().length == 0) return;
 		const body = new FormData()
-		body.append('content', this.replyData.trim().slice(0, 420).replace(/p+a+j+e+t+/gi, "mera baap"))
+		body.append('content', this.replyData.trim().slice(0, 420))
 		body.append('file', this.replyFile as Blob)
 		body.append('ogfilename', this.replyFile?.name ?? "aparichit")
 		body.append('replyto', String(this.replyTo()))
@@ -131,7 +131,7 @@ export class UploadComponent {
 			return
 		}
 		const body = new FormData()
-		body.append('content', this.replyData.trim().slice(0, 420).replace(/p+a+j+e+t+/gi, "mera baap"))
+		body.append('content', this.replyData.trim().slice(0, 420))
 		body.append('file', this.replyFile as Blob)
 		body.append('ogfilename', this.replyFile?.name ?? "aparichit")
 		this.externalData.postThread(body, this.currentBoard())

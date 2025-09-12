@@ -10,9 +10,9 @@
 			@if (item.type == 'link') {
 				<a class="blue" (click)="selectReply(item.value, $event)">&gt;&gt;{{item.shownValue}}</a><br/>
 			}@else if(item.type == 'text') {
-				<span>{{item.value | removeSpace}}</span><br/>
+				<span>{{item.value | removeSpace | filterWord}}</span><br/>
 			}@else if(item.type == 'greenline'){
-				<span class="greenline">{{item.value | removeSpace}}</span><br/>
+				<span class="greenline">{{item.value | removeSpace | filterWord}}</span><br/>
 			}
 		}
 

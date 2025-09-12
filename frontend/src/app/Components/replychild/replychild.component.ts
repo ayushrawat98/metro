@@ -6,12 +6,13 @@ import { RemoveSpacePipe } from '../../Pipes/remove-space.pipe';
 import { ScrollService } from '../../Services/scroll.service';
 import { SmartdatePipe } from '../../Pipes/smartdate.pipe';
 import { InternaldataService } from '../../Services/internaldata.service';
+import { FilterWordPipe } from '../../Pipes/filter-word.pipe';
 
 @Component({
 	selector: 'app-replychild',
 	templateUrl: './replychild.component.html',
 	styleUrl: './replychild.component.scss',
-	imports : [ConvertLinkPipe, RemoveSpacePipe, SmartdatePipe],
+	imports : [ConvertLinkPipe, RemoveSpacePipe, SmartdatePipe, FilterWordPipe],
 	changeDetection : ChangeDetectionStrategy.OnPush
 })
 export class ReplychildComponent extends ContentComponent<reply> {

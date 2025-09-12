@@ -3,10 +3,11 @@ import { ContentComponent } from '../../Classes/content';
 import { ScrollService } from '../../Services/scroll.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { thread } from '../../Models/thread';
+import { FilterWordPipe } from '../../Pipes/filter-word.pipe';
 
 @Component({
   selector: 'app-threadchild',
-  imports: [],
+  imports: [FilterWordPipe],
   templateUrl: './threadchild.component.html',
   styleUrl: './threadchild.component.scss',
   changeDetection : ChangeDetectionStrategy.OnPush,
