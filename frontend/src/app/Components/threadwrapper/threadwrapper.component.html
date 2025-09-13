@@ -4,11 +4,8 @@
 		<app-thread></app-thread>
 	</div>
 
-	<div class="containerBlock replies" style="position: relative;overflow: hidden;">
-		<div #repliesContainer class="hideScroll scrollable">
-			<router-outlet></router-outlet>
-		</div>
-		<div (click)="scroll()" class="scrollPointer pointer">{{scrollDown ? '&darr;' : '&uarr;'}}</div>
+	<div class="containerBlock replies hideScroll">
+		<router-outlet></router-outlet>
 	</div>
 
 </div>

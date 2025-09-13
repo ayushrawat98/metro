@@ -24,14 +24,5 @@ export class ThreadwrapperComponent {
 		this.scrollServiceMain.registerContainer(this.scrollContainer())
 		this.scrollServiceReplies.registerContainer(this.repliesContainer())
 	}
-
-	scrollDown = true
-	scroll(){
-		if(this.scrollDown){
-			this.scrollServiceReplies.scrollBottom()
-		}else{
-			this.scrollServiceReplies.scrollUp()
-		}
-		this.scrollDown = !this.scrollDown
-	}
+	
 }
