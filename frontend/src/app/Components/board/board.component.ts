@@ -13,10 +13,10 @@ import { BoardFlipComponent } from '../board-flip/board-flip.component';
 export class BoardComponent {
 	boards = [
 		{name : 'b', desc : '/random/'},
-		{name : 'yog', desc : '/योग/'},
-		{name : 'fa', desc : '/fashion/'},
+		// {name : 'yog', desc : '/योग/'},
+		// {name : 'fa', desc : '/fashion/'},
 		{name : 'g', desc : '/technology/'},
-		{name : 'dharm', desc : '/धर्म/'},
+		// {name : 'dharm', desc : '/धर्म/'},
 		{name : 'out', desc : '/बाहर जाओ/'},
 		{name : 'media', desc : '/music & movie/'},
 		{name : 'meta', desc : '/abuse admin/'},
