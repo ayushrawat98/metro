@@ -5,8 +5,13 @@ class DB{
     queries;
     constructor(){
         this.db = sqlite('./data/database/metro.db', {})
-		this.db.pragma('cache_size = 100000');
-        this.db.pragma('journal_mode = WAL')
+		
+		this.db.pragma('journal_mode = WAL')
+		this.db.pragma("synchronous = NORMAL");
+		this.db.pragma("journal_size_limit = 67108864"); // 64 MB
+		this.db.pragma("mmap_size = 134217728"); // 128 MB
+		this.db.pragma("cache_size = 2000");
+        
         this.db.exec(
             `
                 create table if not exists posts (
