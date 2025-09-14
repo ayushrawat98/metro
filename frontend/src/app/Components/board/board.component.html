@@ -7,12 +7,6 @@
 		@for (board of boards; track $index) {
 			<app-board-flip [board]="board.name" [desc]="board.desc" [type]="'link'" (click)="boardChanged(board.name)"></app-board-flip>
 		}
-		<a class="big" (click)="changeMode()">/{{internalData.currentTheme()}}/</a>
-		<a class="big" (click)="changeReply()">/{{internalData.currentReply() ? 'simple' : 'hash'}}/</a>
-		<!-- <a class="big" (click)="changeView()">/{{internalData.currentView()}}/</a> -->
-		<!-- <a (click)="pause()">/{{songstate}}/</a> -->
+		<a class="big" (click)="changeMode()">/{{internalData.darkTheme() ? 'dark' : 'light'}}/</a>
 	</div>
 </div>
-
-<!-- pranks -->
- <!-- <audio #song src="shutup.mp3" hidden autoplay></audio> -->

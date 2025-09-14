@@ -16,19 +16,16 @@
 			}
 		}
 
-		@if (internalData.currentReply()) {
-			<a style="text-decoration: underline; font-size: 14px;"  (click)="replyId.emit(data().id)">reply</a>
-		}@else {
-			<a style="font-size: 14px;"  (click)="replyId.emit(data().id)">#{{data().id}}</a>
-		}
+		<a style=" font-size: 14px; color: gray; padding: 4px 0px;"  (click)="replyId.emit(data().id)">reply</a>
+		
 	</div>
 
-	@if (internalData.currentView() == 'detailed') {
+	<!-- @if (internalData.currentView() == 'detailed') {
 		<div class="details">
 		<span>{{data().username ? data().username : "anonymous_mouse"}}</span>
 		<span>{{data().created_at | smartdate}}</span>
 		<span (click)="replyId.emit(data().id)" style="cursor: pointer;">reply</span>
 	</div>
-	}
+	} -->
 	
 </div>

@@ -11,9 +11,7 @@ export class InternaldataService {
 
   currentBoard = signal<string>('')
   currentThread = signal<number|string>(-1)
-  currentTheme = signal<"light"|"dark">("light")
-  currentView = signal<"clean"|"detailed">("clean")
-  currentReply = signal<boolean>(true)
+  darkTheme = signal<boolean>(false)
 
 //   showGlobalProgressBar = signal<boolean>(false)
   globalProgressBarValue = signal<number>(0)

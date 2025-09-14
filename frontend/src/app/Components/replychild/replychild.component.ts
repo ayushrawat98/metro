@@ -8,11 +8,12 @@ import { SmartdatePipe } from '../../Pipes/smartdate.pipe';
 import { InternaldataService } from '../../Services/internaldata.service';
 import { FilterWordPipe } from '../../Pipes/filter-word.pipe';
 
+
 @Component({
 	selector: 'app-replychild',
 	templateUrl: './replychild.component.html',
 	styleUrl: './replychild.component.scss',
-	imports : [ConvertLinkPipe, RemoveSpacePipe, SmartdatePipe, FilterWordPipe],
+	imports: [ConvertLinkPipe, RemoveSpacePipe, FilterWordPipe],
 	changeDetection : ChangeDetectionStrategy.OnPush
 })
 export class ReplychildComponent extends ContentComponent<reply> {
@@ -21,6 +22,7 @@ export class ReplychildComponent extends ContentComponent<reply> {
 	// selectedReply = output<{item : reply, element:HTMLElement}>()
 	selectedReply = output<{item : number, element:HTMLElement}>()
 	expandMedia = output<number>()
+	showInlineReply = false
 
 	// selectReply(item: reply, event : Event) {
 	// 	this.selectedReply.emit({item : item, element : event.target as HTMLElement})

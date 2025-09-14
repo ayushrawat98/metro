@@ -33,39 +33,7 @@ export class BoardComponent {
 	}
 
 	changeMode(){
-		let newTheme = this.internalData.currentTheme()  == 'light' ? 'dark' : 'light'
-		this.internalData.currentTheme.set(newTheme as "light" | "dark")
-		localStorage.setItem("theme", newTheme)
+		this.internalData.darkTheme.update((value) => !value)
+		localStorage.setItem("darkTheme", this.internalData.darkTheme().valueOf().toString())
 	}
-
-	changeView(){
-		let newTheme = this.internalData.currentView()  == 'clean' ? 'detailed' : 'clean'
-		this.internalData.currentView.set(newTheme as "clean" | "detailed")
-		localStorage.setItem("view", newTheme)
-	}
-
-	changeReply(){
-		this.internalData.currentReply.update((value) => !value)
-		localStorage.setItem("simpleReply", this.internalData.currentReply() ? 'true' : 'false')
-	}
-
-
-
-	//pranks
-	// song = viewChild<ElementRef<HTMLAudioElement>>('song')
-	// songstate = 'pause'
-	// ngOnInit() {
-	// 	setTimeout(() => {
-	// 		this.song()?.nativeElement.play()
-	// 	}, 3000);
-	// }
-	// pause(){
-	// 	if(this.songstate == 'pause'){
-	// 		this.songstate = 'play'
-	// 		this.song()?.nativeElement.pause()
-	// 	}else{
-	// 		this.songstate = 'pause'
-	// 		this.song()?.nativeElement.play()
-	// 	}
-	// }
 }
