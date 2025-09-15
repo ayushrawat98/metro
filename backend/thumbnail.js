@@ -19,6 +19,7 @@ exports.thumbnail = async (req, res, next) => {
 			.webp({ quality: 100 })
 			.toFile(thumbfilePath)
 			.then(() => next())
+			.catch((err) => next(err))
 	} else if (req.file.mimetype.startsWith('video')) {
 		ffmpeg(ogfilePath)
 			.frames(1)
@@ -47,6 +48,6 @@ exports.compress = async (req, res, next) => {
 	}
 	let ogfilePath = path.join(__dirname, 'data', 'files', req.file.filename)
 	let temp = ogfilePath + '.temp'
-	sharp(ogfilePath).webp({ quality: 80 }).toFile(temp).then(x => fs.rename(temp, ogfilePath, (err) => { fs.unlink(temp, (err) => { next()})}))
+	sharp(ogfilePath).webp({ quality: 80 }).toFile(temp).then(x => fs.rename(temp, ogfilePath, (err) => { if(err) {return next(err)}  return next()})).catch(err => next(err))
 }
 
