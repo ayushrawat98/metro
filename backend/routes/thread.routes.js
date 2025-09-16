@@ -7,6 +7,7 @@ const { ratelimit } = require('../ratelimit')
 const uniqueName = require('../unique')
 const path = require("path")
 const fs = require('fs')
+const { banUser } = require('../ban')
 const map = {}
 
 //get all replies for a thread
@@ -31,9 +32,12 @@ router.delete('/:threadId', async(req, res, next) => {
 })
 
 //add new reply to the thread
-router.post('/:threadId', ratelimit(10000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, uniqueName.uniqueName, async(req, res, next) => {
+router.post('/:threadId', ratelimit(5000, map), uniqueName.uniqueName, banUser, upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
 	if(req.body.content == 'delete?key=lele'){
-		let result = deletePost(req.body.replyto)
+		let result = deletePost(req.body.replyto, undefined)
+		return res.send(result)
+	}else if(req.body.content == 'ban?key=lele'){
+		let result = banUserMethod(req.body.replyto)
 		return res.send(result)
 	}
     const body = {
@@ -51,8 +55,14 @@ router.post('/:threadId', ratelimit(10000, map), upload.single('file'), thumbnai
     return res.send(result)
 })
 
-function deletePost(postid){
+function banUserMethod(postid){
 	const threadclone = db.getThread(postid)
+	db.banUsername(threadclone.username)
+	return deletePost(postid, threadclone)
+}
+
+function deletePost(postid, threadcopy){
+	const threadclone = threadcopy ?? db.getThread(postid)
 	if(threadclone.file.trim().length > 0){
 		const deletefile = path.join(__dirname,'..', 'data', 'files', threadclone.file)
 		fs.unlink(deletefile,()=>{})

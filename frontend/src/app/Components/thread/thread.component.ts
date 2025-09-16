@@ -42,8 +42,7 @@ export class ThreadComponent implements OnInit {
 			this.route.paramMap.pipe(
 				map(value => value.get('boardName') ?? '')
 			),
-			this.internalData.refreshThreadTrigger$.pipe(map(value => this.internalData.currentBoard())),
-			// this.refreshTrigger$.pipe(map(value => this.internalData.currentBoard())),
+			this.refreshTrigger$.pipe(map(value => this.internalData.currentBoard())),
 			interval(60000).pipe(map(value => this.internalData.currentBoard()))
 		).pipe(
 			tap(board => {
@@ -72,7 +71,7 @@ export class ThreadComponent implements OnInit {
 		dialogRef.closed.subscribe((res)=>{
 			//if closed after adding a new post
 			if(res?.completed == true){
-				// this.refreshTrigger$.next()
+				this.refreshTrigger$.next()
 			}
 		})
 	}

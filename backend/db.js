@@ -14,6 +14,10 @@ class DB{
         
         this.db.exec(
             `
+				create table if not exists bans (
+					username text primary key
+				);
+
                 create table if not exists posts (
                     id integer primary key autoincrement,
                     boardname text not null,
@@ -42,15 +46,17 @@ class DB{
             `
         )
         this.queries = {
-            getThreads : this.db.prepare('select * from posts where boardname = ? and threadid is null order by created_at desc limit 100'),
-            getThread : this.db.prepare('select * from posts where id = ?'),
+            getThreads : this.db.prepare('select id, content, file, ogfilename, updated_at from posts where boardname = ? and threadid is null order by created_at desc limit 100'),
+            getThread : this.db.prepare('select  * from posts where id = ?'),
 			deleteThread : this.db.prepare('delete from posts where id = ?'),
             createThread : this.db.prepare('insert into posts (boardname, content, ogfilename, file, mimetype, created_at, updated_at, username) values (?,?,?,?, ?,?,?,?)'),
-            getReplies : this.db.prepare('select * from posts where threadid = ?'),
+            getReplies : this.db.prepare('select id, content, ogfilename, file, mimetype from posts where threadid = ?'),
             createReply : this.db.prepare('insert into posts (boardname, threadid, content, ogfilename, file, mimetype, created_at, replyto, username) values (?,?,?,?,?, ?,?,?,?)'),
             updateReplyCount : this.db.prepare('update posts set replycount = replycount + 1 where id = ?'),
 			updateDate : this.db.prepare('update posts set updated_at = ? where id = ?'),
-			updateUsername : this.db.prepare('update posts set username = ? where id = ?')
+			updateUsername : this.db.prepare('update posts set username = ? where id = ?'),
+			banUsername : this.db.prepare('insert into bans (username) values (?)'),
+			checkBan : this.db.prepare('select username from bans where username = ?')
         }
     }
 
@@ -87,6 +93,14 @@ class DB{
 
 	updateUsername(username, id){
 		this.queries.updateUsername.run(username, id)
+	}
+
+	banUsername(username){
+		this.queries.banUsername.run(username)
+	}
+
+	checkBan(username){
+		return this.queries.checkBan.all(username)
 	}
 }
 

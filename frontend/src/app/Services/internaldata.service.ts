@@ -13,8 +13,4 @@ export class InternaldataService {
   currentThread = signal<number|string>(-1)
   darkTheme = signal<boolean>(false)
 
-//   showGlobalProgressBar = signal<boolean>(false)
-  globalProgressBarValue = signal<number>(0)
-  refreshThreadTrigger$ = new Subject<void>()
-  
 }

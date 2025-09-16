@@ -71,7 +71,16 @@ export class UploadComponent {
 	}
 
 	createReply() {
-		if (this.replyData.trim().length == 0) return;
+		if (this.replyData.trim().length == 0){
+			this.showErrorMessage("Post cannot be empty")
+			return
+		}else if(!this.replyFile){
+			this.showErrorMessage("File is required")
+			return
+		}else if(this.replyFile  && this.replyFile?.size > 5000000){
+			this.showErrorMessage("File size should be less than 5 MB")
+			return
+		}
 		const body = new FormData()
 		body.append('content', this.replyData.trim().slice(0, 420))
 		body.append('file', this.replyFile as Blob)
@@ -95,13 +104,9 @@ export class UploadComponent {
 					//reset data
 					this.animateExit()
 					this.dialogRef.close({unsavedReplyData : '', completed : true})
-					// this.setShowSelectedReply(false)
 					this.replyFile = null
 					this.replyData = ''
 					this.setUserReplyList(res)
-					//refresh data
-					// this.triggerRefresh.emit(true)
-					// this.internalData.threadSubject.next(this.currentThread)
 				},
 				error: this.errorHandler
 			})
@@ -137,17 +142,12 @@ export class UploadComponent {
 		this.externalData.postThread(body, this.currentBoard())
 			.pipe(
 				tap(event => {
-					if(event.type == 0){
-						this.dialogRef.close({ unsavedReplyData: '', completed: true })
-					}
 					if (event.type == HttpEventType.UploadProgress) {
 						this.fileUploadProgress = Math.round(100 * event.loaded / (event.total ?? 1));
-						this.internalData.globalProgressBarValue.set(this.fileUploadProgress)
 
 					}
 					else if (event.type === HttpEventType.Response) {
 						this.fileUploadProgress = 0
-						this.internalData.globalProgressBarValue.set(this.fileUploadProgress)
 
 					}
 				}),
@@ -156,15 +156,10 @@ export class UploadComponent {
 			.subscribe({
 				next: (res) => {
 					//reset data
-					// this.animateExit()
-					// this.dialogRef.close({ unsavedReplyData: '', completed: true })
+					this.dialogRef.close({ unsavedReplyData: '', completed: true })
 					this.replyFile = null
 					this.replyData = ''
 					this.setUserReplyList(res)
-					this.internalData.refreshThreadTrigger$.next()
-					//refresh data\
-					// this.triggerRefresh.emit(true)
-					// this.internalData.boardSubject.next(this.currentBoard)
 				},
 				error: this.errorHandler
 			})
