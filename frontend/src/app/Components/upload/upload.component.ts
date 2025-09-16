@@ -5,6 +5,7 @@ import { InternaldataService } from '../../Services/internaldata.service';
 import { HttpEventType } from '@angular/common/http';
 import { tap, last, map, throwError, of, mergeMap } from 'rxjs';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
+import { NsfwService } from '../../Services/nsfw.service';
 
 @Component({
 	selector: 'app-upload',
@@ -31,7 +32,7 @@ export class UploadComponent {
 	showError = false
 	errorMessage = ""
 
-	constructor(private externalData: ExternaldataService, public internalData: InternaldataService) { }
+	constructor(private externalData: ExternaldataService, public internalData: InternaldataService, private nsfw : NsfwService) { }
 
 	fileSelected(event: Event) {
 		this.replyFile = (event.target as HTMLInputElement).files?.item(0)
@@ -67,14 +68,34 @@ export class UploadComponent {
 		this.timeoutref = setTimeout(() => {
 			this.showError = false
 			this.errorMessage = ""
-		}, 2000);
+		}, 3000);
+	}
+
+	checkImage(){
+		if(this.replyFile && this.replyFile.type.startsWith('image')){
+			const img = new Image();
+			img.src = URL.createObjectURL(this.replyFile as Blob);
+
+			img.onload = async () => {
+				this.errorHandler("Please wait ... loading ...")
+				const predictions = await this.nsfw.classifyImage(img);
+				const interested = predictions.filter(x => x.className == 'Hentai' || x.className == 'Porn')
+				if(interested[0].probability > 0.70 || interested[1].probability > 0.70){
+					this.replyFile = null
+				}else{
+					this.saveReply()
+				}
+				// cleanup memory
+				URL.revokeObjectURL(img.src);
+			};
+		}
 	}
 
 	createReply() {
-		if (this.replyData.trim().length == 0){
+		if (this.replyData.trim().length == 0) {
 			this.showErrorMessage("Post cannot be empty")
 			return
-		}else if(this.replyFile  && this.replyFile?.size > 5000000){
+		} else if (this.replyFile && this.replyFile?.size > 5000000) {
 			this.showErrorMessage("File size should be less than 5 MB")
 			return
 		}
@@ -100,7 +121,7 @@ export class UploadComponent {
 				next: (res) => {
 					//reset data
 					this.animateExit()
-					this.dialogRef.close({unsavedReplyData : '', completed : true})
+					this.dialogRef.close({ unsavedReplyData: '', completed: true })
 					this.replyFile = null
 					this.replyData = ''
 					this.setUserReplyList(res)
@@ -109,7 +130,7 @@ export class UploadComponent {
 			})
 	}
 
-		showErrorMessage(msg : string){
+	showErrorMessage(msg: string) {
 		if (this.timeoutref) {
 			clearTimeout(this.timeoutref)
 		}
@@ -122,13 +143,13 @@ export class UploadComponent {
 	}
 
 	createThread() {
-		if (this.replyData.trim().length == 0){
+		if (this.replyData.trim().length == 0) {
 			this.showErrorMessage("Thread cannot be empty")
 			return
-		}else if(!this.replyFile){
+		} else if (!this.replyFile) {
 			this.showErrorMessage("File is required")
 			return
-		}else if(this.replyFile  && this.replyFile?.size > 5000000){
+		} else if (this.replyFile && this.replyFile?.size > 5000000) {
 			this.showErrorMessage("File size should be less than 5 MB")
 			return
 		}
@@ -136,6 +157,7 @@ export class UploadComponent {
 		body.append('content', this.replyData.trim().slice(0, 420))
 		body.append('file', this.replyFile as Blob)
 		body.append('ogfilename', this.replyFile?.name ?? "aparichit")
+		
 		this.externalData.postThread(body, this.currentBoard())
 			.pipe(
 				tap(event => {
