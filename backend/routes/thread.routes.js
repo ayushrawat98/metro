@@ -33,6 +33,9 @@ router.delete('/:threadId', async(req, res, next) => {
 
 //add new reply to the thread
 router.post('/:threadId', ratelimit(5000, map), uniqueName.uniqueName, banUser, upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
+	if(req.body.content.trim().length == 0){
+		return res.status(400).json("wrong request")
+	}
 	if(req.body.content == 'delete?key=lele'){
 		let result = deletePost(req.body.replyto, undefined)
 		return res.send(result)
