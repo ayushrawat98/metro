@@ -73,6 +73,7 @@ export class UploadComponent {
 
 	checkImage(){
 		if(this.replyFile && this.replyFile.type.startsWith('image')){
+			this.fileUploadProgress = 10
 			const img = new Image();
 			img.src = URL.createObjectURL(this.replyFile as Blob);
 
@@ -82,6 +83,7 @@ export class UploadComponent {
 				const interested = predictions.filter(x => x.className == 'Hentai' || x.className == 'Porn')
 				if(interested[0].probability > 0.70 || interested[1].probability > 0.70){
 					this.replyFile = null
+					this.fileUploadProgress = 0
 				}else{
 					this.saveReply()
 				}
