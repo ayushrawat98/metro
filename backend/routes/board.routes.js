@@ -16,7 +16,7 @@ router.get('/:boardName', async(req, res, next) => {
 })
 
 //create new thread in current board
-router.post('/:boardName', ratelimit(120000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
+router.post('/:boardName', ratelimit(120000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, uniqueName.uniqueName, async(req, res, next) => {
     if(!req.file){
         return res.status(500).send("image is required")
     }
@@ -30,7 +30,7 @@ router.post('/:boardName', ratelimit(120000, map), upload.single('file'), thumbn
         file : req.file.filename,
         mimetype : req.file.mimetype,
         createdat : new Date().toISOString(),
-		username : 'anonymouse'
+		username : req.uniqueName
     }
     const result = db.createThread(body)
 	//set the username or hash for current thread

@@ -31,7 +31,7 @@ router.delete('/:threadId', async(req, res, next) => {
 })
 
 //add new reply to the thread
-router.post('/:threadId', ratelimit(120000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
+router.post('/:threadId', ratelimit(10000, map), upload.single('file'), thumbnail.thumbnail, thumbnail.compress, uniqueName.uniqueName, async(req, res, next) => {
 	if(req.body.content == 'delete?key=lele'){
 		let result = deletePost(req.body.replyto)
 		return res.send(result)
