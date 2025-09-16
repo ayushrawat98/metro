@@ -5,7 +5,6 @@ import { InternaldataService } from '../../Services/internaldata.service';
 import { HttpEventType } from '@angular/common/http';
 import { tap, last, map, throwError, of, mergeMap } from 'rxjs';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { NsfwService } from '../../Services/nsfw.service';
 
 @Component({
 	selector: 'app-upload',
@@ -32,7 +31,7 @@ export class UploadComponent {
 	showError = false
 	errorMessage = ""
 
-	constructor(private externalData: ExternaldataService, public internalData: InternaldataService, private nsfw : NsfwService) { }
+	constructor(private externalData: ExternaldataService, public internalData: InternaldataService) { }
 
 	fileSelected(event: Event) {
 		this.replyFile = (event.target as HTMLInputElement).files?.item(0)
@@ -69,28 +68,6 @@ export class UploadComponent {
 			this.showError = false
 			this.errorMessage = ""
 		}, 3000);
-	}
-
-	checkImage(){
-		if(this.replyFile && this.replyFile.type.startsWith('image')){
-			this.fileUploadProgress = 10
-			const img = new Image();
-			img.src = URL.createObjectURL(this.replyFile as Blob);
-
-			img.onload = async () => {
-				this.errorHandler("Please wait ... loading ...")
-				const predictions = await this.nsfw.classifyImage(img);
-				const interested = predictions.filter((x:any) => x.className == 'Hentai' || x.className == 'Porn')
-				if(interested[0].probability > 0.70 || interested[1].probability > 0.70){
-					this.replyFile = null
-					this.fileUploadProgress = 0
-				}else{
-					this.saveReply()
-				}
-				// cleanup memory
-				URL.revokeObjectURL(img.src);
-			};
-		}
 	}
 
 	createReply() {

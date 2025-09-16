@@ -4,7 +4,6 @@ import { ScrollService } from './Services/scroll.service';
 import { InternaldataService } from './Services/internaldata.service';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
-import { NsfwService } from './Services/nsfw.service';
 
 @Component({
 	selector: 'app-root',
@@ -19,8 +18,7 @@ export class AppComponent implements AfterViewInit {
 	constructor(
 		private scrollService: ScrollService,
 		public internalData: InternaldataService,
-		public router : Router,
-		private nsfw : NsfwService
+		public router : Router
 	) { }
 	
 	ngOnInit(): void {
@@ -28,7 +26,6 @@ export class AppComponent implements AfterViewInit {
 		if(pastTheme){
 			this.internalData.darkTheme.set(pastTheme == 'true' ? true : false)
 		}
-		this.nsfw.loadModel()
 	}
 
 	ngAfterViewInit(): void {
