@@ -17,7 +17,7 @@ router.get('/:boardName', async(req, res, next) => {
 })
 
 //create new thread in current board
-router.post('/:boardName', ratelimit(30000, map), uniqueName.uniqueName, banUser, upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
+router.post('/:boardName', ratelimit(60000, map), uniqueName.uniqueName, banUser, upload.single('file'), thumbnail.thumbnail, thumbnail.compress, async(req, res, next) => {
 	if(req.body.content.trim().length == 0){
 		return res.status(400).json("wrong request")
 	}
