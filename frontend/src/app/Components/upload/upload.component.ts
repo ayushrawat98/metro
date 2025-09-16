@@ -74,9 +74,6 @@ export class UploadComponent {
 		if (this.replyData.trim().length == 0){
 			this.showErrorMessage("Post cannot be empty")
 			return
-		}else if(!this.replyFile){
-			this.showErrorMessage("File is required")
-			return
 		}else if(this.replyFile  && this.replyFile?.size > 5000000){
 			this.showErrorMessage("File size should be less than 5 MB")
 			return
