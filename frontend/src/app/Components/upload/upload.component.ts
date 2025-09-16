@@ -80,7 +80,7 @@ export class UploadComponent {
 			img.onload = async () => {
 				this.errorHandler("Please wait ... loading ...")
 				const predictions = await this.nsfw.classifyImage(img);
-				const interested = predictions.filter(x => x.className == 'Hentai' || x.className == 'Porn')
+				const interested = predictions.filter((x:any) => x.className == 'Hentai' || x.className == 'Porn')
 				if(interested[0].probability > 0.70 || interested[1].probability > 0.70){
 					this.replyFile = null
 					this.fileUploadProgress = 0

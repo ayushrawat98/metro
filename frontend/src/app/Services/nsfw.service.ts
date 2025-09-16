@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import * as nsfwjs from 'nsfwjs';
-import * as tf from "@tensorflow/tfjs";
-tf.enableProdMode();
+import {load} from 'nsfwjs';
+import {enableDebugMode as dss} from "@tensorflow/tfjs";
+dss();
 
 @Injectable({
   providedIn: 'root'
 })
 export class NsfwService {
-	 private model: nsfwjs.NSFWJS | null = null;
+	 private model: any = null;
 
   async loadModel() {
     if (!this.model) {
       // loads the default model from nsfwjs CDN
-      this.model = await nsfwjs.load("/");
+      this.model = await load("/");
     }
   }
 
