@@ -3,10 +3,10 @@
 		boards
 	</h1>
 
-	<div class="flexColumn shorter">
+	<nav class="flexColumn shorter">
 		@for (board of boards; track $index) {
 			<app-board-flip [board]="board.name" [desc]="board.desc" [type]="'link'" (click)="boardChanged(board.name)"></app-board-flip>
 		}
 		<a class="big" (click)="changeMode()">/{{internalData.darkTheme() ? 'dark' : 'light'}}/</a>
-	</div>
+	</nav>
 </div>

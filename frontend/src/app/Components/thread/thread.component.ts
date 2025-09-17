@@ -31,7 +31,7 @@ export class ThreadComponent implements OnInit {
 	// showThreadPopup = false
 	
 	constructor(
-		private internalData: InternaldataService,
+		public internalData: InternaldataService,
 		private externalData: ExternaldataService,
 		private route: ActivatedRoute,
 		private dialog : Dialog

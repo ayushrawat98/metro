@@ -1,6 +1,6 @@
 <div class="contain">
 	<h1 (click)="showThreadPopup()" class="pointer">
-		<app-board-flip [board]="'threads'" [desc]="'create'" [type]="'header'"></app-board-flip>
+		<app-board-flip [board]="internalData.currentBoard()" [desc]="'create'" [type]="'header'"></app-board-flip>
 	</h1>
 
 	<!-- (click)="emitEvent()" -->
