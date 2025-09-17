@@ -8,5 +8,11 @@
 			<app-board-flip [board]="board.name" [desc]="board.desc" [type]="'link'" (click)="boardChanged(board.name)"></app-board-flip>
 		}
 		<a class="big" (click)="changeMode()">/{{internalData.darkTheme() ? 'dark' : 'light'}}/</a>
+		<a (click)="pause()">/{{songstate}}/</a>
 	</nav>
 </div>
+
+
+
+
+ <audio #song src="dkbose.mp3" hidden autoplay></audio>
