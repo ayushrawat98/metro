@@ -32,7 +32,7 @@ export class ReplyComponent implements OnInit {
 	replyTo!: number
 
 	constructor(
-		private internalData: InternaldataService,
+		public internalData: InternaldataService,
 		private externalData: ExternaldataService,
 		private route: ActivatedRoute,
 		private dialog: Dialog,
