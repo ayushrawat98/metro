@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, output, viewChild } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ScrollService } from '../../Services/scroll.service';
 import { InternaldataService } from '../../Services/internaldata.service';
 import { BoardFlipComponent } from '../board-flip/board-flip.component';
@@ -18,17 +18,18 @@ export class BoardComponent {
 		{name : 'g', desc : '/technology/'},
 		// {name : 'dharm', desc : '/धर्म/'},
 		{name : 'out', desc : '/बाहर जाओ/'},
-		{name : 'media', desc : '/music & movie/'},
+		{name : 'media', desc : '/music&movies/'},
 		{name : 'meta', desc : '/abuse admin/'},
 	]
 
 	scrollService = inject(ScrollService)
 	router = inject(Router)
 	internalData = inject(InternaldataService)
+	route = inject(ActivatedRoute)
 
 	//any board link clicked
 	boardChanged(value: string) {
-		this.router.navigate(['boards', value])
+		this.router.navigate(['boards', value], {relativeTo : this.route})
 		this.scrollService.scrollBy(300)
 	}
 
