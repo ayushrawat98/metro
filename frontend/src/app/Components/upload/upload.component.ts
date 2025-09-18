@@ -79,7 +79,7 @@ export class UploadComponent {
 			return
 		}
 		const body = new FormData()
-		body.append('content', this.replyData.trim().slice(0, 420))
+		body.append('content', this.replyData.trim().slice(0, 2000))
 		body.append('file', this.replyFile as Blob)
 		body.append('ogfilename', this.replyFile?.name ?? "aparichit")
 		body.append('replyto', String(this.replyTo()))
@@ -133,7 +133,7 @@ export class UploadComponent {
 			return
 		}
 		const body = new FormData()
-		body.append('content', this.replyData.trim().slice(0, 420))
+		body.append('content', this.replyData.trim().slice(0, 2000))
 		body.append('file', this.replyFile as Blob)
 		body.append('ogfilename', this.replyFile?.name ?? "aparichit")
 		

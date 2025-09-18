@@ -1,4 +1,4 @@
-<div #container class="content" (click)="threadClicked()" animate.enter="flippedIn" >
+<div #container class="content" animate.enter="flippedIn" >
     <img [src]="fileUrl + 't-' + data().file" [alt]="data().ogfilename" loading="lazy" class="floatLeft small">
     {{data().content.length > 280 ? (data().content.slice(0,280) | filterWord) + '...' : (data().content | filterWord)}}
 	 <!-- {{data().content}} -->

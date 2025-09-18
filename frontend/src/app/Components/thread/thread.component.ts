@@ -11,6 +11,7 @@ import { UploadComponent } from '../upload/upload.component';
 import {Dialog} from '@angular/cdk/dialog';
 import { SortThreadPipe } from '../../Pipes/sort-thread.pipe';
 import { BoardFlipComponent } from '../board-flip/board-flip.component';
+import { ScrollService } from '../../Services/scroll.service';
 
 @Component({
 	selector: 'app-thread',
@@ -34,7 +35,8 @@ export class ThreadComponent implements OnInit {
 		public internalData: InternaldataService,
 		private externalData: ExternaldataService,
 		private route: ActivatedRoute,
-		private dialog : Dialog
+		private dialog : Dialog,
+		private scroll : ScrollService
 	) { }
 
 	ngOnInit(): void {
@@ -47,6 +49,7 @@ export class ThreadComponent implements OnInit {
 		).pipe(
 			tap(board => {
 				this.internalData.currentBoard.set(board)
+				this.scroll.scrollBy(300)
 			}
 			),
 			switchMap(board =>

@@ -20,7 +20,7 @@ export class ThreadwrapperComponent {
 		@Inject('repliesContainer') private scrollServiceReplies: ScrollService
 	) { }
 
-	ngAfterViewInit(): void {
+	ngOnInit(): void {
 		this.scrollServiceMain.registerContainer(this.scrollContainer())
 		this.scrollServiceReplies.registerContainer(this.repliesContainer())
 	}

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, inject, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnInit, viewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { InternaldataService } from '../../Services/internaldata.service';
 import { ScrollService } from '../../Services/scroll.service';
@@ -10,14 +10,14 @@ import { BoardComponent } from '../board/board.component';
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })
-export class MainPageComponent implements AfterViewInit {
+export class MainPageComponent implements OnInit {
 	scrollContainer = viewChild<ElementRef<HTMLElement>>('container')
 	
 	scrollService = inject(ScrollService)
 	internalData = inject(InternaldataService)
 	router = inject(Router)
 
-	ngAfterViewInit(): void {
+	ngOnInit(): void {
 		this.scrollService.registerContainer(this.scrollContainer())
 	}
 }

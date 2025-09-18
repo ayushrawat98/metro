@@ -56,7 +56,8 @@ class DB{
 			updateDate : this.db.prepare('update posts set updated_at = ? where id = ?'),
 			updateUsername : this.db.prepare('update posts set username = ? where id = ?'),
 			banUsername : this.db.prepare('insert into bans (username) values (?)'),
-			checkBan : this.db.prepare('select username from bans where username = ?')
+			checkBan : this.db.prepare('select username from bans where username = ?'),
+			editPost : this.db.prepare('update posts set content = ? where id = ?')
         }
     }
 
@@ -101,6 +102,10 @@ class DB{
 
 	checkBan(username){
 		return this.queries.checkBan.all(username)
+	}
+
+	editPost(content, id){
+		return this.queries.editPost.run(content, id)
 	}
 }
 

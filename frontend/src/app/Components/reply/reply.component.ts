@@ -37,7 +37,8 @@ export class ReplyComponent implements OnInit {
 		private route: ActivatedRoute,
 		private dialog: Dialog,
 		private overlay: Overlay,
-		@Inject('repliesContainer') private scrollService : ScrollService
+		@Inject('repliesContainer') private scrollService : ScrollService,
+		@Inject('mainContainer') private scrollService2 : ScrollService
 	) {}
 
 	ngOnInit(): void {
@@ -48,7 +49,10 @@ export class ReplyComponent implements OnInit {
 			this.refreshTrigger$.pipe(map(value => this.internalData.currentThread())),
 			interval(60000).pipe(map(value => this.internalData.currentThread()))
 		).pipe(
-			tap(id => { this.internalData.currentThread.set(id) }),
+			tap(id => { 
+				this.internalData.currentThread.set(id)
+				this.scrollService2.scrollBy(300)
+			}),
 			switchMap(id => this.externalData.getReplies(id).pipe(catchError(error => of([])))),
 			// map(data => this.mapFunction(data)),
 			tap(data => this.currentReplyList = data)
