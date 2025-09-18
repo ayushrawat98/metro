@@ -40,12 +40,12 @@ export class BoardComponent {
 
 	//pranks
 	song = viewChild<ElementRef<HTMLAudioElement>>('song')
-	songstate = 'pause'
-	ngOnInit() {
-		setTimeout(() => {
-			this.song()?.nativeElement.play()
-		}, 10000);
-	}
+	songstate = 'play'
+	// ngOnInit() {
+	// 	setTimeout(() => {
+	// 		this.song()?.nativeElement.play()
+	// 	}, 10000);
+	// }
 	pause(){
 		if(this.songstate == 'pause'){
 			this.songstate = 'play'

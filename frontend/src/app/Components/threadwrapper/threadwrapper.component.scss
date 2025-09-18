@@ -15,11 +15,6 @@
     overflow-y: auto;   
 }
 
-.replies{
-	overscroll-behavior : contain;
-}
-
-
 @media(min-width:1200px) {
 	.threads{
 		width: 35%;
