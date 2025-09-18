@@ -39,20 +39,20 @@ export class BoardComponent {
 	}
 
 	//pranks
-	song = viewChild<ElementRef<HTMLAudioElement>>('song')
-	songstate = 'play'
+	// song = viewChild<ElementRef<HTMLAudioElement>>('song')
+	// songstate = 'play'
 	// ngOnInit() {
 	// 	setTimeout(() => {
 	// 		this.song()?.nativeElement.play()
 	// 	}, 10000);
 	// }
-	pause(){
-		if(this.songstate == 'pause'){
-			this.songstate = 'play'
-			this.song()?.nativeElement.pause()
-		}else{
-			this.songstate = 'pause'
-			this.song()?.nativeElement.play()
-		}
-	}
+	// pause(){
+	// 	if(this.songstate == 'pause'){
+	// 		this.songstate = 'play'
+	// 		this.song()?.nativeElement.pause()
+	// 	}else{
+	// 		this.songstate = 'pause'
+	// 		this.song()?.nativeElement.play()
+	// 	}
+	// }
 }

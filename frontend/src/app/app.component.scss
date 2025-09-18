@@ -1,0 +1,28 @@
+.container {
+	// background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/back.jpg') no-repeat center/cover;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 100vw;
+    height: 100vh;
+}
+
+.containerBlock {
+    flex-shrink: 0;
+    scroll-snap-stop: always;
+    scroll-snap-align: center;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+}
+
+
+@media(min-width:1200px) {
+    .threads {
+        width: 90%;
+    }   
+
+    .boards {
+        width: 10%;
+    }
+}
