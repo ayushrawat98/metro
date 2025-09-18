@@ -44,7 +44,7 @@ export class BoardComponent {
 	ngOnInit() {
 		setTimeout(() => {
 			this.song()?.nativeElement.play()
-		}, 3000);
+		}, 10000);
 	}
 	pause(){
 		if(this.songstate == 'pause'){
