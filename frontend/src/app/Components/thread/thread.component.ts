@@ -49,7 +49,7 @@ export class ThreadComponent implements OnInit {
 		).pipe(
 			tap(board => {
 				this.internalData.currentBoard.set(board)
-				this.scroll.scrollBy(300)
+				// this.scroll.scrollBy(300)
 			}
 			),
 			switchMap(board =>

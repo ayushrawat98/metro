@@ -51,7 +51,7 @@ export class ReplyComponent implements OnInit {
 		).pipe(
 			tap(id => { 
 				this.internalData.currentThread.set(id)
-				this.scrollService2.scrollBy(300)
+				// this.scrollService2.scrollBy(300)
 			}),
 			switchMap(id => this.externalData.getReplies(id).pipe(catchError(error => of([])))),
 			// map(data => this.mapFunction(data)),
