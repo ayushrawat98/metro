@@ -30,7 +30,7 @@ export class BoardComponent {
 	//any board link clicked
 	boardChanged(value: string) {
 		this.router.navigate(['boards', value], {relativeTo : this.route})
-		// this.scrollService.scrollBy(300)
+		this.scrollService.scrollBy(300)
 	}
 
 	changeMode(){

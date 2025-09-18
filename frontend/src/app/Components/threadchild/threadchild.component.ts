@@ -23,9 +23,9 @@ export class ThreadchildComponent extends ContentComponent<thread> {
 
   threadClicked(): void {
 	this.router.navigate(['threads', this.data().id],{relativeTo: this.route})
-    this.scrollService.scrollBy(400)
-	if(!localStorage.getItem("old")){
-		localStorage.setItem("old", "yes")
-	}
+    this.scrollService.scrollBy(300)
+	// if(!localStorage.getItem("old")){
+	// 	localStorage.setItem("old", "yes")
+	// }
   }
 }
