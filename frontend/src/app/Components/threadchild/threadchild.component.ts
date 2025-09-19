@@ -10,7 +10,6 @@ import { FilterWordPipe } from '../../Pipes/filter-word.pipe';
   imports: [FilterWordPipe],
   templateUrl: './threadchild.component.html',
   styleUrl: './threadchild.component.scss',
-  changeDetection : ChangeDetectionStrategy.OnPush,
   host : {
 	'(click)' : 'threadClicked()'
   }

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, Input, input, output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, Input, input, output, signal } from '@angular/core';
 import { ContentComponent } from '../../Classes/content';
 import { reply } from '../../Models/thread';
 import { ConvertLinkPipe } from '../../Pipes/convert-link.pipe';
@@ -13,8 +13,7 @@ import { FilterWordPipe } from '../../Pipes/filter-word.pipe';
 	selector: 'app-replychild',
 	templateUrl: './replychild.component.html',
 	styleUrl: './replychild.component.scss',
-	imports: [ConvertLinkPipe, RemoveSpacePipe, FilterWordPipe],
-	changeDetection : ChangeDetectionStrategy.OnPush
+	imports: [ConvertLinkPipe, RemoveSpacePipe, FilterWordPipe]
 })
 export class ReplychildComponent extends ContentComponent<reply> {
 
@@ -22,7 +21,7 @@ export class ReplychildComponent extends ContentComponent<reply> {
 	// selectedReply = output<{item : reply, element:HTMLElement}>()
 	selectedReply = output<{item : number, element:HTMLElement}>()
 	expandMedia = output<number>()
-	showInlineReply = false
+	showInlineReply = signal<boolean>(false)
 
 	// selectReply(item: reply, event : Event) {
 	// 	this.selectedReply.emit({item : item, element : event.target as HTMLElement})
@@ -32,7 +31,7 @@ export class ReplychildComponent extends ContentComponent<reply> {
 		super()
 	}
 	
-	
+	changeInlineReply = () => this.showInlineReply.update(value => !value)
 	selectReply(id : string|number, event : Event){
 		this.selectedReply.emit({item : Number(id), element : event.target as HTMLElement})
 	}
