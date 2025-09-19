@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, input, output, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ExternaldataService } from '../../Services/externaldata.service';
 import { InternaldataService } from '../../Services/internaldata.service';
@@ -27,9 +27,9 @@ export class UploadComponent {
 
 	replyData = this.data.unsavedReplyData ?? ''
 	replyFile: File | undefined | null
-	fileUploadProgress = 0
-	showError = false
-	errorMessage = ""
+	fileUploadProgress = signal(0)
+	showError = signal(false)
+	errorMessage = signal("")
 
 	constructor(private externalData: ExternaldataService, public internalData: InternaldataService) { }
 
@@ -62,11 +62,11 @@ export class UploadComponent {
 		if (this.timeoutref) {
 			clearTimeout(this.timeoutref)
 		}
-		this.showError = true
-		this.errorMessage = err.error
+		this.showError.set(true)
+		this.errorMessage.set(err.error)
 		this.timeoutref = setTimeout(() => {
-			this.showError = false
-			this.errorMessage = ""
+			this.showError.set(false) 
+			this.errorMessage.set("")
 		}, 3000);
 	}
 
@@ -88,10 +88,10 @@ export class UploadComponent {
 			.pipe(
 				tap(event => {
 					if (event.type == HttpEventType.UploadProgress) {
-						this.fileUploadProgress = Math.round(100 * event.loaded / (event.total ?? 1));
+						this.fileUploadProgress.set(Math.round(100 * event.loaded / (event.total ?? 1)))
 					}
 					else if (event.type === HttpEventType.Response) {
-						this.fileUploadProgress = 0
+						this.fileUploadProgress.set(0)
 					}
 				}),
 				last()
@@ -113,12 +113,12 @@ export class UploadComponent {
 		if (this.timeoutref) {
 			clearTimeout(this.timeoutref)
 		}
-		this.showError = true
-		this.errorMessage = msg
+		this.showError.set(true)
+		this.errorMessage.set(msg)
 		this.timeoutref = setTimeout(() => {
-			this.showError = false
-			this.errorMessage = ""
-		}, 2000);
+			this.showError.set(false)
+			this.errorMessage.set("")
+		}, 4000);
 	}
 
 	createThread() {
@@ -141,11 +141,11 @@ export class UploadComponent {
 			.pipe(
 				tap(event => {
 					if (event.type == HttpEventType.UploadProgress) {
-						this.fileUploadProgress = Math.round(100 * event.loaded / (event.total ?? 1));
+						this.fileUploadProgress.set(Math.round(100 * event.loaded / (event.total ?? 1)))
 
 					}
 					else if (event.type === HttpEventType.Response) {
-						this.fileUploadProgress = 0
+						this.fileUploadProgress.set(0)
 
 					}
 				}),

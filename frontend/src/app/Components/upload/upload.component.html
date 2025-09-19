@@ -11,13 +11,13 @@
 		<A class="name">{{replyFile?.name}}</A>
 	</div>
 	<div>
-		@if (fileUploadProgress > 0) {
-			<progress max="100" [value]="fileUploadProgress"></progress>
+		@if (fileUploadProgress() > 0) {
+			<progress max="100" [value]="fileUploadProgress()"></progress>
 		}
 	</div>
-	@if (showError) {
+	@if (showError()) {
 		<div>
-			<A>{{errorMessage}}</A>
+			<A>{{errorMessage()}}</A>
 		</div>
 	}
 	<input (change)="fileSelected($event)" #fileInputTwo type="file" accept="image/*, video/*" hidden />
